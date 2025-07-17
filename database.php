@@ -46,16 +46,32 @@ function adminAccount()
 {
     global $conn;
 
-    // Query to check if admin account exists
-    $sql = "SELECT * FROM admin";
+    // Check how many admin rows exist
+    $sql = "SELECT COUNT(*) AS cnt FROM admin";
     $result = $conn->query($sql);
 
-    if ($result->num_rows == 0) {
-        $createAdmin = "INSERT INTO admin values ('admin', 'password') ";
-        if (mysqli_query($conn, $createAdmin)) {
-        } else {
-            echo "Error creating table: " . mysqli_error($conn);
+    if ($result && ($row = $result->fetch_assoc()) && $row['cnt'] == 0) {
+        $user = "adminn";
+        $pass = password_hash("password", PASSWORD_DEFAULT);
+
+        // Prepare the INSERT
+        $stmt = $conn->prepare("INSERT INTO admin (username, password) VALUES (?, ?)");
+        if (! $stmt) {
+            echo "Prepare failed: " . $conn->error;
+            return;
         }
+
+        // Bind parameters and execute
+        $stmt->bind_param("ss", $user, $pass);
+        if ($stmt->execute()) {
+            // Admin created successfully
+        } else {
+            echo "Error creating admin: " . $stmt->error;
+        }
+
+        $stmt->close();
+    } else if (!$result) {
+        echo "Error checking admin table: " . $conn->error;
     }
 }
 
