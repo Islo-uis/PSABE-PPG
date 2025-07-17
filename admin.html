@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Teno in Nach — Events Manager</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <style>
+    body, html { height:100%; margin:0; font-family:'Segoe UI',sans-serif; }
+    .d-flex { display:flex; height:100%; }
+
+    /* Sidebar */
+    #sidebar {
+      width:250px; background:#343a40; color:#fff;
+      display:flex; flex-direction:column; padding:1rem;
+    }
+    #sidebar h4 { margin-bottom:2rem; text-align:center; font-weight:bold; }
+    #sidebar .nav-link {
+      color:#ced4da; margin-bottom:.5rem;
+      padding:.5rem 1rem; border-radius:.25rem;
+      transition:background .2s;
+    }
+    #sidebar .nav-link.active,
+    #sidebar .nav-link:hover { background:#495057; color:#fff; }
+    #sidebar .btn-logout {
+      margin-top:auto; background:#ff416c; border:none;
+      color:#fff; padding:.5rem; border-radius:.25rem;
+    }
+    #sidebar .btn-logout:hover { background:#ff4b2b; }
+
+    /* Content */
+    #content {
+      flex-grow:1; background:#f8f9fa;
+      padding:2rem; overflow-y:auto;
+    }
+
+    /* Card styles */
+    .card-draggable { cursor:move; }
+    .card-draggable img { width:100%; height:150px; object-fit:cover; }
+    .card-actions { position:absolute; top:.5rem; right:.5rem; }
+    .card-disabled { opacity:.5; }
+    .add-tile {
+      display:flex; align-items:center; justify-content:center;
+      font-size:2rem; color:#aaa; cursor:pointer;
+      height:100%; min-height:200px;
+      border:2px dashed #ddd; border-radius:25px;
+      transition:background .2s;
+    }
+    .add-tile:hover { background:#f0f0f0; }
+  </style>
+</head>
+<body>
+
+  <div class="d-flex">
+    <nav id="sidebar">
+      <h4>Teno in Nach</h4>
+      <ul class="nav flex-column">
+        <li class="nav-item"><a class="nav-link active" href="#">Dashboard</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Users</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Merch</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Transactions</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Tabulation</a></li>
+      </ul>
+      <button class="btn btn-logout">Logout</button>
+    </nav>
+
+    <div id="content">
+      <h2 class="mb-4">Events</h2>
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4" id="cards-container">
+        <!-- cards + add-tile injected here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal (Add / Edit) -->
+  <div class="modal fade" id="cardModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="cardModalLabel">Add Card</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form id="card-form">
+            <input type="hidden" id="card-id">
+            <div class="mb-3 text-center">
+              <img id="card-preview" src="https://via.placeholder.com/300x150" 
+                   class="rounded mb-2" style="width:100%;height:150px;object-fit:cover;" alt="">
+              <input type="file" id="card-photo" accept="image/*" class="form-control form-control-sm">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Header</label>
+              <input type="text" id="card-header" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Description</label>
+              <textarea id="card-desc" class="form-control" rows="2" required></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button class="btn btn-primary" id="save-card-btn">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    let cards = [];  // your in-memory store
+
+    const container = document.getElementById('cards-container');
+    const modalEl   = document.getElementById('cardModal');
+    const modal     = new bootstrap.Modal(modalEl);
+
+    function renderCards() {
+      container.innerHTML = '';
+
+      // 1) render each event card
+      cards.forEach((c, idx) => {
+        const col = document.createElement('div');
+        col.className     = 'col';
+        col.draggable     = true;
+        col.dataset.index = idx;
+
+        const card = document.createElement('div');
+        card.className = `position-relative card bg-white rounded-lg shadow-sm ${c.enabled ? '' : 'card-disabled'} card-draggable p-0`;
+
+        // image
+        const img = document.createElement('img');
+        img.src = c.photo; 
+        card.appendChild(img);
+
+        // edit button
+        const actions = document.createElement('div');
+        actions.className = 'card-actions';
+        actions.innerHTML = `<button class="btn btn-sm btn-light"><i class="bi bi-pencil-fill"></i></button>`;
+        actions.querySelector('button').addEventListener('click', e => {
+          e.stopPropagation();
+          openModal(c);
+        });
+        card.appendChild(actions);
+
+        // body
+        const body = document.createElement('div');
+        body.className = 'p-3 text-center';
+        body.innerHTML = `
+          <h5 class="fw-bold mb-1">${c.header}</h5>
+          <p class="text-muted mb-2">${c.desc}</p>
+          <button class="btn btn-sm btn-${c.enabled ? 'warning' : 'success'} toggle-btn">
+            ${c.enabled ? 'Disable' : 'Enable'}
+          </button>
+        `;
+        body.querySelector('.toggle-btn').addEventListener('click', e => {
+          e.stopPropagation();
+          c.enabled = !c.enabled;
+          renderCards();
+        });
+        card.appendChild(body);
+
+        // click and drag handlers
+        card.addEventListener('click', () => openModal(c));
+        col.addEventListener('dragstart', onDragStart);
+        col.addEventListener('dragover', e => e.preventDefault());
+        col.addEventListener('drop', onDrop);
+
+        col.appendChild(card);
+        container.appendChild(col);
+      });
+
+      // 2) render the Add-tile at the end
+      const addCol = document.createElement('div');
+      addCol.className = 'col';
+      addCol.innerHTML = `
+        <div class="add-tile">
+          <span>＋</span>
+        </div>`;
+      addCol.addEventListener('click', () => openModal());
+      container.appendChild(addCol);
+    }
+
+    // Drag & drop
+    let dragSrcIndex = null;
+    function onDragStart(e) {
+      dragSrcIndex = +this.dataset.index;
+      e.dataTransfer.effectAllowed = 'move';
+    }
+    function onDrop(e) {
+      e.preventDefault();
+      const dst = +this.dataset.index;
+      const [moved] = cards.splice(dragSrcIndex, 1);
+      cards.splice(dst, 0, moved);
+      renderCards();
+    }
+
+    // Modal logic
+    document.getElementById('card-photo').onchange    = previewPhoto;
+    document.getElementById('save-card-btn').onclick  = saveCard;
+
+    function openModal(card = null) {
+      document.getElementById('card-form').reset?.();
+      document.getElementById('card-id').value       = card?.id || '';
+      document.getElementById('card-preview').src    = card?.photo || 'https://via.placeholder.com/300x150';
+      document.getElementById('card-header').value    = card?.header || '';
+      document.getElementById('card-desc').value      = card?.desc || '';
+      document.getElementById('cardModalLabel').innerText = card ? 'Edit Card' : 'Add Card';
+      modal.show();
+    }
+
+    function previewPhoto(e) {
+      const f = e.target.files[0];
+      if (!f) return;
+      const r = new FileReader();
+      r.onload = () => document.getElementById('card-preview').src = r.result;
+      r.readAsDataURL(f);
+    }
+
+    function saveCard() {
+      const id     = document.getElementById('card-id').value;
+      const header = document.getElementById('card-header').value.trim();
+      const desc   = document.getElementById('card-desc').value.trim();
+      const photo  = document.getElementById('card-preview').src;
+      if (!header || !desc) return;
+
+      if (id) {
+        const idx = cards.findIndex(c => c.id === id);
+        cards[idx] = { ...cards[idx], header, desc, photo };
+      } else {
+        cards.push({ id:Date.now().toString(), header, desc, photo, enabled:true });
+      }
+      modal.hide();
+      renderCards();
+    }
+
+    // initial
+    renderCards();
+  </script>
+  <!-- optionally include Bootstrap Icons for the pencil icon -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"/>
+</body>
+</html>
