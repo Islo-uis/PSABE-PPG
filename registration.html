@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Register – Join with your email address</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+  <!-- Bootstrap CSS & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Raleway', sans-serif;
+      background: #f7f7f7;
+    }
+    .registration-section {
+      max-width: 900px;
+      margin-top: 200px;
+      margin: 3rem auto;
+      padding: 2rem;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 0.5rem;
+      box-shadow: 0 0 20px rgba(0,0,0,0.05);
+    }
+    .icon-box {
+      background: #b0b0b0;
+      width: 100%;
+      padding-top: 100%;
+      position: relative;
+      border-radius: 0.25rem;
+    }
+    .icon-box i {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 3rem;
+      color: #fff;
+    }
+    .form-label {
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+    .form-label .bi {
+      font-size: 0.8rem;
+      color: #666;
+      vertical-align: middle;
+      margin-left: 0.25rem;
+    }
+    .dob-group .form-control {
+      text-align: center;
+      max-width: 4rem;
+    }
+    .tos-bar {
+      background: #fff;
+      border: 1px solid #ddd;
+      padding: 1rem;
+      border-radius: 0.25rem;
+      margin-top: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .tos-text {
+      flex-grow: 1;
+      font-size: 0.9rem;
+    }
+    .tos-text a {
+      color: #007bff;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <section class="registration-section">
+    <h2 class="text-center mb-4">Join with your email address</h2>
+    <div class="row gx-4 gy-3 align-items-center">
+      
+      <!-- upload-photo button -->
+      <div class="col-md-4">
+        <label class="icon-box" for="photo-upload">
+          <i class="bi bi-person-fill"></i>
+          <input type="file" id="photo-upload" accept="image/*">
+        </label>
+      </div>
+      
+      <!-- form -->
+      <div class="col-md-8" id="form">
+        <form>
+          <div class="row g-3">
+            <!-- Full Name -->
+            <div class="col-md-6">
+              <label for="full-name" class="form-label">FULL NAME <i class="bi bi-question-circle-fill" title="Enter your full legal name"></i></label>
+              <input type="text" class="form-control" id="full-name" placeholder="John Doe" required>
+            </div>
+            <!-- Gender -->
+            <div class="col-md-6">
+              <label for="gender" class="form-label">SELECT GENDER <i class="bi bi-question-circle-fill" title="Select your gender"></i></label>
+              <select id="gender" class="form-select" required>
+                <option value="" disabled selected>Please select</option>
+                <option>Male</option>
+                <option>Female</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <!-- Username -->
+            <div class="col-md-6">
+              <label for="username" class="form-label">USERNAME <i class="bi bi-question-circle-fill" title="Choose a unique username"></i></label>
+              <input type="text" class="form-control" id="username" placeholder="johndoe123" required>
+            </div>
+            <!-- Password -->
+            <div class="col-md-6">
+              <label for="password" class="form-label">PASSWORD <i class="bi bi-question-circle-fill" title="Create a secure password"></i></label>
+              <input type="password" class="form-control" id="password" placeholder="••••••••" required>
+            </div>
+            <!-- Email -->
+            <div class="col-md-6">
+              <label for="email" class="form-label">EMAIL <i class="bi bi-question-circle-fill" title="Enter your email address"></i></label>
+              <input type="email" class="form-control" id="email" placeholder="you@example.com" required>
+            </div>
+            <!-- Date of Birth -->
+            <div class="col-md-6">
+              <label class="form-label d-block">DATE OF BIRTH <i class="bi bi-question-circle-fill" title="MM/DD/YYYY"></i></label>
+              <div class="dob-group d-flex gap-2">
+                <input type="text" class="form-control" placeholder="MM" maxlength="2" required>
+                <input type="text" class="form-control" placeholder="DD" maxlength="2" required>
+                <input type="text" class="form-control" placeholder="YYYY" maxlength="4" required>
+              </div>
+            </div>
+          </div>
+
+          <!-- Terms & Create -->
+          <div class="tos-bar">
+            <div class="form-check me-3">
+              <input class="form-check-input" type="checkbox" id="tos-check" required>
+            </div>
+            <div class="tos-text">
+              I acknowledge that I have read and accept the 
+              <a href="#">Terms of Use Agreement</a> and consent to the 
+              <a href="#">Privacy Policy</a> and 
+              <a href="#">Video Privacy Policy</a>.
+            </div>
+            <button type="submit" class="btn btn-primary">Create Account</button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Bootstrap JS (optional for interactions) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+  const fileInput = document.getElementById('photo-upload');
+  const iconBox  = document.querySelector('.icon-box');
+
+  // make sure the box will show your image
+  iconBox.style.backgroundSize     = 'cover';
+  iconBox.style.backgroundPosition = 'center';
+
+  fileInput.addEventListener('change', e => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = ev => {
+      // hide the placeholder icon
+      const placeholderIcon = iconBox.querySelector('i');
+      if (placeholderIcon) placeholderIcon.style.display = 'none';
+
+      // paint the chosen image as the background
+      iconBox.style.backgroundImage = `url('${ev.target.result}')`;
+    };
+    reader.readAsDataURL(file);
+  });
+</script>
+
+</body>
+</html>
