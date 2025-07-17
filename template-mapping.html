@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ID Template Mapping</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body, html { margin:0; font-family:'Segoe UI',sans-serif; padding:2rem; }
+    #template-canvas { position:relative; border:1px solid #ccc; display:inline-block; }
+    #template-canvas img { display:block; max-width:100%; }
+    .field-box { position:absolute; border:2px dashed #007bff; pointer-events:none; }
+    #label-form {
+      position:absolute; display:none; background:#fff; border:1px solid #ddd;
+      padding:.5rem; box-shadow:0 0 .5rem rgba(0,0,0,.2); z-index:10;
+    }
+    #mapping-list .list-group-item { display:flex; justify-content:space-between; align-items:center; }
+  </style>
+</head>
+<body>
+
+  <h1 class="h4 mb-4">ID Template Mapping</h1>
+
+  <!-- Upload -->
+  <div class="mb-4">
+    <label class="form-label">Upload ID Template</label>
+    <input type="file" id="template-upload" accept="image/*" class="form-control">
+  </div>
+
+  <!-- Canvas -->
+  <div id="canvas-container" class="mb-3"></div>
+
+  <!-- Mappings -->
+  <h5>Defined Fields</h5>
+  <ul id="mapping-list" class="list-group mb-2"></ul>
+
+  <!-- Actions -->
+  <div class="d-flex gap-2 mb-5">
+    <button id="clear-mappings" class="btn btn-sm btn-danger">Clear All</button>
+    <button id="save-mappings"  class="btn btn-sm btn-success">Save Mappings</button>
+  </div>
+
+  <!-- Hidden Label Form -->
+  <div id="label-form">
+    <label class="form-label">Field Type</label>
+    <select id="field-type" class="form-select form-select-sm mb-2">
+      <option value="photo">Photo Box</option>
+      <option value="name">Name</option>
+      <option value="designation">Designation</option>
+      <option value="university">University Name</option>
+    </select>
+    <div class="text-end">
+      <button id="cancel-field" class="btn btn-secondary btn-sm">Cancel</button>
+      <button id="save-field"   class="btn btn-primary btn-sm">Save</button>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const tplUpload       = document.getElementById('template-upload'),
+          canvasContainer = document.getElementById('canvas-container'),
+          labelForm       = document.getElementById('label-form'),
+          fieldType       = document.getElementById('field-type'),
+          saveField       = document.getElementById('save-field'),
+          cancelField     = document.getElementById('cancel-field'),
+          mappingList     = document.getElementById('mapping-list'),
+          clearBtn        = document.getElementById('clear-mappings'),
+          saveMappingsBtn = document.getElementById('save-mappings');
+
+    let wrapper, boxEl, startX, startY, mappings = [];
+
+    tplUpload.onchange = () => {
+      const file = tplUpload.files[0];
+      if (!file) return;
+      const url = URL.createObjectURL(file);
+      canvasContainer.innerHTML = '';
+      mappings = [];
+      renderMappings();
+
+      wrapper = document.createElement('div');
+      wrapper.id = 'template-canvas';
+      wrapper.style.position = 'relative';
+
+      const img = new Image();
+      img.src = url;
+      img.onload = () => URL.revokeObjectURL(url);
+
+      wrapper.append(img);
+      wrapper.append(labelForm);
+      canvasContainer.append(wrapper);
+
+      wrapper.onmousedown = e => {
+        const rect = wrapper.getBoundingClientRect();
+        startX = e.clientX - rect.left;
+        startY = e.clientY - rect.top;
+
+        boxEl = document.createElement('div');
+        boxEl.className = 'field-box';
+        boxEl.style.left = startX + 'px';
+        boxEl.style.top  = startY + 'px';
+        wrapper.append(boxEl);
+
+        const onMove = ev => {
+          const x = ev.clientX - rect.left;
+          const y = ev.clientY - rect.top;
+          boxEl.style.width  = Math.abs(x - startX) + 'px';
+          boxEl.style.height = Math.abs(y - startY) + 'px';
+          boxEl.style.left   = Math.min(x, startX) + 'px';
+          boxEl.style.top    = Math.min(y, startY) + 'px';
+        };
+        const onUp = () => {
+          document.removeEventListener('mousemove', onMove);
+          document.removeEventListener('mouseup', onUp);
+          labelForm.style.display = 'block';
+          labelForm.style.left    = boxEl.offsetLeft + 'px';
+          labelForm.style.top     = (boxEl.offsetTop + boxEl.offsetHeight + 4) + 'px';
+        };
+        document.addEventListener('mousemove', onMove);
+        document.addEventListener('mouseup', onUp);
+      };
+    };
+
+    saveField.onclick = () => {
+      mappings.push({
+        type: fieldType.value,
+        x: boxEl.offsetLeft,
+        y: boxEl.offsetTop,
+        w: boxEl.offsetWidth,
+        h: boxEl.offsetHeight
+      });
+      boxEl.style.borderStyle = 'solid';
+      labelForm.style.display = 'none';
+      renderMappings();
+    };
+
+    cancelField.onclick = () => {
+      boxEl.remove();
+      labelForm.style.display = 'none';
+    };
+
+    clearBtn.onclick = () => {
+      mappings = [];
+      renderMappings();
+      if (wrapper) {
+        wrapper.querySelectorAll('.field-box').forEach(b => b.remove());
+      }
+    };
+
+    saveMappingsBtn.onclick = () => {
+      localStorage.setItem('idMappings', JSON.stringify(mappings));
+      // redirect back to admin.html
+      window.location.href = 'admin.html';
+    };
+
+    function renderMappings() {
+      mappingList.innerHTML = '';
+      mappings.forEach((m, i) => {
+        const li = document.createElement('li');
+        li.className = 'list-group-item';
+        li.innerHTML = `
+          <span>${i+1}. <strong>${m.type}</strong> @ (${m.x},${m.y}) ${m.w}×${m.h}</span>
+          <button class="btn btn-sm btn-danger remove-btn" data-i="${i}">Remove</button>
+        `;
+        mappingList.append(li);
+      });
+      document.querySelectorAll('.remove-btn').forEach(btn => {
+        btn.onclick = e => {
+          const idx = +e.target.dataset.i;
+          mappings.splice(idx, 1);
+          wrapper.querySelectorAll('.field-box')[idx].remove();
+          renderMappings();
+        };
+      });
+    }
+  </script>
+</body>
+</html>
