@@ -1,6 +1,6 @@
 <?php
 include "../../database.php";
-
+session_start();
 if (isset($_GET["action"])) {
     if ($_GET["action"] == 'getAccount') {
         header('Content-Type: application/json');
@@ -22,6 +22,7 @@ if (isset($_GET["action"])) {
                 $stmt->bind_result($dbUser, $dbPassHash);
                 $stmt->fetch();
                 if (password_verify($pass, $dbPassHash)) {
+                    $_SESSION['Username'] = $user;
                     $real = true;
                 }
             }
@@ -34,4 +35,6 @@ if (isset($_GET["action"])) {
             "real" => $real
         ]);
     }
+
+
 }

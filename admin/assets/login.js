@@ -27,6 +27,7 @@ function login() {
                 let real = response.real;
                 if (real) {
                     document.getElementById("wrongPass").style.display = "hidden"
+                    window.location.href = "dashboard.html"
 
                 } else {
                     document.getElementById("wrongPass").style.display = "block"
@@ -39,4 +40,27 @@ function login() {
         });
     }
 
+}
+
+// Initialize and run periodically
+document.addEventListener('DOMContentLoaded', function () {
+    checkIfLoggedIn()
+    setInterval(checkIfLoggedIn, 5000)
+});
+
+function checkIfLoggedIn() {
+    $.ajax({
+        url: "assets/session.php?action=checkIfLoggedIn",
+        type: "POST",
+        dataType: 'json',
+        success: function (response) {
+            console.log(response)
+            if (response) {
+                window.location.href = "dashboard.html";
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error("AJAX error: " + status + " - " + error);
+        }
+    });
 }
