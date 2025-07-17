@@ -18,6 +18,235 @@
       window.history.replaceState(null, null, window.location.href);
     }
   </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins:wght@400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #cfe6cb; 
+}
+
+
+.logo-container {
+  display: flex;
+  justify-content: center; }
+
+.logo {
+  width: 50px;
+  height: 50px;
+  margin-right: 0px;
+}
+
+.text {
+  font-size: 30px;
+  color: #55C597; 
+  font-weight: 800;
+  font-family: 'Poppins';
+}
+
+.dot {
+  font-size: 30px;
+  margin-bottom: 30px; 
+  font-family: 'Poppins';
+  color: #DB504A; /* Dot color red */
+}
+
+.wrapper {
+  position: relative;
+  width: 400px;
+  height: 500px;
+  background: white; /* Wrapper background is white */
+  border-radius: 20px;
+  padding: 20px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers content horizontally within the wrapper */
+  justify-content: center; /* Centers content vertically within the wrapper */
+}
+
+.form-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding-bottom: 30px;
+}
+
+
+.input-group {
+  position: relative;
+  margin: 30px 0;
+  border-bottom: 2px solid #55C597; /* Border color green */
+}
+.input-group label {
+  position: absolute;
+  top: 50%;
+  left: 35px;
+  transform: translateY(-50%);
+  font-size: 16px;
+  color: #55C597; /* Label color green */
+  pointer-events: none;
+  transition: .5s;
+}
+ 
+.user-profile-box {
+  min-width: 300px;
+  font-size: 14px;
+  line-height:18px;
+  direction: ltr;
+}
+
+.profile-image {
+  display: inline-block;
+  vertical-align:middle;
+  border-radius: 50%;
+  height: 48px;
+  width: 48px;
+}
+
+.fullname {
+  color: #14171a;
+  font-size: 14px;
+  font-weight:bold;
+}
+
+.screenname {
+  color: #657786;
+  font-size:14px;
+}
+
+.user-name-box {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+  margin-left: 10px;
+}
+.input-group input:not([type='radio']) {
+  width: 320px;
+  height: 40px;
+  font-size: 16px;
+  color: #55C597; /* Input text color green */
+  padding: 0 0 0 35px;
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+.input-group input:focus~label,
+.input-group input:valid~label,
+.input-group input:-webkit-autofill~label {
+  top: -5px;
+  font-size: 12px;
+}
+.input-group  i {
+    position: absolute;
+    padding: 5px;
+}
+
+.not-found {
+    background-color: #f8d7da; /* Light red background */ 
+    color: #721c24; /* Dark red text color */
+    padding: 15px 0;
+    border-radius: 5px; /* Rounded corners */
+    margin-bottom: 15px; /* Spacing from the top */
+    display: flex;
+    align-items: center;
+}
+
+.not-found i {
+    font-size: 20px; /* Icon size */
+    color: #721c24; /* Match icon color with text */
+    padding-left: 5px;
+}
+
+.not-found p {
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+}
+
+button {
+  width: 100%;
+  height: 40px;
+  background: #DB504A; 
+  font-size: 16px;
+  color: white; /* Button text color white */
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 30px;
+  border: none;
+  outline: none;
+}
+
+.remember {
+  margin: -5px 0 15px 5px;
+}
+
+.remember input , .remember span{
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .wrapper {
+    width: 100%;
+    max-width: 90%;
+    padding: 15px;
+  }
+
+  .text, .dot {
+    font-size: 24px;
+  }
+
+  .input-group input:not([type='radio']) {
+    width: 100%;
+  }
+
+  button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .text, .dot {
+    font-size: 20px;
+  }
+
+  .input-group {
+    margin: 15px 0;
+  }
+
+  .input-group label {
+    font-size: 14px;
+  }
+
+  .not-found p {
+    font-size: 14px;
+  }
+
+  button {
+    font-size: 14px;
+    height: 35px;
+  }
+}
+
+  </style>
 </head>
 
 <body>
