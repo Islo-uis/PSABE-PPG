@@ -116,7 +116,7 @@ mysqli_close($conn);
               <th>Amount</th>
               <th>Products</th>
               <th>View Receipt</th>
-              <th>Confirm?</th>
+              <th>Confirmation</th>
               <th>Order Status</th>
             </tr>
           </thead>
