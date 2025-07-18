@@ -56,25 +56,27 @@ $users = "
 if (! mysqli_query($conn, $users)) {
     die("Error creating users table: " . mysqli_error($conn));
 }
-
-// 8. Transactions table
-$transactions = "
-  CREATE TABLE IF NOT EXISTS transactions (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    order_number VARCHAR(100)    NOT NULL,
-    name VARCHAR(255)            NOT NULL,
-    email VARCHAR(255)           NOT NULL,
-    reference_no VARCHAR(100)    NOT NULL,
-    amount DECIMAL(10,2)         NOT NULL DEFAULT 0.00,
-    products TEXT                NOT NULL,
-    confirmed TINYINT(1)         NOT NULL DEFAULT 0,
-    status ENUM('Not Confirmed','Processing','Claimed')
-             NOT NULL DEFAULT 'Not Confirmed',
-    created_at TIMESTAMP         NOT NULL DEFAULT CURRENT_TIMESTAMP);
-";
-if (! mysqli_query($conn, $transactions)) {
-    die("Error creating transactions table: " . mysqli_error($conn));
-}
+// ('ORD-2002005', 'Emma Svensson',     
+// 'emma.svensson@example.co',  'REF-M4N5O6', 
+//  23.75,   'Widget A, Widget C',               1,         'Not Confirmed',  '2025-07-14 16:22:59');
+// // 8. Transactions table
+// $transactions = "
+//   CREATE TABLE IF NOT EXISTS transactions (
+//     id INT AUTO_INCREMENT PRIMARY KEY,
+//     order_number VARCHAR(100)    NOT NULL,
+//     name VARCHAR(255)            NOT NULL,
+//     email VARCHAR(255)           NOT NULL,
+//     reference_no VARCHAR(100)    NOT NULL,
+//     amount DECIMAL(10,2)         NOT NULL DEFAULT 0.00,
+//     products TEXT                NOT NULL,
+//     confirmed TINYINT(1)         NOT NULL DEFAULT 0,
+//     status ENUM('Not Confirmed','Processing','Claimed')
+//              NOT NULL DEFAULT 'Not Confirmed',
+//     created_at TIMESTAMP         NOT NULL DEFAULT CURRENT_TIMESTAMP);
+// ";
+// if (! mysqli_query($conn, $transactions)) {
+//     die("Error creating transactions table: " . mysqli_error($conn));
+// }
 
 function adminAccount()
 {
