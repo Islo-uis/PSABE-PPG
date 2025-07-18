@@ -40,7 +40,41 @@ if (mysqli_query($conn, $admin)) {
 //     echo "Error creating table: " . mysqli_error($conn);
 // }
 
+// 7. Users table
+$users = "
+  CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255)      NOT NULL UNIQUE,
+    first_name VARCHAR(255) NOT NULL,
+    last_name VARCHAR(255)  NOT NULL,
+    sex VARCHAR(10) NOT NULL,
+    university VARCHAR(255) DEFAULT NULL,
+    photo VARCHAR(255)      DEFAULT NULL,
+    created_at TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP
+  );
+";
+if (! mysqli_query($conn, $users)) {
+    die("Error creating users table: " . mysqli_error($conn));
+}
 
+// 8. Transactions table
+$transactions = "
+  CREATE TABLE IF NOT EXISTS transactions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    order_number VARCHAR(100)    NOT NULL,
+    name VARCHAR(255)            NOT NULL,
+    email VARCHAR(255)           NOT NULL,
+    reference_no VARCHAR(100)    NOT NULL,
+    amount DECIMAL(10,2)         NOT NULL DEFAULT 0.00,
+    products TEXT                NOT NULL,
+    confirmed TINYINT(1)         NOT NULL DEFAULT 0,
+    status ENUM('Not Confirmed','Processing','Claimed')
+             NOT NULL DEFAULT 'Not Confirmed',
+    created_at TIMESTAMP         NOT NULL DEFAULT CURRENT_TIMESTAMP);
+";
+if (! mysqli_query($conn, $transactions)) {
+    die("Error creating transactions table: " . mysqli_error($conn));
+}
 
 function adminAccount()
 {
@@ -74,46 +108,7 @@ function adminAccount()
         echo "Error checking admin table: " . $conn->error;
     }
 }
-// 7. Users table
-$users = "
-  CREATE TABLE IF NOT EXISTS users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    email VARCHAR(255)      NOT NULL UNIQUE,
-    first_name VARCHAR(255) NOT NULL,
-    last_name VARCHAR(255)  NOT NULL,
-    sex ENUM('M','F','Other') NOT NULL DEFAULT 'Other',
-    university VARCHAR(255) DEFAULT NULL,
-    photo VARCHAR(255)      DEFAULT NULL,
-    created_at TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    INDEX(idx_email) (email)
-  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-";
-if (! mysqli_query($conn, $users)) {
-    die("Error creating users table: " . mysqli_error($conn));
-}
 
-// 8. Transactions table
-$transactions = "
-  CREATE TABLE IF NOT EXISTS transactions (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    order_number VARCHAR(100)    NOT NULL,
-    name VARCHAR(255)            NOT NULL,
-    email VARCHAR(255)           NOT NULL,
-    reference_no VARCHAR(100)    NOT NULL,
-    amount DECIMAL(10,2)         NOT NULL DEFAULT 0.00,
-    products TEXT                NOT NULL,
-    receipt_url VARCHAR(255)     DEFAULT NULL,
-    confirmed TINYINT(1)         NOT NULL DEFAULT 0,
-    status ENUM('Not Confirmed','Processing','Claimed')
-             NOT NULL DEFAULT 'Not Confirmed',
-    created_at TIMESTAMP         NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    INDEX(idx_order_number) (order_number),
-    INDEX(idx_txn_email) (email)
-  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-";
-if (! mysqli_query($conn, $transactions)) {
-    die("Error creating transactions table: " . mysqli_error($conn));
-}
 
 
 mysqli_close($conn);
