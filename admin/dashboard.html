@@ -155,7 +155,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
-          <form id="card-form">
+          <form id="card-form" enctype="multipart/form-data">
             <input type="hidden" id="card-id">
             <input type="hidden" id="card-type">
 
@@ -163,38 +163,39 @@
             <div class="mb-3 text-center">
               <img id="card-preview" src="https://via.placeholder.com/300x150" class="rounded mb-2"
                 style="width:100%;height:auto;object-fit:cover;" alt="Preview">
-              <input type="file" id="card-photo" accept="image/*" class="form-control form-control-sm">
+              <input type="file" name="card-photo" id="card-photo" accept="image/*"
+                class="form-control form-control-sm">
             </div>
 
             <!-- Announcement fields -->
             <div id="header-group" class="mb-3">
               <label class="form-label">Header</label>
-              <input type="text" id="card-header" class="form-control">
+              <input type="text" id="card-header" name="announcement-header" class="form-control">
             </div>
             <div id="desc-group" class="mb-3">
               <label class="form-label">Description</label>
-              <textarea id="card-desc" class="form-control" rows="2"></textarea>
+              <textarea id="card-desc" name="announcement-desc" class="form-control" rows="2"></textarea>
             </div>
 
             <!-- Merch fields -->
             <div id="merch-name-group" class="mb-3">
               <label class="form-label">Product Name</label>
-              <input type="text" id="merch-name" class="form-control">
+              <input type="text" id="merch-name" name="merch-name" class="form-control">
             </div>
             <div id="merch-price-group" class="mb-3">
               <label class="form-label">Price</label>
-              <input type="number" id="merch-price" class="form-control" step="0.01">
+              <input type="number" id="merch-price" name="merch-price" class="form-control" step="0.01">
             </div>
             <div id="merch-stock-group" class="mb-3">
               <label class="form-label">Stock by Size</label>
               <div class="d-flex gap-2 flex-wrap">
-                <div><label class="d-block mb-1">S</label><input type="number" id="stock-S"
+                <div><label class="d-block mb-1">S</label><input type="number" name="merch-s" id="stock-S"
                     class="form-control stock-input"></div>
-                <div><label class="d-block mb-1">M</label><input type="number" id="stock-M"
+                <div><label class="d-block mb-1">M</label><input type="number" name="merch-m" id="stock-M"
                     class="form-control stock-input"></div>
-                <div><label class="d-block mb-1">L</label><input type="number" id="stock-L"
+                <div><label class="d-block mb-1">L</label><input type="number" name="merch-l" id="stock-L"
                     class="form-control stock-input"></div>
-                <div><label class="d-block mb-1">XL</label><input type="number" id="stock-XL"
+                <div><label class="d-block mb-1">XL</label><input type="number" name="merch-xl" id="stock-XL"
                     class="form-control stock-input"></div>
               </div>
             </div>
@@ -358,6 +359,8 @@
     };
 
     document.getElementById('save-card-btn').onclick = () => {
+      const form = document.getElementById("card-form");
+      const formData = new FormData(form);
       const type = document.getElementById('card-type').value,
         store = getStore(type),
         id = document.getElementById('card-id').value || Date.now().toString(),
@@ -377,15 +380,17 @@
           record.stock[sz] = parseInt(document.getElementById(`stock-${sz}`).value) || 0;
         });
       }
-
+      // Add type and id to the FormcData
+      formData.append('type', type);
+      console.log([...formData.entries()]);
+      console.log(type)
       $.ajax({
-        url: "assets/save_record.php?action=saveRecord",
+        url: "assets/ajax.php?action=saveRecord",
         type: "POST",
         dataType: 'json',
-        data: {
-          type: type,
-          record: JSON.stringify(record)
-        },
+        processData: false, // Required for FormData
+        contentType: false,
+        data: formData,
         success: function (response) {
           console.log(response);
           if (response.success) {
@@ -402,13 +407,15 @@
         },
         error: function (xhr, status, error) {
           console.error("AJAX error: " + status + " - " + error);
-          alert('Failed to save data. Please check your connection and try again.');
+          console.log("Response text: " + xhr.responseText);
         }
       });
     };
 
     ['announcement', 'schedule', 'events', 'merch', 'highlight'].forEach(render);
   </script>
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+    crossorigin="anonymous"></script>
 </body>
 
 </html>

@@ -44,65 +44,62 @@ if (isset($_GET["action"])) {
             die(json_encode(["success" => false, "error" => "Connection failed: " . mysqli_connect_error()]));
         }
 
-        $type = $_POST['type'];
-        $record = json_decode($_POST['record'], true);
-        $success = false;
-
         try {
+            if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+                http_response_code(405);
+                echo json_encode(["success" => false, "message" => "Method not allowed"]);
+                exit;
+            }
+
+            $formData = $_POST['formData'];
+
             if ($type === 'announcement') {
+                $header = $_POST['announcement-header'];
+                $description = $_POST['announcement-desc'];
+                $imageName = $_FILES['card-photo']['name'];
+                $imageTmpName = $_FILES['card-photo']['tmp_name'];
+                $imageSize = $_FILES['card-photo']['size'];
+                $imageError = $_FILES['card-photo']['error'];
+                $imageType = $_FILES['card-photo']['type'];
+
+                $imgExt = explode('.', $imageName);
+                $imgActualExt = strtolower(end($imgExt));
+
+                $allowed = array('jpg', 'jpeg', 'png');
+
+                if (!in_array($imgActualExt, $allowed)) {
+                    throw new Exception('Invalid file type. Only JPG, JPEG, PNG are allowed.');
+                }
+
+                if ($imageError !== 0) {
+                    throw new Exception('File upload error.');
+                }
+
+                if ($imageSize >= 5000000) {
+                    throw new Exception('File size too large. Maximum 500KB allowed.');
+                }
+
+                $fileNameNew = uniqid('', true) . "." . $imgActualExt;
+                $fileDestination = '../images/announcements/' . $fileNameNew;
+
+                if (!move_uploaded_file($imageTmpName, $fileDestination)) {
+                    throw new Exception('Failed to move uploaded file.');
+                }
                 // Prepare statement for announcements
-                if ($stmt = $conn->prepare("INSERT INTO announcements (id, header, description, photo, enabled) 
-                                      VALUES (?, ?, ?, ?, ?)
-                                      ON DUPLICATE KEY UPDATE 
-                                      header = VALUES(header), 
-                                      description = VALUES(description), 
-                                      photo = VALUES(photo), 
-                                      enabled = VALUES(enabled)")) {
+                if ($stmt = $conn->prepare("INSERT INTO announcements (announcementID, header, description, orderr, photo, status, timeUploaded) 
+                                      VALUES (NULL, ?, ?, 1, ?, 1, NOW())")) {
                     $stmt->bind_param(
-                        "ssssi",
-                        $record['id'],
-                        $record['header'],
-                        $record['desc'],
-                        $record['photo'],
-                        $record['enabled']
+                        "sss",
+                        $header,
+                        $description,
+                        $fileNameNew
                     );
                     $success = $stmt->execute();
                     $stmt->close();
                 }
             } elseif ($type === 'merch') {
                 // Prepare statement for merch
-                if ($stmt = $conn->prepare("INSERT INTO merch (id, name, price, photo, enabled) 
-                                      VALUES (?, ?, ?, ?, ?)
-                                      ON DUPLICATE KEY UPDATE 
-                                      name = VALUES(name), 
-                                      price = VALUES(price), 
-                                      photo = VALUES(photo), 
-                                      enabled = VALUES(enabled)")) {
-                    $stmt->bind_param(
-                        "ssdsi",
-                        $record['id'],
-                        $record['name'],
-                        $record['price'],
-                        $record['photo'],
-                        $record['enabled']
-                    );
-                    $success = $stmt->execute();
-                    $stmt->close();
 
-                    // Handle stock levels if merch was successfully saved
-                    if ($success) {
-                        foreach (['S', 'M', 'L', 'XL'] as $size) {
-                            $qty = $record['stock'][$size] ?? 0;
-                            if ($stockStmt = $conn->prepare("INSERT INTO merch_stock (merch_id, size, quantity) 
-                                                       VALUES (?, ?, ?)
-                                                       ON DUPLICATE KEY UPDATE quantity = VALUES(quantity)")) {
-                                $stockStmt->bind_param("ssi", $record['id'], $size, $qty);
-                                $stockStmt->execute();
-                                $stockStmt->close();
-                            }
-                        }
-                    }
-                }
             }
 
             echo json_encode([

@@ -1,5 +1,5 @@
 <?php
-include "database.php";
+include "../database.php";
 
 // 1. Enable error reporting
 ini_set('display_errors', 1);

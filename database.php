@@ -56,6 +56,19 @@ $users = "
 if (! mysqli_query($conn, $users)) {
     die("Error creating users table: " . mysqli_error($conn));
 }
+
+$announcements = "CREATE table if not exists announcements (
+    announcementID INT PRIMARY KEY AUTO_INCREMENT,
+    header TEXT NOT NULL,
+    description TEXT NOT NULL,
+    orderr INT NOT NULL,
+    photo TEXT NOT NULL,
+    status INT NOT NULL,
+    timeUploaded DATETIME)
+";
+if (! mysqli_query($conn, $announcements)) {
+    die("Error creating users table: " . mysqli_error($conn));
+}
 // ('ORD-2002005', 'Emma Svensson',     
 // 'emma.svensson@example.co',  'REF-M4N5O6', 
 //  23.75,   'Widget A, Widget C',               1,         'Not Confirmed',  '2025-07-14 16:22:59');
