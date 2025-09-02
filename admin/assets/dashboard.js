@@ -22,21 +22,3 @@ function checkIfLoggedOut() {
     });
 }
 
-
-function addAnnouncement() {
-    $.ajax({
-        url: "assets/session.php?action=addAnnouncement",
-        type: "POST",
-        dataType: 'json',
-        success: function (response) {
-            console.log(response)
-            if (response) {
-                window.location.href = "login.html";
-            }
-        },
-        error: function (xhr, status, error) {
-            console.error("AJAX error: " + status + " - " + error);
-        }
-    });
-}
-
