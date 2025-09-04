@@ -348,6 +348,7 @@ strong {
 /*---------------------------------------
   SITE HEADER              
 -----------------------------------------*/
+
 .site-header {
   background-color: var(--primary-color);
   padding-top: 12px;
@@ -501,13 +502,12 @@ strong {
   height: 100%;
 }
 
-
 /*---------------------------------------
   ABOUT              
 -----------------------------------------*/
 .about-section {
   background-image: url('../images/edward-unsplash-blur.jpg');
-  background-color: #704010;
+  background-color: #ec9404;
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;
@@ -645,7 +645,7 @@ strong {
 -----------------------------------------*/
 .schedule-section {
   background-image: url('../images/nainoa-shizuru-unsplash-blur.jpg');
-  background-color: #242424;
+  background-color: #ec9404;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -661,7 +661,7 @@ strong {
 }
 
 .schedule-table .bg-warning {
-  background: #f0a5a5 !important;
+  background: #ec9404 !important;
 }
 
 .schedule-table thead th {
@@ -671,7 +671,7 @@ strong {
 .schedule-table th,
 .schedule-table tr,
 .schedule-table td {
-  border-bottom-color: #363a3e;
+  border-bottom-color: #ec9404;
   padding: 30px;
 }
 
@@ -681,7 +681,7 @@ strong {
 }
 
 .schedule-table thead th {
-  border-right: 1px solid #c7460a;
+  border-right: 1px solid #ec9404;
   border-bottom-color: transparent;
 }
 
@@ -828,7 +828,7 @@ strong {
 }
 
 .site-footer-top {
-  background-color: var(--secondary-color);
+  background-color: #ec9404;
   background-image: url('../images/nainoa-shizuru-NcdG9mK3PBY-unsplash.jpg');
   background-repeat: no-repeat;
   margin-bottom: 70px;
