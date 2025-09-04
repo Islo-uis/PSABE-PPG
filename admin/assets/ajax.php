@@ -119,7 +119,6 @@ if (isset($_GET["action"])) {
         mysqli_close($conn);
     }
 
-
     if ($_GET["action"] == 'editAnnouncement') {
         header('Content-Type: application/json');
         $conn = new mysqli($db_server, $db_user, $db_pass, $db_name);
@@ -134,66 +133,54 @@ if (isset($_GET["action"])) {
                 echo json_encode(["success" => false, "message" => "Method not allowed"]);
                 exit;
             }
+
             $id = $_POST['ea-id'];
             $header = $_POST['ea-header'];
             $description = $_POST['ea-desc'];
-            $imageName = $_FILES['ea-photo']['name'];
-            $imageTmpName = $_FILES['ea-photo']['tmp_name'];
-            $imageSize = $_FILES['ea-photo']['size'];
-            $imageError = $_FILES['ea-photo']['error'];
-            $imageType = $_FILES['ea-photo']['type'];
 
-            $imgExt = explode('.', $imageName);
-            $imgActualExt = strtolower(end($imgExt));
+            $hasNewPhoto = isset($_FILES['ea-photo']) && $_FILES['ea-photo']['error'] === UPLOAD_ERR_OK;
 
-            $allowed = array('jpg', 'jpeg', 'png');
+            if ($hasNewPhoto) {
+                $imageName = $_FILES['ea-photo']['name'];
+                $imageTmpName = $_FILES['ea-photo']['tmp_name'];
+                $imageSize = $_FILES['ea-photo']['size'];
+                $imageError = $_FILES['ea-photo']['error'];
 
-            if (!in_array($imgActualExt, $allowed)) {
-                throw new Exception('Invalid file type. Only JPG, JPEG, PNG are allowed.');
-            }
+                $imgExt = explode('.', $imageName);
+                $imgActualExt = strtolower(end($imgExt));
 
-            if ($imageError !== 0) {
-                throw new Exception('File upload error.');
-            }
+                $allowed = array('jpg', 'jpeg', 'png');
 
-            if ($imageSize >= 5000000) {
-                throw new Exception('File size too large. Maximum 500KB allowed.');
-            }
-
-
-            if ($stmt = $conn->prepare("SELECT photo FROM announcements WHERE announcementID = ?")) {
-                $stmt->bind_param("s", $id);
-                $stmt->execute();
-                $stmt->bind_result($oldPhoto);
-                if ($stmt->fetch()) {
-                    $oldFilePath = '../../photos/announcement/' . $oldPhoto;
-                    if (file_exists($oldFilePath)) {
-                        unlink($oldFilePath); // Delete the old file
-                    }
+                if (!in_array($imgActualExt, $allowed)) {
+                    throw new Exception('Invalid file type. Only JPG, JPEG, PNG are allowed.');
                 }
-                $stmt->close();
+
+                if ($imageError !== 0) {
+                    throw new Exception('File upload error.');
+                }
+
+                if ($imageSize >= 5000000) {
+                    throw new Exception('File size too large. Maximum 5MB allowed.');
+                }
+
+                $fileNameNew = uniqid('', true) . "." . $imgActualExt;
+                $fileDestination = '../../photos/announcement/' . $fileNameNew;
+
+                if (!move_uploaded_file($imageTmpName, $fileDestination)) {
+                    throw new Exception('Failed to move uploaded file.');
+                }
+
+                // Update with photo
+                $stmt = $conn->prepare("UPDATE announcements SET header = ?, description = ?, photo = ? WHERE announcementID = ?");
+                $stmt->bind_param("ssss", $header, $description, $fileNameNew, $id);
+            } else {
+                // Update without touching photo
+                $stmt = $conn->prepare("UPDATE announcements SET header = ?, description = ? WHERE announcementID = ?");
+                $stmt->bind_param("sss", $header, $description, $id);
             }
 
-
-            $fileNameNew = uniqid('', true) . "." . $imgActualExt;
-            $fileDestination = '../../photos/announcement/' . $fileNameNew;
-
-            if (!move_uploaded_file($imageTmpName, $fileDestination)) {
-                throw new Exception('Failed to move uploaded file.');
-            }
-            // Prepare statement for announcements
-            if ($stmt = $conn->prepare("UPDATE announcements set header = ?, description = ?, photo = ? where announcementID = ?")) {
-                $stmt->bind_param(
-                    "ssss",
-                    $header,
-                    $description,
-                    $fileNameNew,
-                    $id
-                );
-                $success = $stmt->execute();
-                $stmt->close();
-            }
-
+            $success = $stmt->execute();
+            $stmt->close();
 
             echo json_encode([
                 "success" => $success,
@@ -208,8 +195,6 @@ if (isset($_GET["action"])) {
 
         mysqli_close($conn);
     }
-
-
 
     if ($_GET["action"] == 'getAnnouncements') {
         header('Content-Type: application/json');
@@ -247,6 +232,44 @@ if (isset($_GET["action"])) {
         ]);
     }
 
+    if ($_GET["action"] == 'getMerch') {
+        header('Content-Type: application/json');
+        $conn = new mysqli($db_server, $db_user, $db_pass, $db_name);
+
+        if (!$conn) {
+            die(json_encode(["error" => "Connection failed: " . mysqli_connect_error()]));
+        }
+        $sql = "SELECT * from merch";
+
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+
+        $merch = [];
+
+        if (mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $merch[] = [
+                    "id" => $row['merchID'],
+                    "name" => $row['merchName'],
+                    "hasSize" => $row['hasSize'],
+                    "price" => $row['price'],
+                    "photo" => $row['photo'],
+                    "qty" => $row['qty'],
+                    "qtyS" => $row['qtyS'],
+                    "qtyM" => $row['qtyM'],
+                    "qtyL" => $row['qtyL'],
+                    "status" => $row['status']
+                ];
+            }
+        }
+
+
+        mysqli_close($conn);
+        echo json_encode([
+            "merch" => $merch
+        ]);
+    }
 
     if ($_GET["action"] == 'getAnnouncementData') {
         header('Content-Type: application/json');
@@ -280,6 +303,158 @@ if (isset($_GET["action"])) {
         ]);
     }
 
+    if ($_GET["action"] == 'getMerchData') {
+        header('Content-Type: application/json');
+        $conn = new mysqli($db_server, $db_user, $db_pass, $db_name);
+        $id = $_POST['id'];
+        if (!$conn) {
+            die(json_encode(["error" => "Connection failed: " . mysqli_connect_error()]));
+        }
+        $sql = "SELECT * from merch where merchID = ?";
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "s", $id);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $name = "";
+        $hasSize = "";
+        $price = "";
+        $photo = "";
+        $qty = "";
+        $qtyS = "";
+        $qtyM = "";
+        $qtyL = "";
+        if (mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $name = $row['merchName'];
+                $hasSize = $row['hasSize'];
+                $price = $row['price'];
+                $photo = $row['photo'];
+                $qty = $row['qty'];
+                $qtyS = $row['qtyS'];
+                $qtyM = $row['qtyM'];
+                $qtyL = $row['qtyL'];
+            }
+        }
+
+
+        mysqli_close($conn);
+        echo json_encode([
+            "name" => $name,
+            "hasSize" => $hasSize,
+            "photo" => $photo,
+            "price" => $price,
+            "qty" => $qty,
+            "qtyS" => $qtyS,
+            "qtyM" => $qtyM,
+            "qtyL" => $qtyL
+        ]);
+    }
+
+    if ($_GET["action"] == 'getSched') {
+        header('Content-Type: application/json');
+        $conn = new mysqli($db_server, $db_user, $db_pass, $db_name);
+        if (!$conn) {
+            die(json_encode(["error" => "Connection failed: " . mysqli_connect_error()]));
+        }
+        $sql = "SELECT photo from schedule";
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $photo = "";
+        if (mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $photo = $row['photo'];
+            }
+        }
+
+
+        mysqli_close($conn);
+        echo json_encode([
+            "photo" => $photo
+        ]);
+    }
+
+    if ($_GET["action"] == 'changeSched') {
+        header('Content-Type: application/json');
+        $conn = new mysqli($db_server, $db_user, $db_pass, $db_name);
+
+        if (!$conn) {
+            die(json_encode(["success" => false, "error" => "Connection failed: " . mysqli_connect_error()]));
+        }
+
+        try {
+            if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+                http_response_code(405);
+                echo json_encode(["success" => false, "message" => "Method not allowed"]);
+                exit;
+            }
+            $imageName = $_FILES['sched-file']['name'];
+            $imageTmpName = $_FILES['sched-file']['tmp_name'];
+            $imageSize = $_FILES['sched-file']['size'];
+            $imageError = $_FILES['sched-file']['error'];
+            $imageType = $_FILES['sched-file']['type'];
+
+            $imgExt = explode('.', $imageName);
+            $imgActualExt = strtolower(end($imgExt));
+
+            $allowed = array('jpg', 'jpeg', 'png');
+
+            if (!in_array($imgActualExt, $allowed)) {
+                throw new Exception('Invalid file type. Only JPG, JPEG, PNG are allowed.');
+            }
+
+            if ($imageError !== 0) {
+                throw new Exception('File upload error.');
+            }
+
+            if ($imageSize >= 5000000) {
+                throw new Exception('File size too large. Maximum 500KB allowed.');
+            }
+
+
+            if ($stmt = $conn->prepare("SELECT photo FROM schedule")) {
+                $stmt->execute();
+                $stmt->bind_result($oldPhoto);
+                if ($stmt->fetch()) {
+                    $oldFilePath = '../../photos/schedule/' . $oldPhoto;
+                    if (file_exists($oldFilePath)) {
+                        unlink($oldFilePath); // Delete the old file
+                    }
+                }
+                $stmt->close();
+            }
+
+
+            $fileNameNew = uniqid('', true) . "." . $imgActualExt;
+            $fileDestination = '../../photos/schedule/' . $fileNameNew;
+
+            if (!move_uploaded_file($imageTmpName, $fileDestination)) {
+                throw new Exception('Failed to move uploaded file.');
+            }
+            // Prepare statement for announcements
+            if ($stmt = $conn->prepare("UPDATE schedule set photo = ?")) {
+                $stmt->bind_param(
+                    "s",
+                    $fileNameNew
+                );
+                $success = $stmt->execute();
+                $stmt->close();
+            }
+
+
+            echo json_encode([
+                "success" => $success,
+                "message" => $success ? "Record saved successfully" : "Failed to save record"
+            ]);
+        } catch (Exception $e) {
+            echo json_encode([
+                "success" => false,
+                "message" => "Database error: " . $e->getMessage()
+            ]);
+        }
+
+        mysqli_close($conn);
+    }
 
     if ($_GET["action"] == 'changeAnnouncementOrder') {
         header('Content-Type: application/json');
@@ -347,6 +522,222 @@ if (isset($_GET["action"])) {
 
 
         $stmt = $conn->prepare("UPDATE announcements SET status = ? WHERE announcementID = ?");
+        $stmt->bind_param("ii", $status, $id);
+        $stmt->execute();
+        $stmt->close();
+
+        echo json_encode(["success" => true]);
+
+        mysqli_close($conn);
+    }
+
+    if ($_GET["action"] == 'addMerch') {
+        header('Content-Type: application/json');
+        $conn = new mysqli($db_server, $db_user, $db_pass, $db_name);
+
+        if (!$conn) {
+            die(json_encode(["success" => false, "error" => "Connection failed: " . mysqli_connect_error()]));
+        }
+
+        try {
+            if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+                http_response_code(405);
+                echo json_encode(["success" => false, "message" => "Method not allowed"]);
+                exit;
+            }
+            $size = 0;
+            if (isset($_POST['sizeornot'])) {
+                if ($_POST['sizeornot'] === 'with') {
+                    $size = 1;
+                }
+            }
+            $name = $_POST['am-name'];
+            $price = $_POST['am-price'];
+            $qty = $_POST['am-qty'];
+            $sqty = $_POST['am-sqty'];
+            $mqty = $_POST['am-mqty'];
+            $lqty = $_POST['am-lqty'];
+            $imageName = $_FILES['am-photo']['name'];
+            $imageTmpName = $_FILES['am-photo']['tmp_name'];
+            $imageSize = $_FILES['am-photo']['size'];
+            $imageError = $_FILES['am-photo']['error'];
+            $imageType = $_FILES['am-photo']['type'];
+
+            $imgExt = explode('.', $imageName);
+            $imgActualExt = strtolower(end($imgExt));
+
+            $allowed = array('jpg', 'jpeg', 'png');
+
+            if (!in_array($imgActualExt, $allowed)) {
+                throw new Exception('Invalid file type. Only JPG, JPEG, PNG are allowed.');
+            }
+
+            if ($imageError !== 0) {
+                throw new Exception('File upload error.');
+            }
+
+            if ($imageSize >= 5000000) {
+                throw new Exception('File size too large. Maximum 500KB allowed.');
+            }
+
+            $fileNameNew = uniqid('', true) . "." . $imgActualExt;
+            $fileDestination = '../../photos/merch/' . $fileNameNew;
+
+            if (!move_uploaded_file($imageTmpName, $fileDestination)) {
+                throw new Exception('Failed to move uploaded file.');
+            }
+            // Prepare statement for announcements
+            if ($stmt = $conn->prepare("INSERT INTO merch values (NULL, ?, ?, ?, ?, ?, ?, ?, ?, 1)")) {
+                $stmt->bind_param(
+                    "ssssssss",
+                    $name,
+                    $size,
+                    $price,
+                    $fileNameNew,
+                    $qty,
+                    $sqty,
+                    $mqty,
+                    $lqty
+                );
+                $success = $stmt->execute();
+                $stmt->close();
+            }
+
+
+            echo json_encode([
+                "success" => $success,
+                "message" => $success ? "Record saved successfully" : "Failed to save record"
+            ]);
+        } catch (Exception $e) {
+            echo json_encode([
+                "success" => false,
+                "message" => "Database error: " . $e->getMessage()
+            ]);
+        }
+
+        mysqli_close($conn);
+    }
+
+    if ($_GET["action"] == 'editMerch') {
+        header('Content-Type: application/json');
+        $conn = new mysqli($db_server, $db_user, $db_pass, $db_name);
+
+        if (!$conn) {
+            die(json_encode(["success" => false, "error" => "Connection failed: " . mysqli_connect_error()]));
+        }
+
+        try {
+            if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+                http_response_code(405);
+                echo json_encode(["success" => false, "message" => "Method not allowed"]);
+                exit;
+            }
+            $size = 0;
+            $qty = 0;
+            $sqty = 0;
+            $mqty = 0;
+            $lqty = 0;
+
+            if (isset($_POST['em-sizeornot'])) {
+                if ($_POST['em-sizeornot'] === 'with') {
+                    $size = 1;
+                    $sqty = $_POST['em-sqty'];
+                    $mqty = $_POST['em-mqty'];
+                    $lqty = $_POST['em-lqty'];
+                } else {
+                    $qty = $_POST['em-qty'];
+                }
+            }
+            $name = $_POST['em-name'];
+            $price = $_POST['em-price'];
+            $id = $_POST['em-id'];
+            $imageName = $_FILES['em-photo']['name'];
+            $imageTmpName = $_FILES['em-photo']['tmp_name'];
+            $imageSize = $_FILES['em-photo']['size'];
+            $imageError = $_FILES['em-photo']['error'];
+            $imageType = $_FILES['em-photo']['type'];
+
+            $imgExt = explode('.', $imageName);
+            $imgActualExt = strtolower(end($imgExt));
+
+            $allowed = array('jpg', 'jpeg', 'png');
+
+            if (!in_array($imgActualExt, $allowed)) {
+                throw new Exception('Invalid file type. Only JPG, JPEG, PNG are allowed.');
+            }
+
+            if ($imageError !== 0) {
+                throw new Exception('File upload error.');
+            }
+
+            if ($imageSize >= 5000000) {
+                throw new Exception('File size too large. Maximum 500KB allowed.');
+            }
+
+            if ($stmt = $conn->prepare("SELECT photo FROM merch WHERE merchID = ?")) {
+                $stmt->bind_param("s", $id);
+                $stmt->execute();
+                $stmt->bind_result($oldPhoto);
+                if ($stmt->fetch()) {
+                    $oldFilePath = '../../photos/merch/' . $oldPhoto;
+                    if (file_exists($oldFilePath)) {
+                        unlink($oldFilePath); // Delete the old file
+                    }
+                }
+                $stmt->close();
+            }
+
+
+            $fileNameNew = uniqid('', true) . "." . $imgActualExt;
+            $fileDestination = '../../photos/merch/' . $fileNameNew;
+
+            if (!move_uploaded_file($imageTmpName, $fileDestination)) {
+                throw new Exception('Failed to move uploaded file.');
+            }
+            // Prepare statement for announcements
+            if ($stmt = $conn->prepare("UPDATE merch set merchName = ?, hasSize = ?, price = ?, photo = ?, qty = ?, qtyS = ?, qtyM = ?, qtyL = ? where merchID = ?")) {
+                $stmt->bind_param(
+                    "sssssssss",
+                    $name,
+                    $size,
+                    $price,
+                    $fileNameNew,
+                    $qty,
+                    $sqty,
+                    $mqty,
+                    $lqty,
+                    $id
+                );
+                $success = $stmt->execute();
+                $stmt->close();
+            }
+
+
+            echo json_encode([
+                "success" => $success,
+                "message" => $success ? "Record saved successfully" : "Failed to save record"
+            ]);
+        } catch (Exception $e) {
+            echo json_encode([
+                "success" => false,
+                "message" => "Database error: " . $e->getMessage()
+            ]);
+        }
+
+        mysqli_close($conn);
+    }
+
+    if ($_GET["action"] == 'changeMerchStatus') {
+        header('Content-Type: application/json');
+        $conn = new mysqli($db_server, $db_user, $db_pass, $db_name);
+        $id = $_POST['id'];
+        $status = $_POST['status'];
+        if (!$conn) {
+            die(json_encode(["error" => "Connection failed: " . mysqli_connect_error()]));
+        }
+
+
+        $stmt = $conn->prepare("UPDATE merch SET status = ? WHERE merchID = ?");
         $stmt->bind_param("ii", $status, $id);
         $stmt->execute();
         $stmt->close();

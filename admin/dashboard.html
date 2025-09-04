@@ -115,23 +115,21 @@
       <h4>Teno in Nach</h4>
       <ul class="nav flex-column">
         <li class="nav-item"><a class="nav-link active" href="admin.html">Dashboard</a></li>
-        <li class="nav-item"><a class="nav-link" href="users.php">Users</a></li>
+        <li class="nav-item"><a class="nav-link" href="users.html">Users</a></li>
         <li class="nav-item"><a class="nav-link" href="transactions.php">Transactions</a></li>
         <li class="nav-item"><a class="nav-link" href="tabulation.html">Tabulation</a></li>
       </ul>
       <button class="btn btn-logout">Logout</button>
     </nav>
-
-    <div style="width: 100%; padding: 2%;">
+    <div style="width: 100%;padding: 2%;">
       <div style="display: flex; justify-content: space-between;">
         <select class="form-select w-25" id="tableType">
           <option value="announcement" selected>Announcement</option>
-          <option value="schedule">Schedule</option>
           <option value="events">Events</option>
           <option value="merch">Merch</option>
           <option value="highlights">Highlights</option>
         </select>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#aa-modal">Add</button>
+        <button type="button" class="btn btn-primary" id="addButton">Add</button>
       </div>
 
       <table id="myTable" class="display">
@@ -148,12 +146,22 @@
 
         </tbody>
       </table>
+      <div class="card">
+        <p class="p-3 fs-3">Schedule</p>
+        <div class="card-body d-flex justify-content-center">
+          <img id="sched-photo" class="img-fluid w-25" alt="...">
+        </div>
+        <div class="card-body d-flex justify-content-center">
+          <form id="sched-form" enctype="multipart/form-data">
+            <input type="file" id="sched-file" name="sched-file" accept="image/*" hidden onchange="changeSched()">
+            <button type="button" class="btn btn-primary" onclick="document.getElementById('sched-file').click()">Change
+              Schedule Photo</button>
+          </form>
+
+        </div>
+      </div>
     </div>
   </div>
-
-
-
-
 
   <!-- Add Row Modal -->
   <div class="modal fade" id="aa-modal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -258,9 +266,205 @@
         </div>
         <div class="modal-footer border-0">
           <button type="button" id="addRowButton" class="btn btn-primary" onclick="editAnnouncement()">
-            Add
+            Edit
           </button>
           <button type="button" id="ea-close" class="btn btn-danger">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="am-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header border-0">
+          <h5 class="modal-title">
+            <span class="fw-mediumbold"> Add Merch </span>
+          </h5>
+          <button type="button" class="close" id="am-exit" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="am-form" enctype="multipart/form-data">
+            <div class="row">
+              <div class="col-sm-12 mb-3">
+                <div class="form-group form-group-default">
+                  <label>Name</label>
+                  <input id="am-name" name="am-name" type="text" class="form-control" placeholder="Enter Name Here" />
+                </div>
+              </div>
+              <div class="col-sm-12 mb-3">
+                <div class="form-group form-group-default">
+                  <label>Price</label>
+                  <input id="am-price" name="am-price" type="number" class="form-control"
+                    placeholder="Enter Description Here" />
+                </div>
+              </div>
+              <div class="col-sm-12 mb-3">
+                <div class="form-group form-group-default">
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="sizeornot" value="with" id="yessize" checked>
+                    <label class="form-check-label" for="yessize">
+                      With Sizes
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="sizeornot" value="without" id="nosize">
+                    <label class="form-check-label" for="nosize">
+                      Without Sizes
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12 mb-3" style="display: none;" id="nsize">
+                <div class="form-group form-group-default">
+                  <label>QTY</label>
+                  <input id="am-qty" name="am-qty" type="number" class="form-control" placeholder="Enter QTY" />
+                </div>
+              </div>
+              <div class="row" id="size">
+                <div class="col-md-4">
+                  <div class="form-group form-group-default">
+                    <label>Small</label>
+                    <input id="am-sqty" name="am-sqty" type="number" class="form-control" placeholder="QTY" min="1" />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group form-group-default">
+                    <label>Medium</label>
+                    <input id="am-mqty" name="am-mqty" type="number" class="form-control" placeholder="QTY" min="1" />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group form-group-default">
+                    <label>Large</label>
+                    <input id="am-lqty" name="am-lqty" type="number" class="form-control" placeholder="QTY" min="1" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-12 mb-3">
+                <div class="form-group form-group-default">
+                  <label>Photo</label>
+                  <input id="am-photo" name="am-photo" type="file" class="form-control" accept="image/*"
+                    placeholder="Enter Description Here" />
+                </div>
+              </div>
+              <div class="col-sm-12 mb-3">
+                <div class="form-group form-group-default">
+                  <img id="am-card-preview" class="rounded mb-2" style="height:35vh;object-fit:cover;" alt="Preview">
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer border-0">
+          <button type="button" id="addRowButton" class="btn btn-primary" onclick="addMerch()">
+            Add
+          </button>
+          <button type="button" id="am-close" class="btn btn-danger">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="em-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header border-0">
+          <h5 class="modal-title">
+            <span class="fw-mediumbold"> Edit Merch </span>
+          </h5>
+          <button type="button" class="close" id="em-exit" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="em-form" enctype="multipart/form-data">
+            <input type="hidden" name="em-id" id="em-id">
+            <input type="hidden" name="em-hasSize" id="em-hasSize">
+            <div class="row">
+              <div class="col-sm-12 mb-3">
+                <div class="form-group form-group-default">
+                  <label>Name</label>
+                  <input id="em-name" name="em-name" type="text" class="form-control" placeholder="Enter Name Here" />
+                </div>
+              </div>
+              <div class="col-sm-12 mb-3">
+                <div class="form-group form-group-default">
+                  <label>Price</label>
+                  <input id="em-price" name="em-price" type="number" class="form-control"
+                    placeholder="Enter Description Here" />
+                </div>
+              </div>
+              <div class="col-sm-12 mb-3">
+                <div class="form-group form-group-default">
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="em-sizeornot" value="with" id="em-yessize" checked>
+                    <label class="form-check-label" for="em-yessize">
+                      With Sizes
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="em-sizeornot" value="without" id="em-nosize">
+                    <label class="form-check-label" for="em-nosize">
+                      Without Sizes
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12 mb-3" style="display: none;" id="em-nsize">
+                <div class="form-group form-group-default">
+                  <label>QTY</label>
+                  <input id="em-qty" name="em-qty" type="number" class="form-control" placeholder="Enter QTY" />
+                </div>
+              </div>
+              <div class="row" id="em-size">
+                <div class="col-md-4">
+                  <div class="form-group form-group-default">
+                    <label>Small</label>
+                    <input id="em-sqty" name="em-sqty" type="number" class="form-control" placeholder="QTY" min="1" />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group form-group-default">
+                    <label>Medium</label>
+                    <input id="em-mqty" name="em-mqty" type="number" class="form-control" placeholder="QTY" min="1" />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group form-group-default">
+                    <label>Large</label>
+                    <input id="em-lqty" name="em-lqty" type="number" class="form-control" placeholder="QTY" min="1" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-12 mb-3">
+                <div class="form-group form-group-default">
+                  <label>Photo</label>
+                  <input id="em-photo" name="em-photo" type="file" class="form-control" accept="image/*"
+                    placeholder="Enter Description Here" />
+                </div>
+              </div>
+              <div class="col-sm-12 mb-3">
+                <div class="form-group form-group-default">
+                  <img id="em-card-preview" class="rounded mb-2" style="height:35vh;object-fit:cover;" alt="Preview">
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer border-0">
+          <button type="button" id="addRowButton" class="btn btn-primary" onclick="editMerch()">
+            Edit
+          </button>
+          <button type="button" id="em-close" class="btn btn-danger">
             Close
           </button>
         </div>
@@ -275,13 +479,13 @@
     crossorigin="anonymous"></script>
   <script src="https://cdn.datatables.net/2.3.3/js/dataTables.js"></script>
   <script src="assets/announcement.js"></script>
+  <script src="assets/merch.js"></script>
   <script>
 
     const headersMap = {
       announcement: ["Order", "ID", "Header", "Description", "Action"],
-      schedule: ["ID", "Title", "Date & Time", "Action"],
       events: ["ID", "Event Name", "Location", "Date", "Action"],
-      merch: ["ID", "Item", "Price", "Stock", "Action"],
+      merch: ["ID", "Item", "Price", "Stocks", "Stock (Small)", "Stock (Medium)", "Stock (Large)", "Action"],
       highlights: ["ID", "Highlight", "Category", "Views", "Action"]
     };
     var table = $("#myTable").DataTable();
@@ -317,6 +521,57 @@
     document.addEventListener('DOMContentLoaded', function () {
       loadData()
       // render("announcement")
+      loadSched();
+    });
+
+
+    function loadSched() {
+      $.ajax({
+        url: "assets/ajax.php?action=getSched",
+        type: "POST",
+        dataType: 'json',
+        success: function (response) {
+          document.getElementById("sched-photo").src = "../photos/schedule/" + response.photo;
+        },
+        error: function (xhr, status, error) {
+          console.error("AJAX error: " + status + " - " + error);
+        }
+      });
+    }
+
+    function changeSched() {
+      const form = document.getElementById("sched-form");
+      const formData = new FormData(form);
+
+      $.ajax({
+        url: "assets/ajax.php?action=changeSched",
+        type: "POST",
+        dataType: 'json',
+        processData: false, // Required for FormData
+        contentType: false,
+        data: formData,
+        success: function (response) {
+          loadSched()
+        },
+        error: function (xhr, status, error) {
+          console.error("AJAX error: " + status + " - " + error);
+          console.log("Response text: " + xhr.responseText);
+        }
+      });
+    }
+
+    document.getElementById('addButton').addEventListener('click', () => {
+      var category = document.getElementById("tableType").value;
+      let modall = "";
+      if (category == "announcement") {
+        modall = "aa-modal";
+      }
+      else if (category == "merch") {
+        modall = "am-modal";
+      }
+      const modalEl = document.getElementById(modall);
+      const modal = new bootstrap.Modal(modalEl);
+      modal.show();
     });
 
     function loadData() {
@@ -325,44 +580,81 @@
       if (category == "announcement") {
         ajax = "assets/ajax.php?action=getAnnouncements";
       }
+      else if (category == "merch") {
+        ajax = "assets/ajax.php?action=getMerch";
+      }
       $.ajax({
         url: ajax,
         type: "POST",
         dataType: 'json',
         success: function (response) {
-          var data = response.announcements;
-          console.log(data)
-          table.clear().draw();
-          $.each(data, function (index, value) {
-            if (value.status == 0) {
-              table.row.add([
-                value.order,
-                value.id,
-                value.header,
-                value.desc,
-                `<button type="button" class="btn btn-success" data-bs-toggle="modal" onclick="viewAnnouncementData(${value.id})" data-bs-target="#ea-modal">Edit </button>
+          if (category == "announcement") {
+            var data = response.announcements;
+            // console.log(data)
+            table.clear().draw();
+            $.each(data, function (index, value) {
+              if (value.status == 0) {
+                table.row.add([
+                  value.order,
+                  value.id,
+                  value.header,
+                  value.desc,
+                  `<button type="button" class="btn btn-success" data-bs-toggle="modal" onclick="viewAnnouncementData(${value.id})" data-bs-target="#ea-modal">Edit </button>
               <button type="button" class="btn btn-primary" onclick="changeAnnouncementOrder(${value.id}, 'up')">Up </button>
               <button type="button" class="btn btn-warning" onclick="changeAnnouncementOrder(${value.id}, 'down')">Down </button>
               <button type="button" class="btn btn-success" onclick="changeAnnouncementStatus(${value.id}, 1)">Enable </button>`
 
-              ]).draw(false);
-            }
-            else {
-              table.row.add([
-                value.order,
-                value.id,
-                value.header,
-                value.desc,
-                `<button type="button" class="btn btn-success" data-bs-toggle="modal" onclick="viewAnnouncementData(${value.id})" data-bs-target="#ea-modal">Edit </button>
+                ]).draw(false);
+              }
+              else {
+                table.row.add([
+                  value.order,
+                  value.id,
+                  value.header,
+                  value.desc,
+                  `<button type="button" class="btn btn-success" data-bs-toggle="modal" onclick="viewAnnouncementData(${value.id})" data-bs-target="#ea-modal">Edit </button>
               <button type="button" class="btn btn-primary" onclick="changeAnnouncementOrder(${value.id}, 'up')">Up </button>
               <button type="button" class="btn btn-warning" onclick="changeAnnouncementOrder(${value.id}, 'down')">Down </button>
               <button type="button" class="btn btn-danger" onclick="changeAnnouncementStatus(${value.id}, 0)">Disable </button>`
 
+                ]).draw(false);
+              }
+
+
+            });
+          }
+          else if (category == "merch") {
+            var data = response.merch;
+            // console.log(data)
+            table.clear().draw();
+            $.each(data, function (index, value) {
+              const statusBtn = value.status === 0
+                ? `<button type="button" class="btn btn-success" onclick="changeMerchStatus(${value.id}, 1)">Enable</button>`
+                : `<button type="button" class="btn btn-danger" onclick="changeMerchStatus(${value.id}, 0)">Disable</button>`;
+              const qty = value.hasSize === 0 ? value.qty : (parseFloat(value.qtyS) + parseFloat(value.qtyM) + parseFloat(value.qtyL))
+
+              table.row.add([
+                value.id,
+                value.name,
+                value.price,
+                qty,
+                value.qtyS,
+                value.qtyM,
+                value.qtyL,
+                `
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#em-modal"
+                    onclick="viewMerchData(${value.id})">
+                    Edit
+                  </button>
+                  ${statusBtn}
+                `
               ]).draw(false);
-            }
 
 
-          });
+
+            });
+          }
+
         },
         error: function (xhr, status, error) {
           console.error("AJAX error: " + status + " - " + error);

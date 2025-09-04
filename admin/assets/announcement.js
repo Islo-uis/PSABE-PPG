@@ -58,7 +58,6 @@ function viewAnnouncementData(id) {
 }
 
 function editAnnouncement() {
-    let id = document.getElementById("ea-id").value;
 
     const form = document.getElementById("ea-form");
     const formData = new FormData(form);
