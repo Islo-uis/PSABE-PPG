@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tabulation</title>
+
+  <!-- Bootstrap 5 & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet"/>
+
+  <!-- DataTables CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/datatables.net-bs5@1.13.4/css/dataTables.bootstrap5.min.css"
+        rel="stylesheet"/>
+
+  <style>
+    html, body { height: 100%; margin: 0; font-family: 'Segoe UI', sans-serif; }
+    .d-flex-full { display: flex; height: 100%; }
+
+    /* sidebar */
+    #sidebar {
+      width: 250px;
+      background: #343a40;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      padding: 1rem;
+    }
+    #sidebar h4 {
+      text-align: center;
+      margin-bottom: 2rem;
+      font-weight: bold;
+    }
+    #sidebar .nav-link {
+      color: #ced4da;
+      margin-bottom: .5rem;
+      padding: .5rem 1rem;
+      border-radius: .25rem;
+      transition: background .2s;
+    }
+    #sidebar .nav-link:hover,
+    #sidebar .nav-link.active {
+      background: #495057;
+      color: #fff;
+    }
+    #sidebar .btn-logout {
+      margin-top: auto;
+      background: #ff416c;
+      border: none;
+      color: #fff;
+      padding: .5rem;
+      border-radius: .25rem;
+    }
+    #sidebar .btn-logout:hover {
+      background: #ff4b2b;
+    }
+
+    /* main content */
+    #content {
+      flex-grow: 1;
+      padding: 2rem;
+      background: #f8f9fa;
+      overflow-y: auto;
+    }
+    .tab-pane { display: none; }
+    .tab-pane.active { display: block; }
+
+    /* common */
+    h3 { margin-bottom: .5rem; }
+    hr { margin-bottom: 1.5rem; }
+
+    .criteria-row { display: flex; gap: .5rem; margin-bottom: .5rem; }
+    .criteria-row input { flex: 1; }
+
+    /* hide default DataTables controls */
+    .dataTables_length, .dataTables_filter { display: none; }
+  </style>
+</head>
+<body>
+
+  <div class="d-flex-full">
+
+    <!-- Sidebar -->
+    <nav id="sidebar">
+      <h4>Tabulation</h4>
+      <a href="#" class="nav-link active" data-tab="dashboardTab">Dashboard</a>
+      <a href="#" class="nav-link" data-tab="eventsTab">Events</a>
+      <a href="#" class="nav-link" data-tab="judgesTab">Judges</a>
+      <a href="#" class="nav-link" data-tab="leaderboardsTab">Leaderboards</a>
+      <button class="btn btn-logout">Logout</button>
+    </nav>
+
+    <!-- Main Content -->
+    <div id="content">
+      <!-- DASHBOARD -->
+      <div id="dashboardTab" class="tab-pane active">
+        <h3>Dashboard</h3>
+        <hr>
+        <h5>Events & Assigned Judges</h5>
+        <table id="dashboardTable" class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th>Event</th><th>Category</th><th>Schedule</th><th>Assigned Judge(s)</th>
+            </tr>
+          </thead>
+          <tbody><!-- ... --></tbody>
+        </table>
+      </div>
+
+      <!-- EVENTS -->
+      <div id="eventsTab" class="tab-pane">
+        <h3>Create / Edit Event</h3>
+        <hr>
+        <form id="eventForm" class="mb-5">
+          <div class="mb-3">
+            <label class="form-label">Event Name</label>
+            <input type="text" id="eventName" class="form-control" required>
+          </div>
+          <div class="row gx-3 mb-3">
+            <div class="col-md-4">
+              <label class="form-label">Category</label>
+              <select id="eventCategory" class="form-select" required>
+                <option value="">Select…</option>
+                <option>Art</option><option>Music</option><option>Dance</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Schedule</label>
+              <input type="datetime-local" id="eventSchedule" class="form-control" required>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Assign Judge</label>
+              <select id="eventJudge" class="form-select" required>
+                <option value="">Select Judge…</option>
+                <option>Judge A</option><option>Judge B</option>
+              </select>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Criteria & Scores</label>
+            <div id="criteriaContainer">
+              <div class="criteria-row">
+                <input type="text" class="form-control" placeholder="Criterion description" required>
+                <input type="number" class="form-control" placeholder="Max score" required>
+                <button type="button" class="btn btn-outline-danger btn-sm remove-crit">&times;</button>
+              </div>
+            </div>
+            <button type="button" id="addCriteria" class="btn btn-sm btn-secondary">+ Add Criterion</button>
+          </div>
+          <button type="submit" class="btn btn-primary">Save Event</button>
+        </form>
+
+        <h5>Existing Events</h5>
+        <table id="eventsTable" class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th>Event Name</th><th>Category</th><th>Schedule</th><th>Judge</th><th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- sample -->
+            <tr>
+              <td>Art Showcase</td>
+              <td>Art</td>
+              <td>2025-08-01 10:00</td>
+              <td>Judge A</td>
+              <td>
+                <button class="btn btn-sm btn-warning edit-event">Edit</button>
+                <button class="btn btn-sm btn-danger disable-event">Disable</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- JUDGES -->
+      <div id="judgesTab" class="tab-pane">
+        <h3>Judges Management</h3>
+        <hr>
+        <form id="judgeForm" class="mb-4">
+          <div class="row gx-3">
+            <div class="col-md-4 mb-3">
+              <label class="form-label">Name</label>
+              <input type="text" id="judgeName" class="form-control" required>
+            </div>
+            <div class="col-md-4 mb-3">
+              <label class="form-label">Email</label>
+              <input type="email" id="judgeEmail" class="form-control" required>
+            </div>
+            <div class="col-md-4 mb-3">
+              <label class="form-label">Password</label>
+              <input type="password" id="judgePassword" class="form-control" required>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-success">Add Judge</button>
+        </form>
+
+        <div class="mb-3 d-flex align-items-center gap-2">
+          <label class="m-0">Filter by Event:</label>
+          <select id="filterJudgeEvent" class="form-select form-select-sm w-auto">
+            <option value="">All Events</option>
+            <option>Art Showcase</option><option>Music Competition</option><option>Dance Off</option>
+          </select>
+        </div>
+
+        <table id="judgesTable" class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th>Name</th><th>Email</th><th>Assigned Event</th><th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- sample -->
+            <tr>
+              <td>Judge A</td>
+              <td>judgeA@example.com</td>
+              <td>Art Showcase</td>
+              <td>
+                <button class="btn btn-sm btn-warning edit-judge">Edit</button>
+                <button class="btn btn-sm btn-danger disable-judge">Disable</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- LEADERBOARDS -->
+      <div id="leaderboardsTab" class="tab-pane">
+        <h3>Leaderboards</h3>
+        <hr>
+        <div class="mb-3 d-flex align-items-center gap-2">
+          <label class="m-0">Filter by Event:</label>
+          <select id="filterEventLb" class="form-select form-select-sm w-auto">
+            <option value="">All Events</option>
+            <option>Art Showcase</option><option>Music Competition</option><option>Dance Off</option>
+          </select>
+        </div>
+        <table id="leaderboardsTable" class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Event</th><th>Contestant</th><th>Total Score</th><th>Rank</th>
+            </tr>
+          </thead>
+          <tbody><!-- ... --></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- scripts -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/datatables.net@1.13.4/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/datatables.net-bs5@1.13.4/js/dataTables.bootstrap5.min.js"></script>
+
+  <script>
+    // tab switching
+    $('#sidebar .nav-link').click(function(e){
+      e.preventDefault();
+      $('#sidebar .nav-link').removeClass('active');
+      $(this).addClass('active');
+      $('.tab-pane').removeClass('active');
+      $('#' + $(this).data('tab')).addClass('active');
+    });
+
+    // init tables
+    $('#dashboardTable, #eventsTable, #judgesTable, #leaderboardsTable').DataTable();
+
+    // dynamic criteria
+    $('#addCriteria').click(() => {
+      $('#criteriaContainer').append(`
+        <div class="criteria-row">
+          <input type="text" class="form-control" placeholder="Criterion description" required>
+          <input type="number" class="form-control" placeholder="Max score" required>
+          <button type="button" class="btn btn-outline-danger btn-sm remove-crit">&times;</button>
+        </div>`);
+    });
+    $('#criteriaContainer').on('click', '.remove-crit', function(){
+      $(this).closest('.criteria-row').remove();
+    });
+
+    // filters
+    $('#filterJudgeEvent').on('change', function(){
+      $('#judgesTable').DataTable().column(2).search(this.value).draw();
+    });
+    $('#filterEventLb').on('change', function(){
+      $('#leaderboardsTable').DataTable().column(0).search(this.value).draw();
+    });
+  </script>
+</body>
+</html>

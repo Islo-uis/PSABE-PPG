@@ -551,10 +551,18 @@ strong {
   TICKET               
 -----------------------------------------*/
 .ticket-section {
-  background-image: url('../images/nicholas-green-unsplash-blur.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  position: relative;
+  display: none; /* hidden by default */
+  position: fixed; 
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  
+  background: rgba(0,0,0,0.4); /* translucent dark overlay */
+  backdrop-filter: blur(8px);  /* blur whatever is behind */
+  -webkit-backdrop-filter: blur(8px);
+  
+  z-index: 9999;
   padding-top: 130px;
 }
 

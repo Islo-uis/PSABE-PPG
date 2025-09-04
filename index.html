@@ -23,24 +23,34 @@
 
     <link href="css/templatemo-festava-live.css" rel="stylesheet">
 
-    <link href="style.css" rel="stylesheet">
-
-
-
 </head>
 
 <body>
-    <header class="site-header">
-        <br>
-        <br>
+
+    <main>
+
+        <header class="site-header">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-12 col-12 d-flex flex-wrap">
+                        <p class="d-flex me-4 mb-0">
+                            <i class="bi-person custom-icon me-2"></i>
+                            <strong class="text-dark">PSABE-PPG CONVENTION</strong>
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </header>
+
+
         <nav class="navbar navbar-expand-lg">
             <div class="container">
                 <a class="navbar-brand" href="index.html">
-                    <img src="images/ABECON_Logo_Mini.png" style="max-width: 3vw;" class="logo img-fluid"
-                        alt="PSABE-PPG CONVENTION">
+                    PSABE-PPG
                 </a>
 
-                <a href="ticket.html" class="btn custom-btn d-lg-none ms-auto me-4">Buy Ticket</a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,7 +58,7 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto me-lg-1">
+                    <ul class="navbar-nav align-items-lg-center ms-auto me-lg-5">
                         <li class="nav-item">
                             <a class="nav-link click-scroll" href="#section_1">Home</a>
                         </li>
@@ -74,14 +84,108 @@
                         </li>
                     </ul>
 
-                    <a href="ticket.html" class="btn custom-btn d-lg-block d-none">Buy Ticket</a>
+                    <button class="btn custom-btn openTicket">Login</button>
+
                 </div>
             </div>
         </nav>
-    </header>
 
-    <main>
+        <section class="ticket-section section-padding">
+            <div class="section-overlay"></div>
 
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-6 col-10 mx-auto">
+                        <form class="custom-form ticket-form mb-5 mb-lg-0" action="#" method="post" role="form">
+                            <h6 class="text-center">Create an account</h6>
+                            <h2 class="text-center mb-4">PSABE-PPG</h2>
+
+                            <div class="ticket-form-body">
+
+                                <div class="row">
+                                    <div> <!--drop down select university same design to other elements-->
+                                        <select class="form-select form-control" name="ticket-form-university"
+                                            id="ticket-form-university" required>
+                                            <option value="" disabled selected>Select University</option>
+                                            <option value="University of Southeastern Philippines">University of
+                                                Southeastern Philippines</option>
+                                            <option value="Ateneo de Davao University">Ateneo de Davao University
+                                            </option>
+                                            <option value="University of the Immaculate Conception">University of the
+                                                Immaculate Conception</option>
+                                            <option value="San Pedro College">San Pedro College</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-12">
+                                        <input type="text" name="ticket-form-name" id="ticket-form-name"
+                                            class="form-control" placeholder="Full name" required="">
+                                    </div>
+
+                                    <div class="col-lg-6 col-md-6 col-12">
+                                        <select class="form-select form-control" name="ticket-form-sex"
+                                            id="ticket-form-sex" required>
+                                            <option value="" disabled selected>Select Sex</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <input type="email" name="ticket-form-email" id="ticket-form-email"
+                                    pattern="[^ @]*@[^ @]*" class="form-control" placeholder="Email address"
+                                    required="">
+
+                                <input type="tel" class="form-control" name="ticket-form-phone"
+                                    placeholder="Ph 085-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required="">
+
+                                <h6>Choose Ticket Type</h6>
+
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-12">
+                                        <div class="form-check form-control">
+                                            <input class="form-check-input" type="radio" name="TicketForm"
+                                                id="flexRadioDefault1">
+                                            <label class="form-check-label" for="flexRadioDefault1">
+                                                Eary bird $120
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 col-md-6 col-12">
+                                        <div class="form-check form-check-radio form-control">
+                                            <input class="form-check-input" type="radio" name="TicketForm"
+                                                id="flexRadioDefault2">
+                                            <label class="form-check-label" for="flexRadioDefault2">
+                                                Standard $240
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <input type="number" name="ticket-form-number" id="ticket-form-number"
+                                    class="form-control" placeholder="Number of Tickets" required="">
+
+                                <textarea name="ticket-form-message" rows="3" class="form-control"
+                                    id="ticket-form-message" placeholder="Additional Request"></textarea>
+                                <div class="form-check form-control">
+                                    <input class="form-check">
+                                </div>
+
+
+                                <div class="col-lg-4 col-md-10 col-8 mx-auto">
+                                    <button type="submit" class="form-control">Buy Ticket</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
         <section class="hero-section" id="section_1">
             <div class="section-overlay"></div>
 
@@ -89,15 +193,11 @@
                 <div class="row">
 
                     <div class="col-12 mt-auto mb-5 text-center">
+                        <small>PSABE-PPG</small>
 
-                        <div>
-                            <img src="images/abecon logo3.svg" style="max-width: 30vw;" class="logo img-fluid"
-                                alt="PSABE-PPG CONVENTION">
-                        </div>
-                        <br>
-                        <br>
-                        <a class="btn custom-btn smoothscroll" href="registration.html">Register Now!</a>
+                        <h1 class="text-white mb-5">The Convention</h1>
 
+                        <button class="btn custom-btn openTicket">Register Now</button>
                     </div>
 
                     <div class="col-lg-12 col-12 mt-auto d-flex flex-column flex-lg-row text-center">
@@ -139,15 +239,21 @@
                             </ul>
                         </div>
                     </div>
+
                 </div>
             </div>
 
             <div class="video-wrap">
                 <video autoplay="" loop="" muted="" class="custom-video" poster="">
                     <source src="video/pexels-2022395.mp4" type="video/mp4">
+
                     Your browser does not support the video tag.
                 </video>
             </div>
+
+
+
+
         </section>
 
 
@@ -530,7 +636,7 @@
                                             id="contact-message" placeholder="Message"></textarea>
 
                                         <div class="col-lg-4 col-md-10 col-8 mx-auto">
-                                            <button type="submit" class="form-control" style="background-color: #ec9404;">Send message</button>
+                                            <button type="submit" class="form-control">Send message</button>
                                         </div>
                                     </div>
                                 </form>
@@ -552,6 +658,8 @@
         </section>
     </main>
 <!--Festava Live Footer Orange -->
+
+
     <footer class="site-footer">
         <div class="site-footer-top">
             <div class="container">

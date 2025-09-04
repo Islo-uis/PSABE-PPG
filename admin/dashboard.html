@@ -7,6 +7,8 @@
   <title>Teno in Nach — Dashboard</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.3.3/css/dataTables.dataTables.css" />
+
   <style>
     body,
     html {
@@ -62,13 +64,6 @@
       background: #ff4b2b;
     }
 
-    #content {
-      flex-grow: 1;
-      background: #f8f9fa;
-      padding: 2rem;
-      overflow-y: auto;
-    }
-
     .card-draggable {
       cursor: move;
     }
@@ -119,274 +114,558 @@
     <nav id="sidebar">
       <h4>Teno in Nach</h4>
       <ul class="nav flex-column">
-        <li class="nav-item"><a class="nav-link active" href="dashboard.html">Dashboard</a></li>
+        <li class="nav-item"><a class="nav-link active" href="admin.html">Dashboard</a></li>
         <li class="nav-item"><a class="nav-link" href="users.html">Users</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Merch</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Transactions</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Tabulation</a></li>
+        <li class="nav-item"><a class="nav-link" href="transactions.php">Transactions</a></li>
+        <li class="nav-item"><a class="nav-link" href="tabulation.html">Tabulation</a></li>
       </ul>
       <button class="btn btn-logout">Logout</button>
     </nav>
+    <div style="width: 100%;padding: 2%;">
+      <div style="display: flex; justify-content: space-between;">
+        <select class="form-select w-25" id="tableType">
+          <option value="announcement" selected>Announcement</option>
+          <option value="events">Events</option>
+          <option value="merch">Merch</option>
+          <option value="highlights">Highlights</option>
+        </select>
+        <button type="button" class="btn btn-primary" id="addButton">Add</button>
+      </div>
 
-    <div id="content">
-      <!-- Announcements -->
-      <h2 class="mb-3">Announcements</h2>
-      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-5" id="announcement-container"></div>
-      <!-- Schedule -->
-      <h2 class="mb-3">Schedule</h2>
-      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-5" id="schedule-container"></div>
-      <!-- Events -->
-      <h2 class="mb-3">Events</h2>
-      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-5" id="events-container"></div>
-      <!-- Merch -->
-      <h2 class="mb-3">Merch</h2>
-      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-5" id="merch-container"></div>
-      <!-- Highlights -->
-      <h2 class="mb-3">Highlights</h2>
-      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" id="highlight-container"></div>
-    </div>
-  </div>
+      <table id="myTable" class="display">
+        <thead>
+          <tr>
+            <th>Order</th>
+            <th>ID</th>
+            <th>Header</th>
+            <th>Description</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
 
-  <!-- Shared Modal for Add/Edit -->
-  <div class="modal fade" id="cardModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="cardModalLabel">Add</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </tbody>
+      </table>
+      <div class="card">
+        <p class="p-3 fs-3">Schedule</p>
+        <div class="card-body d-flex justify-content-center">
+          <img id="sched-photo" class="img-fluid w-25" alt="...">
         </div>
-        <div class="modal-body">
-          <form id="card-form">
-            <input type="hidden" id="card-id">
-            <input type="hidden" id="card-type">
-
-            <!-- Photo (all types) -->
-            <div class="mb-3 text-center">
-              <img id="card-preview" src="https://via.placeholder.com/300x150" class="rounded mb-2"
-                style="width:100%;height:150px;object-fit:cover;" alt="Preview">
-              <input type="file" id="card-photo" accept="image/*" class="form-control form-control-sm">
-            </div>
-
-            <!-- Announcement fields -->
-            <div id="header-group" class="mb-3">
-              <label class="form-label">Header</label>
-              <input type="text" id="card-header" class="form-control">
-            </div>
-            <div id="desc-group" class="mb-3">
-              <label class="form-label">Description</label>
-              <textarea id="card-desc" class="form-control" rows="2"></textarea>
-            </div>
-
-            <!-- Merch fields -->
-            <div id="merch-name-group" class="mb-3">
-              <label class="form-label">Product Name</label>
-              <input type="text" id="merch-name" class="form-control">
-            </div>
-            <div id="merch-price-group" class="mb-3">
-              <label class="form-label">Price</label>
-              <input type="number" id="merch-price" class="form-control" step="0.01">
-            </div>
-            <div id="merch-stock-group" class="mb-3">
-              <label class="form-label">Stock by Size</label>
-              <div class="d-flex gap-2 flex-wrap">
-                <div><label class="d-block mb-1">S</label><input type="number" id="stock-S"
-                    class="form-control stock-input"></div>
-                <div><label class="d-block mb-1">M</label><input type="number" id="stock-M"
-                    class="form-control stock-input"></div>
-                <div><label class="d-block mb-1">L</label><input type="number" id="stock-L"
-                    class="form-control stock-input"></div>
-                <div><label class="d-block mb-1">XL</label><input type="number" id="stock-XL"
-                    class="form-control stock-input"></div>
-              </div>
-            </div>
-
+        <div class="card-body d-flex justify-content-center">
+          <form id="sched-form" enctype="multipart/form-data">
+            <input type="file" id="sched-file" name="sched-file" accept="image/*" hidden onchange="changeSched()">
+            <button type="button" class="btn btn-primary" onclick="document.getElementById('sched-file').click()">Change
+              Schedule Photo</button>
           </form>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-          <button class="btn btn-primary" id="save-card-btn">Save</button>
+
         </div>
       </div>
     </div>
   </div>
 
+  <!-- Add Row Modal -->
+  <div class="modal fade" id="aa-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header border-0">
+          <h5 class="modal-title">
+            <span class="fw-mediumbold"> Add Announcement </span>
+          </h5>
+          <button type="button" class="close" id="aa-exit" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="aa-form" enctype="multipart/form-data">
+            <div class="row">
+              <div class="col-sm-12 mb-3">
+                <div class="form-group form-group-default">
+                  <label>Header</label>
+                  <input id="aa-header" name="aa-header" type="text" class="form-control"
+                    placeholder="Enter Header Here" />
+                </div>
+              </div>
+              <div class="col-sm-12 mb-3">
+                <div class="form-group form-group-default">
+                  <label>Description</label>
+                  <input id="aa-desc" name="aa-desc" type="text" class="form-control"
+                    placeholder="Enter Description Here" />
+                </div>
+              </div>
+              <div class="col-sm-12 mb-3">
+                <div class="form-group form-group-default">
+                  <label>Photo</label>
+                  <input id="aa-photo" name="aa-photo" type="file" class="form-control" accept="image/*"
+                    placeholder="Enter Description Here" />
+                </div>
+              </div>
+              <div class="col-sm-12 mb-3">
+                <div class="form-group form-group-default">
+                  <img id="aa-card-preview" class="rounded mb-2" style="height:35vh;object-fit:cover;" alt="Preview">
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer border-0">
+          <button type="button" id="addRowButton" class="btn btn-primary" onclick="addAnnouncement()">
+            Add
+          </button>
+          <button type="button" id="aa-close" class="btn btn-danger">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Row Modal -->
+  <div class="modal fade" id="ea-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header border-0">
+          <h5 class="modal-title">
+            <span class="fw-mediumbold"> Edit Announcement </span>
+          </h5>
+          <button type="button" class="close" id="ea-exit" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="ea-form" enctype="multipart/form-data">
+            <input type="hidden" name="ea-id" id="ea-id">
+            <div class="row">
+              <div class="col-sm-12 mb-3">
+                <div class="form-group form-group-default">
+                  <label>Header</label>
+                  <input id="ea-header" name="ea-header" type="text" class="form-control"
+                    placeholder="Enter Header Here" />
+                </div>
+              </div>
+              <div class="col-sm-12 mb-3">
+                <div class="form-group form-group-default">
+                  <label>Description</label>
+                  <input id="ea-desc" name="ea-desc" type="text" class="form-control"
+                    placeholder="Enter Description Here" />
+                </div>
+              </div>
+              <div class="col-sm-12 mb-3">
+                <div class="form-group form-group-default">
+                  <label>Photo</label>
+                  <input id="ea-photo" name="ea-photo" type="file" class="form-control" accept="image/*"
+                    placeholder="Enter Description Here" />
+                </div>
+              </div>
+              <div class="col-sm-12 mb-3">
+                <div class="form-group form-group-default">
+                  <img id="ea-card-preview" class="rounded mb-2" style="height:35vh;object-fit:cover;" alt="Preview">
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer border-0">
+          <button type="button" id="addRowButton" class="btn btn-primary" onclick="editAnnouncement()">
+            Edit
+          </button>
+          <button type="button" id="ea-close" class="btn btn-danger">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="am-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header border-0">
+          <h5 class="modal-title">
+            <span class="fw-mediumbold"> Add Merch </span>
+          </h5>
+          <button type="button" class="close" id="am-exit" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="am-form" enctype="multipart/form-data">
+            <div class="row">
+              <div class="col-sm-12 mb-3">
+                <div class="form-group form-group-default">
+                  <label>Name</label>
+                  <input id="am-name" name="am-name" type="text" class="form-control" placeholder="Enter Name Here" />
+                </div>
+              </div>
+              <div class="col-sm-12 mb-3">
+                <div class="form-group form-group-default">
+                  <label>Price</label>
+                  <input id="am-price" name="am-price" type="number" class="form-control"
+                    placeholder="Enter Description Here" />
+                </div>
+              </div>
+              <div class="col-sm-12 mb-3">
+                <div class="form-group form-group-default">
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="sizeornot" value="with" id="yessize" checked>
+                    <label class="form-check-label" for="yessize">
+                      With Sizes
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="sizeornot" value="without" id="nosize">
+                    <label class="form-check-label" for="nosize">
+                      Without Sizes
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12 mb-3" style="display: none;" id="nsize">
+                <div class="form-group form-group-default">
+                  <label>QTY</label>
+                  <input id="am-qty" name="am-qty" type="number" class="form-control" placeholder="Enter QTY" />
+                </div>
+              </div>
+              <div class="row" id="size">
+                <div class="col-md-4">
+                  <div class="form-group form-group-default">
+                    <label>Small</label>
+                    <input id="am-sqty" name="am-sqty" type="number" class="form-control" placeholder="QTY" min="1" />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group form-group-default">
+                    <label>Medium</label>
+                    <input id="am-mqty" name="am-mqty" type="number" class="form-control" placeholder="QTY" min="1" />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group form-group-default">
+                    <label>Large</label>
+                    <input id="am-lqty" name="am-lqty" type="number" class="form-control" placeholder="QTY" min="1" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-12 mb-3">
+                <div class="form-group form-group-default">
+                  <label>Photo</label>
+                  <input id="am-photo" name="am-photo" type="file" class="form-control" accept="image/*"
+                    placeholder="Enter Description Here" />
+                </div>
+              </div>
+              <div class="col-sm-12 mb-3">
+                <div class="form-group form-group-default">
+                  <img id="am-card-preview" class="rounded mb-2" style="height:35vh;object-fit:cover;" alt="Preview">
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer border-0">
+          <button type="button" id="addRowButton" class="btn btn-primary" onclick="addMerch()">
+            Add
+          </button>
+          <button type="button" id="am-close" class="btn btn-danger">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="em-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header border-0">
+          <h5 class="modal-title">
+            <span class="fw-mediumbold"> Edit Merch </span>
+          </h5>
+          <button type="button" class="close" id="em-exit" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="em-form" enctype="multipart/form-data">
+            <input type="hidden" name="em-id" id="em-id">
+            <input type="hidden" name="em-hasSize" id="em-hasSize">
+            <div class="row">
+              <div class="col-sm-12 mb-3">
+                <div class="form-group form-group-default">
+                  <label>Name</label>
+                  <input id="em-name" name="em-name" type="text" class="form-control" placeholder="Enter Name Here" />
+                </div>
+              </div>
+              <div class="col-sm-12 mb-3">
+                <div class="form-group form-group-default">
+                  <label>Price</label>
+                  <input id="em-price" name="em-price" type="number" class="form-control"
+                    placeholder="Enter Description Here" />
+                </div>
+              </div>
+              <div class="col-sm-12 mb-3">
+                <div class="form-group form-group-default">
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="em-sizeornot" value="with" id="em-yessize" checked>
+                    <label class="form-check-label" for="em-yessize">
+                      With Sizes
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="em-sizeornot" value="without" id="em-nosize">
+                    <label class="form-check-label" for="em-nosize">
+                      Without Sizes
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12 mb-3" style="display: none;" id="em-nsize">
+                <div class="form-group form-group-default">
+                  <label>QTY</label>
+                  <input id="em-qty" name="em-qty" type="number" class="form-control" placeholder="Enter QTY" />
+                </div>
+              </div>
+              <div class="row" id="em-size">
+                <div class="col-md-4">
+                  <div class="form-group form-group-default">
+                    <label>Small</label>
+                    <input id="em-sqty" name="em-sqty" type="number" class="form-control" placeholder="QTY" min="1" />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group form-group-default">
+                    <label>Medium</label>
+                    <input id="em-mqty" name="em-mqty" type="number" class="form-control" placeholder="QTY" min="1" />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group form-group-default">
+                    <label>Large</label>
+                    <input id="em-lqty" name="em-lqty" type="number" class="form-control" placeholder="QTY" min="1" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-12 mb-3">
+                <div class="form-group form-group-default">
+                  <label>Photo</label>
+                  <input id="em-photo" name="em-photo" type="file" class="form-control" accept="image/*"
+                    placeholder="Enter Description Here" />
+                </div>
+              </div>
+              <div class="col-sm-12 mb-3">
+                <div class="form-group form-group-default">
+                  <img id="em-card-preview" class="rounded mb-2" style="height:35vh;object-fit:cover;" alt="Preview">
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer border-0">
+          <button type="button" id="addRowButton" class="btn btn-primary" onclick="editMerch()">
+            Edit
+          </button>
+          <button type="button" id="em-close" class="btn btn-danger">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
   <!-- Bootstrap + Logic -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.datatables.net/2.3.3/js/dataTables.js"></script>
+  <script src="assets/announcement.js"></script>
+  <script src="assets/merch.js"></script>
   <script>
-    const modalEl = document.getElementById('cardModal'),
-      modal = new bootstrap.Modal(modalEl);
 
-    let announcements = [], schedule = [], events = [], merch = [], highlights = [];
+    const headersMap = {
+      announcement: ["Order", "ID", "Header", "Description", "Action"],
+      events: ["ID", "Event Name", "Location", "Date", "Action"],
+      merch: ["ID", "Item", "Price", "Stocks", "Stock (Small)", "Stock (Medium)", "Stock (Large)", "Action"],
+      highlights: ["ID", "Highlight", "Category", "Views", "Action"]
+    };
+    var table = $("#myTable").DataTable();
 
-    function getStore(type) {
-      return {
-        announcement: announcements,
-        schedule: schedule,
-        events: events,
-        merch: merch,
-        highlight: highlights
-      }[type];
-    }
-    function getContainer(type) {
-      return document.getElementById(type + '-container');
-    }
+    $("#tableType").on("change", function () {
+      let type = $(this).val();
+      let headers = headersMap[type];
 
-    function render(type) {
-      const store = getStore(type),
-        cont = getContainer(type);
-      cont.innerHTML = '';
+      // Destroy DataTable before changing headers
+      table.destroy();
 
-      store.forEach((c, idx) => {
-        const col = document.createElement('div');
-        col.className = 'col';
-        col.draggable = true;
-        col.dataset.index = idx;
-        col.dataset.type = type;
-
-        const card = document.createElement('div');
-        card.className = `position-relative card bg-white rounded-lg shadow-sm p-0 card-draggable`;
-
-        // Image only
-        const img = document.createElement('img');
-        img.src = c.photo;
-        card.append(img);
-
-        // Edit button
-        const act = document.createElement('div');
-        act.className = 'card-actions';
-        act.innerHTML = `<button class="btn btn-sm btn-light"><i class="bi bi-pencil-fill"></i></button>`;
-        act.firstChild.addEventListener('click', e => {
-          e.stopPropagation(); openModal(type, c);
-        });
-        card.append(act);
-
-        // Body: only for announcement and merch
-        if (type === 'announcement') {
-          const body = document.createElement('div');
-          body.className = 'p-3 text-center';
-          body.innerHTML = `
-            <h5 class="fw-bold mb-1">${c.header}</h5>
-            <p class="text-muted mb-2">${c.desc}</p>
-            <button class="btn btn-sm btn-${c.enabled ? 'warning' : 'success'} toggle-btn">
-              ${c.enabled ? 'Disable' : 'Enable'}
-            </button>
-          `;
-          body.querySelector('.toggle-btn').addEventListener('click', e => {
-            e.stopPropagation(); c.enabled = !c.enabled; render(type);
-          });
-          card.append(body);
-        }
-        if (type === 'merch') {
-          const body = document.createElement('div');
-          body.className = 'p-3 text-center';
-          body.innerHTML = `
-            <h5 class="fw-bold mb-1">${c.name}</h5>
-            <p class="text-muted mb-1">$${c.price.toFixed(2)}</p>
-            <div class="d-flex justify-content-center gap-1 flex-wrap">
-              <span class="badge bg-secondary">S ${c.stock.S}</span>
-              <span class="badge bg-secondary">M ${c.stock.M}</span>
-              <span class="badge bg-secondary">L ${c.stock.L}</span>
-              <span class="badge bg-secondary">XL ${c.stock.XL}</span>
-            </div>
-          `;
-          card.append(body);
-        }
-
-        // Click & drag
-        card.addEventListener('click', () => openModal(type, c));
-        col.addEventListener('dragstart', onDragStart);
-        col.addEventListener('dragover', e => e.preventDefault());
-        col.addEventListener('drop', onDrop);
-
-        col.append(card);
-        cont.append(col);
+      // Rebuild table head
+      let thead = $("#myTable thead tr");
+      thead.empty();
+      headers.forEach(h => {
+        thead.append(`<th>${h}</th>`);
       });
 
-      // Add tile
-      const addCol = document.createElement('div');
-      addCol.className = 'col';
-      addCol.innerHTML = `<div class="add-tile"><span>＋</span></div>`;
-      addCol.addEventListener('click', () => openModal(type));
-      cont.append(addCol);
-    }
+      // Clear tbody as well (optional, depends on your data loading strategy)
+      $("#myTable tbody").empty();
 
-    let dragIdx = null, dragType = null;
-    function onDragStart(e) {
-      dragIdx = +this.dataset.index;
-      dragType = this.dataset.type;
-      e.dataTransfer.effectAllowed = 'move';
-    }
-    function onDrop(e) {
-      e.preventDefault();
-      const dst = +this.dataset.index,
-        store = getStore(dragType),
-        [m] = store.splice(dragIdx, 1);
-      store.splice(dst, 0, m);
-      render(dragType);
-    }
-
-    function openModal(type, card = null) {
-      document.getElementById('card-type').value = type;
-      document.getElementById('card-id').value = card?.id || '';
-      document.getElementById('card-preview').src = card?.photo || 'https://via.placeholder.com/300x150';
-
-      // show/hide fields
-      document.getElementById('header-group').style.display = type === 'announcement' ? 'block' : 'none';
-      document.getElementById('desc-group').style.display = type === 'announcement' ? 'block' : 'none';
-      document.getElementById('merch-name-group').style.display = type === 'merch' ? 'block' : 'none';
-      document.getElementById('merch-price-group').style.display = type === 'merch' ? 'block' : 'none';
-      document.getElementById('merch-stock-group').style.display = type === 'merch' ? 'block' : 'none';
-
-      // populate
-      document.getElementById('card-header').value = card?.header || '';
-      document.getElementById('card-desc').value = card?.desc || '';
-      document.getElementById('merch-name').value = card?.name || '';
-      document.getElementById('merch-price').value = card?.price || '';
-      ['S', 'M', 'L', 'XL'].forEach(sz => {
-        document.getElementById(`stock-${sz}`).value = card?.stock?.[sz] ?? 0;
+      // Reinitialize DataTable
+      table = $("#myTable").DataTable({
+        // if you want, define columns explicitly to match headers
+        columns: headers.map(h => ({ title: h }))
       });
 
-      document.getElementById('cardModalLabel').innerText = card ? 'Edit' : 'Add';
+
+      loadData()
+    });
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+      loadData()
+      // render("announcement")
+      loadSched();
+    });
+
+
+    function loadSched() {
+      $.ajax({
+        url: "assets/ajax.php?action=getSched",
+        type: "POST",
+        dataType: 'json',
+        success: function (response) {
+          document.getElementById("sched-photo").src = "../photos/schedule/" + response.photo;
+        },
+        error: function (xhr, status, error) {
+          console.error("AJAX error: " + status + " - " + error);
+        }
+      });
+    }
+
+    function changeSched() {
+      const form = document.getElementById("sched-form");
+      const formData = new FormData(form);
+
+      $.ajax({
+        url: "assets/ajax.php?action=changeSched",
+        type: "POST",
+        dataType: 'json',
+        processData: false, // Required for FormData
+        contentType: false,
+        data: formData,
+        success: function (response) {
+          loadSched()
+        },
+        error: function (xhr, status, error) {
+          console.error("AJAX error: " + status + " - " + error);
+          console.log("Response text: " + xhr.responseText);
+        }
+      });
+    }
+
+    document.getElementById('addButton').addEventListener('click', () => {
+      var category = document.getElementById("tableType").value;
+      let modall = "";
+      if (category == "announcement") {
+        modall = "aa-modal";
+      }
+      else if (category == "merch") {
+        modall = "am-modal";
+      }
+      const modalEl = document.getElementById(modall);
+      const modal = new bootstrap.Modal(modalEl);
       modal.show();
+    });
+
+    function loadData() {
+      var category = document.getElementById("tableType").value;
+      let ajax = "";
+      if (category == "announcement") {
+        ajax = "assets/ajax.php?action=getAnnouncements";
+      }
+      else if (category == "merch") {
+        ajax = "assets/ajax.php?action=getMerch";
+      }
+      $.ajax({
+        url: ajax,
+        type: "POST",
+        dataType: 'json',
+        success: function (response) {
+          if (category == "announcement") {
+            var data = response.announcements;
+            // console.log(data)
+            table.clear().draw();
+            $.each(data, function (index, value) {
+              if (value.status == 0) {
+                table.row.add([
+                  value.order,
+                  value.id,
+                  value.header,
+                  value.desc,
+                  `<button type="button" class="btn btn-success" data-bs-toggle="modal" onclick="viewAnnouncementData(${value.id})" data-bs-target="#ea-modal">Edit </button>
+              <button type="button" class="btn btn-primary" onclick="changeAnnouncementOrder(${value.id}, 'up')">Up </button>
+              <button type="button" class="btn btn-warning" onclick="changeAnnouncementOrder(${value.id}, 'down')">Down </button>
+              <button type="button" class="btn btn-success" onclick="changeAnnouncementStatus(${value.id}, 1)">Enable </button>`
+
+                ]).draw(false);
+              }
+              else {
+                table.row.add([
+                  value.order,
+                  value.id,
+                  value.header,
+                  value.desc,
+                  `<button type="button" class="btn btn-success" data-bs-toggle="modal" onclick="viewAnnouncementData(${value.id})" data-bs-target="#ea-modal">Edit </button>
+              <button type="button" class="btn btn-primary" onclick="changeAnnouncementOrder(${value.id}, 'up')">Up </button>
+              <button type="button" class="btn btn-warning" onclick="changeAnnouncementOrder(${value.id}, 'down')">Down </button>
+              <button type="button" class="btn btn-danger" onclick="changeAnnouncementStatus(${value.id}, 0)">Disable </button>`
+
+                ]).draw(false);
+              }
+
+
+            });
+          }
+          else if (category == "merch") {
+            var data = response.merch;
+            // console.log(data)
+            table.clear().draw();
+            $.each(data, function (index, value) {
+              const statusBtn = value.status === 0
+                ? `<button type="button" class="btn btn-success" onclick="changeMerchStatus(${value.id}, 1)">Enable</button>`
+                : `<button type="button" class="btn btn-danger" onclick="changeMerchStatus(${value.id}, 0)">Disable</button>`;
+              const qty = value.hasSize === 0 ? value.qty : (parseFloat(value.qtyS) + parseFloat(value.qtyM) + parseFloat(value.qtyL))
+
+              table.row.add([
+                value.id,
+                value.name,
+                value.price,
+                qty,
+                value.qtyS,
+                value.qtyM,
+                value.qtyL,
+                `
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#em-modal"
+                    onclick="viewMerchData(${value.id})">
+                    Edit
+                  </button>
+                  ${statusBtn}
+                `
+              ]).draw(false);
+
+
+
+            });
+          }
+
+        },
+        error: function (xhr, status, error) {
+          console.error("AJAX error: " + status + " - " + error);
+        }
+      });
+
     }
 
-    document.getElementById('card-photo').onchange = e => {
-      const f = e.target.files[0];
-      if (!f) return;
-      const r = new FileReader();
-      r.onload = () => document.getElementById('card-preview').src = r.result;
-      r.readAsDataURL(f);
-    };
 
-    document.getElementById('save-card-btn').onclick = () => {
-      const type = document.getElementById('card-type').value,
-        store = getStore(type),
-        id = document.getElementById('card-id').value || Date.now().toString(),
-        photo = document.getElementById('card-preview').src;
-      let record = { id, photo, enabled: true };
-
-      if (type === 'announcement') {
-        record.header = document.getElementById('card-header').value;
-        record.desc = document.getElementById('card-desc').value;
-      }
-      if (type === 'merch') {
-        record.name = document.getElementById('merch-name').value;
-        record.price = parseFloat(document.getElementById('merch-price').value) || 0;
-        record.stock = {};
-        ['S', 'M', 'L', 'XL'].forEach(sz => {
-          record.stock[sz] = parseInt(document.getElementById(`stock-${sz}`).value) || 0;
-        });
-      }
-
-      const idx = store.findIndex(c => c.id === id);
-      if (idx > -1) store[idx] = record; else store.push(record);
-
-      modal.hide();
-      render(type);
-    };
-
-    ['announcement', 'schedule', 'events', 'merch', 'highlight'].forEach(render);
   </script>
+
 </body>
 
 </html>
