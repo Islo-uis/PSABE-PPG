@@ -1034,7 +1034,7 @@ if (isset($_GET["action"])) {
 
         $id = $_POST['id'];
 
-        $sql = "SELECT * from eventsched where eventID = ?";
+        $sql = "SELECT schedID, eventsched.eventID, eventsched.description, venue, time, eventName from eventsched inner join events on eventsched.eventID = events.eventID where events.eventID = ?";
 
         $stmt = mysqli_prepare($conn, $sql);
         mysqli_stmt_bind_param($stmt, "s", $id);
@@ -1046,19 +1046,31 @@ if (isset($_GET["action"])) {
         if (mysqli_num_rows($result) > 0) {
             while ($row = mysqli_fetch_assoc($result)) {
                 $sched[] = [
-                    "id" => $row['merchID'],
-                    "name" => $row['merchName'],
-                    "hasSize" => $row['hasSize'],
-                    "price" => $row['price'],
-                    "photo" => $row['photo'],
-                    "qty" => $row['qty'],
-                    "qtyS" => $row['qtyS'],
-                    "qtyM" => $row['qtyM'],
-                    "qtyL" => $row['qtyL'],
-                    "status" => $row['status']
+                    "id" => $row['schedID'],
+                    "eventID" => $row['eventID'],
+                    "desc" => $row['description'],
+                    "venue" => $row['venue'],
+                    "time" => $row['time']
                 ];
             }
         }
+
+
+        $sql = "SELECT eventName from events where eventID = ?";
+
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "s", $id);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+
+        $name = "";
+
+        if (mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $name = $row['eventName'];
+            }
+        }
+
 
 
         mysqli_close($conn);

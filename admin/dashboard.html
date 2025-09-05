@@ -581,55 +581,93 @@
     </div>
   </div>
 
-  <div class="modal fade" id="es-modal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+  <div class="modal fade" id="vs-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
       <div class="modal-content">
         <div class="modal-header border-0">
           <h5 class="modal-title">
-            <span class="fw-mediumbold" id="es-title"> View Schedule </span>
+            <span class="fw-mediumbold" id="vs-title"> View Schedule </span>
           </h5>
-          <button type="button" class="close" id="ee-exit" data-dismiss="modal" aria-label="Close">
+          <button type="button" class="close" id="vs-exit" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          <form id="ee-form" enctype="multipart/form-data">
-            <input type="hidden" name="ee-id" id="ee-id">
-            <div class="row">
-              <div class="col-sm-12 mb-3">
-                <div class="form-group form-group-default">
-                  <label>Title</label>
-                  <input id="ee-title" name="ee-title" type="text" class="form-control"
-                    placeholder="Enter Title Here" />
-                </div>
+          <div class="col-md-12 mb-2">
+            <div class="card">
+              <div class="card-head">
+                <h5 class="fw-mediumbold p-2"> Add Schedule </h5>
               </div>
-              <div class="col-sm-12 mb-3">
-                <div class="form-group form-group-default">
-                  <label>Description</label>
-                  <input id="ee-desc" name="ee-desc" type="text" class="form-control"
-                    placeholder="Enter Description Here" />
+              <div class="card-body">
+                <div class="col-sm-12 mb-3">
+                  <div class="form-group form-group-default">
+                    <label>Description</label>
+                    <input id="asd-desc" name="asd-desc" type="text" class="form-control"
+                      placeholder="Enter Description Here" />
+                  </div>
                 </div>
-              </div>
-              <div class="col-sm-12 mb-3">
-                <div class="form-group form-group-default">
-                  <label>Photo</label>
-                  <input id="ee-photo" name="ee-photo" type="file" class="form-control" accept="image/*"
-                    placeholder="Enter Description Here" />
+                <div class="col-sm-12 mb-3">
+                  <div class="form-group form-group-default">
+                    <label>Venue</label>
+                    <input id="asd-desc" name="asd-desc" type="text" class="form-control"
+                      placeholder="Enter Description Here" />
+                  </div>
                 </div>
+                <div class="col-sm-12 mb-3">
+                  <div class="form-group form-group-default">
+                    <label>Date</label>
+                    <input id="asd-date" name="asd-date" type="date" class="form-control"
+                      placeholder="Enter Venue Here" />
+                  </div>
+                </div>
+                <div class="row" id="size">
+                  <div class="col-md-6">
+                    <div class="form-group form-group-default">
+                      <label>Start</label>
+                      <input id="asd-start" name="asd-start" type="time" class="form-control" />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group form-group-default">
+                      <label>End</label>
+                      <input id="asd-end" name="asd-end" type="time" class="form-control" />
+                    </div>
+                  </div>
+                </div>
+
+                <div style="display: flex; justify-content: flex-end; margin-top: 20px">
+                  <button type="button" id="addRowButton" class="btn btn-primary" onclick="addSched()">
+                    Add
+                  </button>
+                </div>
+
               </div>
-              <div class="col-sm-12 mb-3">
-                <div class="form-group form-group-default">
-                  <img id="ee-card-preview" class="rounded mb-2" style="height:35vh;object-fit:cover;" alt="Preview">
+            </div>
+          </div>
+
+          <div class="col-md-12 ">
+            <div class="card">
+              <div class="card-body">
+                <div class="table-responsive" style="max-height: 25vw; height: 25vw;">
+                  <table id="returnedItemsTable" class="table mt-3">
+                    <thead>
+                      <tr>
+                        <th scope="col">Description</th>
+                        <th scope="col">Venue</th>
+                        <th scope="col">Time</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
-          </form>
+          </div>
         </div>
         <div class="modal-footer border-0">
-          <button type="button" id="addRowButton" class="btn btn-primary" onclick="editEvent()">
-            Edit
-          </button>
-          <button type="button" id="ee-close" class="btn btn-danger">
+          <button type="button" id="vs-close" class="btn btn-danger">
             Close
           </button>
         </div>

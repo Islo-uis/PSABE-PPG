@@ -215,7 +215,7 @@ function loadData() {
                     onclick="viewEventData(${value.id})">
                     Edit
                   </button>
-                  <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#es-modal"
+                  <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#vs-modal"
                     onclick="viewEventSched(${value.id})">
                     View Schedule
                   </button>

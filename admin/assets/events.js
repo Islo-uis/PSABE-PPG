@@ -94,6 +94,13 @@ $("#ee-exit").click(function (e) {
 $("#ee-close").click(function (e) {
     $("#ee-modal").modal('hide');
 });
+$("#vs-close").click(function (e) {
+    $("#vs-modal").modal('hide');
+});
+$("#vs-exit").click(function (e) {
+    $("#vs-modal").modal('hide');
+});
+
 
 
 
@@ -125,7 +132,10 @@ function viewEventSched(id) {
         },
         dataType: 'json',
         success: function (response) {
-            document.getElementById("ee-title").value = response.name;
+            let sched = response.sched;
+            let name = response.name;
+            console.log(sched)
+            document.getElementById("vs-title").textContent = "View Schedule for "+name;
             document.getElementById("ee-desc").value = response.desc;
             document.getElementById("ee-id").value = id;
             document.getElementById("ee-card-preview").src = "../photos/events/" + response.photo;
