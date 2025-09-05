@@ -95,6 +95,30 @@ if (! mysqli_query($conn, $merch)) {
 }
 
 
+$event = "CREATE table if not exists events (
+    eventID INT PRIMARY KEY AUTO_INCREMENT,
+    eventName TEXT NOT NULL,
+    description TEXT NOT NULL,
+    status INT NOT NULL,
+    photo TEXT NOT NULL)
+";
+if (! mysqli_query($conn, $event)) {
+    die("Error creating users table: " . mysqli_error($conn));
+}
+
+$eventSched = "CREATE table if not exists eventSched (
+    schedID INT PRIMARY KEY AUTO_INCREMENT,
+    eventID INT NOT NULL,
+    description TEXT NOT NULL,
+    venue TEXT NOT NULL,
+    time TEXT NOT NULL,
+    FOREIGN KEY (eventID) REFERENCES events (eventID))
+";
+if (! mysqli_query($conn, $eventSched)) {
+    die("Error creating users table: " . mysqli_error($conn));
+}
+
+
 // ('ORD-2002005', 'Emma Svensson',     
 // 'emma.svensson@example.co',  'REF-M4N5O6', 
 //  23.75,   'Widget A, Widget C',               1,         'Not Confirmed',  '2025-07-14 16:22:59');
