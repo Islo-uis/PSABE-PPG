@@ -11,8 +11,8 @@
    
 </head>
 <body>
-    <header class="border">
-        <nav class="navbar">
+    <header>
+        <nav class="container navbar">
 
             <div class="actions" style="display: none;">
                 <span id="hamburger-btn" class="material-symbols-outlined">menu</span>
@@ -30,41 +30,110 @@
                 <a href="speakers.html" ><b>Merch</b></a>
             </div>
             <div class="actions">
-                <span class="material-symbols-outlined">account_circle</span>
                 
                 <button class="icon-btn cart-btn" aria-label="Cart">
                     <span class="material-symbols-outlined">shopping_cart</span>
                     <span class="badge">10</span> 
                 </button>
+                <span class="material-symbols-outlined">account_circle</span>
+                
             </div>
         </nav>
     </header>
 
-    <main  class="border">
+    <main style="position: absolute; top: 0;">
         <section>
             <div class="hero">
                 <img src="/images/merchbanner.jpg" alt="Merch Banner" class="hero-image">    
             </div>
-            <div display="flex">
-                <div class="hero-content" style="margin-left: auto; margin-right: auto;">
-                        <h1>Welcome to the ABECON2025 Merch Store!</h1>
-                        <p>Get your exclusive ABECON2025 merchandise here. From t-shirts to mugs, we have something for every fan!</p>
-                        <a href="#merch-section" class="btn">Shop Now</a>
+        </section>
+       
+
+        <section class="container merch-section">
+            <h1 style="font-size: larger; padding-bottom: 50px;">Shop Our Exclusive Merch</h1>
+
+            <div class="merch-grid">
+
+                <!-- Product Card -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="/images/product-images/image 5.png" alt="White Shirt Small">
+                    </div>
+                    <h3 class="product-title" id="prod-name">White Shirt Small Medium Large</h3>
+                    <div class="meta-row">
+                        <span class="price" id="prod-price">₱189.00</span>
+                        <span class="qty">Qty: <span id="prod-qty">13</span></span>
+                    </div>
+                    <button class="add-cart-btn">
+                        <span class="material-symbols-outlined">add_shopping_cart</span>
+                        Add to cart
+                    </button>
                 </div>
 
-            </div>
-        </section>
-        <br>
-        <br>
-        <br>
-        <br>
-        <section class="merch-section">
-            <h1>Shop Our Exclusive Merch</h1>
-            <div class="merch-grid">
+  <!-- Product Card -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="/images/product-images/image 5.png" alt="White Shirt Small">
+                    </div>
+                    <h3 class="product-title" id="prod-name">White Shirt Small Medium Large</h3>
+                    <div class="meta-row">
+                        <span class="price" id="prod-price">₱189.00</span>
+                        <span class="qty">Qty: <span id="prod-qty">13</span></span>
+                    </div>
+                    <button class="add-cart-btn">
+                        <span class="material-symbols-outlined">add_shopping_cart</span>
+                        Add to cart
+                    </button>
+                </div>
+  <!-- Product Card -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="/images/product-images/image 5.png" alt="White Shirt Small">
+                    </div>
+                    <h3 class="product-title" id="prod-name">White Shirt Small Medium Large</h3>
+                    <div class="meta-row">
+                        <span class="price" id="prod-price">₱189.00</span>
+                        <span class="qty">Qty: <span id="prod-qty">13</span></span>
+                    </div>
+                    <button class="add-cart-btn">
+                        <span class="material-symbols-outlined">add_shopping_cart</span>
+                        Add to cart
+                    </button>
+                </div>
+  <!-- Product Card -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="/images/product-images/image 5.png" alt="White Shirt Small">
+                    </div>
+                    <h3 class="product-title" id="prod-name">White Shirt Small Medium Large</h3>
+                    <div class="meta-row">
+                        <span class="price" id="prod-price">₱189.00</span>
+                        <span class="qty">Qty: <span id="prod-qty">13</span></span>
+                    </div>
+                    <button class="add-cart-btn">
+                        <span class="material-symbols-outlined">add_shopping_cart</span>
+                        Add to cart
+                    </button>
+                </div>
+
+           
 
             </div>
         </section>
     </main>
+
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-section">
+                <h3>About Us</h3>
+                <p>We are committed to delivering the best experience for our attendees.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p>Email:</p>
+                </div>
+        </div>
+        </footer>
     
 </body>
 </html>

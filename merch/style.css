@@ -49,10 +49,9 @@ html, body {
 }
 
 
-.border{
-max-width: 1920px;
-margin: 0 auto; /* center content */
-}
+
+
+
 /* Example for a variable font file */
 @font-face {
   font-family: 'Paris2024';
@@ -62,6 +61,13 @@ margin: 0 auto; /* center content */
   font-display: swap;
 }
 
+header {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 999;
+}
+  
 
 .logo-container img{
     width: 129.93px;
@@ -133,6 +139,12 @@ align-items: center;
 flex-shrink: 0;
 }
 
+.container {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
 .nav-links {
     display: flex;
     width: 462px;
@@ -156,6 +168,7 @@ flex-shrink: 0;
 .hero-image {
   object-fit: cover; /* makes sure it fills without distortion */
   display: block;
+  width: 100%;
 }
 
 /* gradient overlay */
@@ -166,4 +179,72 @@ flex-shrink: 0;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.00) 0.12%, #FFF 100.11%);
   pointer-events: none; /* lets clicks pass through */
 }
+
+.merch-section {
+  text-align: center;
+  font-size: larger;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+
+.merch-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.product-card {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.product-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  display: block;
+}
+
+.product-title {
+  margin: 1rem 0 0.5rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.meta-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  color: #555;
+}
+
+.price {
+  font-weight: bold;
+  color: #000;
+}
+
+.add-cart-btn {
+  background: none;
+  color: #191919;
+  border: 1px solid #DBD3D3;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.25rem;
+  transition: background 0.3s;
+}
+
 
