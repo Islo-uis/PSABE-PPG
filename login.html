@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to bottom right, #9BBE3C, #16650F);
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        /* Proper use gradients from the color guide */
+        .green-gradient-bg {
+            background: linear-gradient(to right, #9BBE3C, #16650F);
+        }
+
+        .text-green-gradient {
+            background: linear-gradient(to right, #9BBE3C, #16650F);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Custom SVG background for the left panel using the brand colors */
+        .background-svg {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><filter id="f1" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur in="SourceGraphic" stdDeviation="50" /></filter><filter id="f2" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur in="SourceGraphic" stdDeviation="30" /></filter><filter id="f3" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur in="SourceGraphic" stdDeviation="20" /></filter></defs><circle cx="50" cy="50" r="100" fill="%23DBBF00" filter="url(%23f1)" opacity="0.8"/><circle cx="950" cy="950" r="150" fill="%23ED8900" filter="url(%23f1)" opacity="0.8"/><circle cx="300" cy="700" r="80" fill="%23DBBF00" filter="url(%23f2)" opacity="0.7"/><circle cx="700" cy="300" r="120" fill="%23ED8900" filter="url(%23f2)" opacity="0.7"/><circle cx="500" cy="500" r="60" fill="%23DBBF00" filter="url(%23f3)" opacity="0.6"/><path d="M50 400 Q200 350, 350 400 T 650 400" fill="none" stroke="%23DBBF00" stroke-width="5" filter="url(%23f3)" opacity="0.5"/><path d="M900 600 Q750 650, 600 600 T 300 600" fill="none" stroke="%23ED8900" stroke-width="5" filter="url(%23f3)" opacity="0.5"/><path d="M100 800 L 150 750 L 100 700 L 50 750 Z" fill="%23ED8900" opacity="0.6"/><path d="M800 150 L 850 100 L 900 150 L 850 200 Z" fill="%23DBBF00" opacity="0.6"/><path d="M200 200 L 250 250 L 200 300 L 150 250 Z" fill="%23ED8900" opacity="0.6"/></svg>');
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Adjustments for login form layout */
+        .login-card-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .login-card {
+            display: flex;
+            width: 100%;
+            max-width: 900px;
+            border-radius: 2rem;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+        }
+
+        .left-panel {
+            flex: 1;
+            padding: 3rem;
+            color: white;
+            position: relative;
+            background: linear-gradient(135deg, #9BBE3C, #16650F);
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* New class for the combination background */
+        .combined-background {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><filter id="f1" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur in="SourceGraphic" stdDeviation="50" /></filter><filter id="f2" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur in="SourceGraphic" stdDeviation="30" /></filter><filter id="f3" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur in="SourceGraphic" stdDeviation="20" /></filter></defs><circle cx="50" cy="50" r="100" fill="%23DBBF00" filter="url(%23f1)" opacity="0.8"/><circle cx="950" cy="950" r="150" fill="%23ED8900" filter="url(%23f1)" opacity="0.8"/><circle cx="300" cy="700" r="80" fill="%23DBBF00" filter="url(%23f2)" opacity="0.7"/><circle cx="700" cy="300" r="120" fill="%23ED8900" filter="url(%23f2)" opacity="0.7"/><circle cx="500" cy="500" r="60" fill="%23DBBF00" filter="url(%23f3)" opacity="0.6"/><path d="M50 400 Q200 350, 350 400 T 650 400" fill="none" stroke="%23DBBF00" stroke-width="5" filter="url(%23f3)" opacity="0.5"/><path d="M900 600 Q750 650, 600 600 T 300 600" fill="none" stroke="%23ED8900" stroke-width="5" filter="url(%23f3)" opacity="0.5"/><path d="M100 800 L 150 750 L 100 700 L 50 750 Z" fill="%23ED8900" opacity="0.6"/><path d="M800 150 L 850 100 L 900 150 L 850 200 Z" fill="%23DBBF00" opacity="0.6"/><path d="M200 200 L 250 250 L 200 300 L 150 250 Z" fill="%23ED8900" opacity="0.6"/></svg>');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .right-panel {
+            flex: 1;
+            background-color: white;
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        @media (max-width: 768px) {
+            .login-card {
+                flex-direction: column;
+            }
+
+            .left-panel,
+            .right-panel {
+                flex: none;
+                width: 100%;
+                padding: 2rem;
+            }
+
+            .left-panel {
+                border-radius: 2rem 2rem 0 0;
+            }
+
+            .right-panel {
+                border-radius: 0 0 2rem 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-card-container">
+        <div class="login-card">
+
+            <div class="left-panel combined-background">
+                <div class="relative z-5">
+                    <div class="flex items-center gap-2"> <!-- Added flex container -->
+                        <a href="#" aria-label="ABECON Home">
+                            <img src="icons/abecon_small_logo.png" alt="ABECON Logo" class="h-10 w-auto">
+                        </a>
+                       
+                    </div>
+
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4" style="margin-top: 5px;">Welcome!<br>ABECON 2025</h1>
+
+                    <p class="text-sm text-white/80">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nisi risus.
+                    </p>
+                </div>
+            </div>
+
+
+            <div class="right-panel">
+                <form action="#" method="POST" class="w-full">
+                    <div class="mb-4">
+                        <label for="email" class="sr-only">Email address</label>
+                        <input type="email" id="email" name="email" placeholder="Email address"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#9BBE3C] focus:border-transparent transition-colors duration-200">
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="password" class="sr-only">Password</label>
+                        <input type="password" id="password" name="password" placeholder="Password"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#9BBE3C] focus:border-transparent transition-colors duration-200">
+                    </div>
+
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="flex items-center">
+                            <input id="remember-me" name="remember-me" type="checkbox"
+                                class="h-4 w-4 text-[#16650F] border-gray-300 rounded focus:ring-[#9BBE3C]">
+                            <label for="remember-me" class="ml-2 block text-sm text-gray-900">
+                                Remember me
+                            </label>
+                        </div>
+                        <a href="#"
+                            class="text-sm font-medium text-[#16650F] hover:text-[#9BBE3C] transition-colors duration-200">
+                            Forgot password?
+                        </a>
+                    </div>
+
+                    <div class="flex space-x-4">
+                        <button type="submit"
+                            class="flex-1 py-3 px-6 text-white font-semibold rounded-xl green-gradient-bg hover:brightness-110 transition-all duration-200 shadow-md">
+                            Login
+                        </button>
+                        
+                    </div>
+                </form>
+
+                <div class="mt-8 pt-6 border-t border-gray-200 text-center">
+                    <p class="text-xs text-gray-500 mb-2">FOLLOW</p>
+                    <div class="flex justify-center space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-[#16650F] transition-colors duration-200">
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill-rule="evenodd"
+                                    d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.505 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33V22H12c5.523 0 10-4.477 10-10z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-[#9BBE3C] transition-colors duration-200">
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path
+                                    d="M8.297 3.998a.9.9 0 01.63.26l1.238 1.238a.9.9 0 010 1.272l-1.238 1.238a.9.9 0 01-1.272 0L6.777 6.77a.9.9 0 010-1.272L8.016 4.258a.9.9 0 01.281-.26zM20 7.214a1.714 1.714 0 01-1.714-1.714V2.572A1.714 1.714 0 0120 .857h2.286A1.714 1.714 0 0124 2.572V5.5a1.714 1.714 0 01-1.714 1.714H20zM12 2a10 10 0 1010 10A10 10 0 0012 2zm6.273 4.239a.9.9 0 01-.63.26l-1.238 1.238a.9.9 0 010 1.272l1.238 1.238a.9.9 0 011.272 0l1.238-1.238a.9.9 0 010-1.272L18.904 4.5a.9.9 0 01-.63-.26zM5.727 6.239a.9.9 0 01-.63-.26L3.859 4.741a.9.9 0 010-1.272L5.097 2.231a.9.9 0 011.272 0l1.238 1.238a.9.9 0 010 1.272L6.357 5.979a.9.9 0 01-.63-.26zM15.227 6.239a.9.9 0 01-.63.26l-1.238 1.238a.9.9 0 010 1.272l1.238 1.238a.9.9 0 011.272 0l1.238-1.238a.9.9 0 010-1.272L15.857 4.741a.9.9 0 01-.63-.26zM12 12a4 4 0 10-4 4A4 4 0 0012 12zm2-2a2 2 0 11-2 2A2 2 0 0114 10z" />
+                            </svg>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-[#ED8900] transition-colors duration-200">
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill-rule="evenodd"
+                                    d="M12.28 0c-2.31 0-2.58.01-3.49.05-1.07.05-1.8.22-2.45.48-.68.27-1.28.62-1.84 1.18-.56.56-.91 1.16-1.18 1.84-.26.65-.43 1.38-.48 2.45-.04.91-.05 1.18-.05 3.49s.01 2.58.05 3.49c.05 1.07.22 1.8.48 2.45.27.68.62 1.28 1.18 1.84.56.56 1.16.91 1.84 1.18.65.26 1.38.43 2.45.48.91.04 1.18.05 3.49.05s2.58-.01 3.49-.05c1.07-.05 1.8-.22 2.45-.48.68-.27 1.28-.62 1.84-1.18.56-.56.91-1.16 1.18-1.84.26-.65.43-1.38.48-2.45.04-.91.05-1.18.05-3.49s-.01-2.58-.05-3.49c-.05-1.07-.22-1.8-.48-2.45-.27-.68-.62-1.28-1.18-1.84-.56-.56-1.16-.91-1.84-1.18-.65-.26-1.38-.43-2.45-.48-.91-.04-1.18-.05-3.49-.05zm0 17.51c-2.28 0-2.54-.01-3.43-.05-1-.04-1.54-.2-1.99-.39-.4-.17-.7-.36-.98-.64-.28-.28-.47-.58-.64-.98-.19-.45-.35-.99-.39-1.99-.04-.89-.05-1.15-.05-3.43s.01-2.54.05-3.43c.04-1 .2-1.54.39-1.99.17-.4.36-.7.64-.98.28-.28.58-.47.98-.64.45-.19.99-.35 1.99-.39.89-.04 1.15-.05 3.43-.05s2.54.01 3.43.05c1 .04 1.54.2 1.99.39.4.17.7.36.98.64.28.28.47.58.64.98.19.45.35.99.39 1.99.04.89.05 1.15.05 3.43s-.01 2.54-.05 3.43c-.04 1-.2 1.54-.39 1.99-.17.4-.36.7-.64.98-.28.28-.58.47-.98.64-.45.19-.99.35-1.99.39-.89.04-1.15.05-3.43.05zm0-10.74a5.35 5.35 0 100 10.7 5.35 5.35 0 000-10.7zm0 8.7a3.35 3.35 0 110-6.7 3.35 3.35 0 010 6.7zM17.48 4.28a1.2 1.2 0 100-2.4 1.2 1.2 0 000 2.4z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
