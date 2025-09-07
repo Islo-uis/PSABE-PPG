@@ -62,10 +62,12 @@ html, body {
 }
 
 header {
-    position: sticky;
-    top: 0;
-    width: 100%;
-    z-index: 999;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000; 
+
+  
 }
   
 
@@ -91,7 +93,6 @@ body {
   background-image: url('/images/background.jpg');
   background-size: cover;       /* scale image to cover entire area */
   background-repeat: no-repeat; /* prevent tiling */
-  background-attachment: fixed; /* optional: parallax effect */
 }
 
 p, span, li {
@@ -248,3 +249,212 @@ flex-shrink: 0;
 }
 
 
+.cart-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 300px;              /* drawer width */
+  height: 100%;
+  background: #fff;          /* cart background */
+  box-shadow: -2px 0 10px rgba(0,0,0,0.2);
+  
+  transform: translateX(100%); /* hidden to the right */
+  opacity: 0;                 /* invisible */
+  
+  transition: transform 500ms ease, opacity 500ms ease;
+  z-index: 2000;
+}
+
+.cart-drawer.active {
+  transform: translateX(0);  /* slide in */
+  opacity: 1;                /* fade in */
+}
+/* Dark Overlay */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 500ms ease;
+  z-index: 2000;
+}
+
+.overlay.active {
+  opacity: 1;
+  pointer-events: all; /* clickable */
+}
+
+/* Prevent body scroll when active */
+body.no-scroll {
+  overflow: hidden;
+}
+
+
+/* === Cart Drawer Container === */
+.cart-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 380px; /* adjust to match your figma (420px in screenshot) */
+  height: 100%;
+  background: #fff;
+  box-shadow: -2px 0 12px rgba(0, 0, 0, 0.15);
+
+  transform: translateX(100%);
+  opacity: 0;
+  transition: transform 500ms ease, opacity 500ms ease;
+  z-index: 2001;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.cart-drawer.active {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+/* === Header === */
+.cart-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px;
+  border-bottom: 1px solid #eee;
+}
+
+.cart-header h2 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  color: #333;
+}
+
+/* === Empty Cart === */
+.cart-empty {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #999;
+  font-size: 0.95rem;
+  padding: 20px;
+}
+
+/* === Cart Items === */
+.cart-items {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+  gap: 12px;
+}
+
+.cart-item img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid #eee;
+}
+
+.item-info {
+  flex: 1;
+}
+
+.item-name {
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin: 0 0 4px 0;
+}
+
+.item-price {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 6px 0;
+}
+
+.item-qty {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.qty-btn {
+  width: 26px;
+  height: 26px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #f9f9f9;
+  cursor: pointer;
+}
+
+.qty {
+  min-width: 20px;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.remove-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #999;
+  transition: color 0.2s;
+}
+
+.remove-btn:hover {
+  color: #333;
+}
+
+/* === Footer === */
+.cart-footer {
+  padding: 16px;
+  border-top: 1px solid #eee;
+}
+
+.cart-footer .total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.checkout-btn {
+  width: 100%;
+  padding: 12px;
+  background: #2e7d32; /* green like in your design */
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.checkout-btn:hover {
+  background: #256427;
+}

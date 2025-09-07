@@ -31,9 +31,9 @@
             </div>
             <div class="actions">
                 
-                <button class="icon-btn cart-btn" aria-label="Cart">
+                <button class="icon-btn cart-btn" id="openCart" aria-label="Cart">
                     <span class="material-symbols-outlined">shopping_cart</span>
-                    <span class="badge">10</span> 
+                    <span class="badge">0</span> 
                 </button>
                 <span class="material-symbols-outlined">account_circle</span>
                 
@@ -47,6 +47,82 @@
                 <img src="/images/merchbanner.jpg" alt="Merch Banner" class="hero-image">    
             </div>
         </section>
+
+
+<div id="overlay" class="overlay"></div>
+
+<!-- Cart Drawer -->
+<div id="cartDrawer" class="cart-drawer">
+  
+  <!-- Header -->
+  <div class="cart-header">
+    <button class="back-btn">
+      <span class="material-symbols-outlined" id="closeCart">arrow_back_ios</span>
+    </button>
+    <h2>Cart</h2>
+  </div>
+
+  <!-- Empty Cart State -->
+  <div class="cart-empty">
+    <p>You have no items in your cart.</p>
+  </div>
+
+  <!-- Cart Items -->
+  <div class="cart-items">
+    <!-- Item 1 -->
+    <div class="cart-item">
+      <img src="/images/product-images/image 5.png" alt="White Shirt Small">
+      <div class="item-info">
+        <p class="item-name">White Shirt Small</p>
+        <p class="item-price">₱189.00</p>
+        <div class="item-qty">
+          <button class="qty-btn">-</button>
+          <span class="qty">1</span>
+          <button class="qty-btn">+</button>
+        </div>
+      </div>
+      <button class="remove-btn">×</button>
+    </div>
+
+    <!-- Item 2 -->
+    <div class="cart-item">
+      <img src="/images/product-images/image 5.png" alt="White Shirt Medium">
+      <div class="item-info">
+        <p class="item-name">White Shirt Medium</p>
+        <p class="item-price">₱189.00</p>
+        <div class="item-qty">
+          <button class="qty-btn">-</button>
+          <span class="qty">1</span>
+          <button class="qty-btn">+</button>
+        </div>
+      </div>
+      <button class="remove-btn">×</button>
+    </div>
+
+    <!-- Item 3 -->
+    <div class="cart-item">
+      <img src="/images/product-images/image 5.png" alt="White Shirt Large">
+      <div class="item-info">
+        <p class="item-name">White Shirt Large</p>
+        <p class="item-price">₱189.00</p>
+        <div class="item-qty">
+          <button class="qty-btn">-</button>
+          <span class="qty">1</span>
+          <button class="qty-btn">+</button>
+        </div>
+      </div>
+      <button class="remove-btn">×</button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="cart-footer">
+    <p class="total">Total <span>₱567.00</span></p>
+    <button class="checkout-btn">Checkout</button>
+  </div>
+
+</div>
+
        
 
         <section class="container merch-section">
@@ -229,5 +305,28 @@
         </div>
         </footer>
     
+
+        <script>
+const cartDrawer = document.getElementById("cartDrawer");
+const overlay = document.getElementById("overlay");
+const openCart = document.getElementById("openCart");
+const closeCart = document.getElementById("closeCart");
+
+openCart.addEventListener("click", () => {
+  cartDrawer.classList.add("active");
+  overlay.classList.add("active");
+  document.body.classList.add("no-scroll");
+});
+
+function closeCartDrawer() {
+  cartDrawer.classList.remove("active");
+  overlay.classList.remove("active");
+  document.body.classList.remove("no-scroll");
+}
+
+closeCart.addEventListener("click", closeCartDrawer);
+overlay.addEventListener("click", closeCartDrawer);
+
+        </script>
 </body>
 </html>
