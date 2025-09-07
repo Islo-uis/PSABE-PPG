@@ -11,7 +11,7 @@ function checkIfLoggedOut() {
         type: "POST",
         dataType: 'json',
         success: function (response) {
-            console.log(response)
+            // console.log(response)
             if (response) {
                 window.location.href = "login.html";
             }

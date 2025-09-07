@@ -1034,7 +1034,7 @@ if (isset($_GET["action"])) {
 
         $id = $_POST['id'];
 
-        $sql = "SELECT schedID, eventsched.eventID, eventsched.description, venue, time, eventName from eventsched inner join events on eventsched.eventID = events.eventID where events.eventID = ?";
+        $sql = "SELECT schedID, eventsched.eventID, eventsched.description, venue, datee, timeStart, timeEnd from eventsched where eventID = ?";
 
         $stmt = mysqli_prepare($conn, $sql);
         mysqli_stmt_bind_param($stmt, "s", $id);
@@ -1050,7 +1050,9 @@ if (isset($_GET["action"])) {
                     "eventID" => $row['eventID'],
                     "desc" => $row['description'],
                     "venue" => $row['venue'],
-                    "time" => $row['time']
+                    "date" => $row['datee'],
+                    "start" => $row['timeStart'],
+                    "end" => $row['timeEnd']
                 ];
             }
         }
@@ -1078,5 +1080,52 @@ if (isset($_GET["action"])) {
             "sched" => $sched,
             "name" => $name
         ]);
+    }
+
+    if ($_GET["action"] == 'addEventSched') {
+        header('Content-Type: application/json');
+        $conn = new mysqli($db_server, $db_user, $db_pass, $db_name);
+
+        if (!$conn) {
+            die(json_encode(["success" => false, "error" => "Connection failed: " . mysqli_connect_error()]));
+        }
+
+        try {
+            if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+                http_response_code(405);
+                echo json_encode(["success" => false, "message" => "Method not allowed"]);
+                exit;
+            }
+
+            $id = $_POST['asd-id'];
+            $description = $_POST['asd-desc'];
+            $venue = $_POST['asd-venue'];
+            $date = $_POST['asd-date'];
+            $start = $_POST['asd-start'];
+            $end = $_POST['asd-end'];
+
+            // Prepare statement for sched
+            if ($stmt = $conn->prepare("INSERT INTO events VALUES (NULL, ?, ?, 1, ?)")) {
+                $stmt->bind_param(
+                    "sss",
+                    $title,
+                    $description,
+                    $fileNameNew
+                );
+                $success = $stmt->execute();
+                $stmt->close();
+            }
+            echo json_encode([
+                "success" => $success,
+                "message" => $success ? "Record saved successfully" : "Failed to save record"
+            ]);
+        } catch (Exception $e) {
+            echo json_encode([
+                "success" => false,
+                "message" => "Database error: " . $e->getMessage()
+            ]);
+        }
+
+        mysqli_close($conn);
     }
 }

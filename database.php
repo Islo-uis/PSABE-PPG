@@ -10,7 +10,7 @@ try {
 }
 
 //db creeattioonnn    
-$dbName = "CREATE DATABASE IF NOT EXISTS psabe";
+$dbName = "CREATE DATABASE IF NOT EXISTS psabe CHARACTER SET utf8 COLLATE utf8_general_ci";
 if (mysqli_query($conn, $dbName)) {
     $conn = mysqli_connect($db_server, $db_user, $db_pass, $db_name);
 } else {
@@ -18,8 +18,8 @@ if (mysqli_query($conn, $dbName)) {
 }
 
 $admin = "CREATE TABLE IF NOT EXISTS admin (
-        username VARCHAR(750) NOT NULL PRIMARY KEY,
-        password VARBINARY(750) NOT NULL
+        username VARCHAR(171) NOT NULL PRIMARY KEY,
+        password VARBINARY(500) NOT NULL
         )";
 
 if (mysqli_query($conn, $admin)) {
@@ -111,7 +111,10 @@ $eventSched = "CREATE table if not exists eventSched (
     eventID INT NOT NULL,
     description TEXT NOT NULL,
     venue TEXT NOT NULL,
-    time TEXT NOT NULL,
+    datee TEXT NOT NULL,
+    timeStart TEXT NOT NULL,
+    timeEnd TEXT NOT NULL,
+    status TEXT NULL,
     FOREIGN KEY (eventID) REFERENCES events (eventID))
 ";
 if (! mysqli_query($conn, $eventSched)) {

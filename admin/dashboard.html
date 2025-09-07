@@ -599,48 +599,50 @@
                 <h5 class="fw-mediumbold p-2"> Add Schedule </h5>
               </div>
               <div class="card-body">
-                <div class="col-sm-12 mb-3">
-                  <div class="form-group form-group-default">
-                    <label>Description</label>
-                    <input id="asd-desc" name="asd-desc" type="text" class="form-control"
-                      placeholder="Enter Description Here" />
-                  </div>
-                </div>
-                <div class="col-sm-12 mb-3">
-                  <div class="form-group form-group-default">
-                    <label>Venue</label>
-                    <input id="asd-desc" name="asd-desc" type="text" class="form-control"
-                      placeholder="Enter Description Here" />
-                  </div>
-                </div>
-                <div class="col-sm-12 mb-3">
-                  <div class="form-group form-group-default">
-                    <label>Date</label>
-                    <input id="asd-date" name="asd-date" type="date" class="form-control"
-                      placeholder="Enter Venue Here" />
-                  </div>
-                </div>
-                <div class="row" id="size">
-                  <div class="col-md-6">
+                <form id="asd-form">
+                  <input type="hidden" name="asd-id" id="asd-id">
+                  <div class="col-sm-12 mb-3">
                     <div class="form-group form-group-default">
-                      <label>Start</label>
-                      <input id="asd-start" name="asd-start" type="time" class="form-control" />
+                      <label>Description</label>
+                      <input id="asd-desc" name="asd-desc" type="text" class="form-control"
+                        placeholder="Enter Description Here" />
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-sm-12 mb-3">
                     <div class="form-group form-group-default">
-                      <label>End</label>
-                      <input id="asd-end" name="asd-end" type="time" class="form-control" />
+                      <label>Venue</label>
+                      <input id="asd-venue" name="asd-venue" type="text" class="form-control"
+                        placeholder="Enter Description Here" />
                     </div>
                   </div>
-                </div>
+                  <div class="col-sm-12 mb-3">
+                    <div class="form-group form-group-default">
+                      <label>Date</label>
+                      <input id="asd-date" name="asd-date" type="date" class="form-control"
+                        placeholder="Enter Venue Here" />
+                    </div>
+                  </div>
+                  <div class="row" id="size">
+                    <div class="col-md-6">
+                      <div class="form-group form-group-default">
+                        <label>Start</label>
+                        <input id="asd-start" name="asd-start" type="time" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group form-group-default">
+                        <label>End</label>
+                        <input id="asd-end" name="asd-end" type="time" class="form-control" />
+                      </div>
+                    </div>
+                  </div>
 
-                <div style="display: flex; justify-content: flex-end; margin-top: 20px">
-                  <button type="button" id="addRowButton" class="btn btn-primary" onclick="addSched()">
-                    Add
-                  </button>
-                </div>
-
+                  <div style="display: flex; justify-content: flex-end; margin-top: 20px">
+                    <button type="button" id="addRowButton" class="btn btn-primary" onclick="addSched()">
+                      Add
+                    </button>
+                  </div>
+                </form>
               </div>
             </div>
           </div>

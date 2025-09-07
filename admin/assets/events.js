@@ -37,6 +37,27 @@ function addEvent() {
     });
 }
 
+function addSched() {
+    const form = document.getElementById("asd-form");
+    const formData = new FormData(form);
+    let id = document.getElementById("asd-id");
+    $.ajax({
+        url: "assets/ajax.php?action=addEventSched",
+        type: "POST",
+        dataType: 'json',
+        processData: false, // Required for FormData
+        contentType: false,
+        data: formData,
+        success: function (response) {
+            viewEventData(id)
+        },
+        error: function (xhr, status, error) {
+            console.error("AJAX error: " + status + " - " + error);
+            console.log("Response text: " + xhr.responseText);
+        }
+    });
+}
+
 function viewEventData(id) {
     $.ajax({
         url: "assets/ajax.php?action=getEventData",
@@ -136,9 +157,7 @@ function viewEventSched(id) {
             let name = response.name;
             console.log(sched)
             document.getElementById("vs-title").textContent = "View Schedule for "+name;
-            document.getElementById("ee-desc").value = response.desc;
-            document.getElementById("ee-id").value = id;
-            document.getElementById("ee-card-preview").src = "../photos/events/" + response.photo;
+            document.getElementById("asd-id").value = id;
 
         },
         error: function (xhr, status, error) {
