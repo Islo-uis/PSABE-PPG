@@ -81,7 +81,7 @@
             <!-- Payment Method -->
             <div class="space-y-3">
 
-                <button data-modal-target="payment-instruction-modal" data-modal-toggle="payment-instruction-modal"
+                <button id="paymentMethodBtn" data-modal-target="payment-instruction-modal" data-modal-toggle="payment-instruction-modal"
                     class="flex items-center gap-2">
                     <h3 class="font-semibold">Payment Method</h3>
                     <span class="material-symbols-outlined text-gray-500 cursor-pointer text-sm">help</span>
@@ -98,13 +98,10 @@
 
             </div>
 
-
-            <!-- Total -->
-            <div class="flex justify-between items-center font-semibold text-lg">
-                <span>Total</span>
-                <span class="text-2xl">₱567.00</span>
-            </div>
-
+<div class="flex justify-between items-center font-semibold text-lg">
+    <span>Total</span>
+    <span id="checkout-total" class="text-2xl">₱0.00</span>
+</div>
             <!-- Payment Button -->
             <button data-modal-target="payment-modal" data-modal-toggle="payment-modal"
                 class="w-full bg-green-700 hover:bg-green-800 text-white font-semibold py-3 rounded-lg shadow">
@@ -113,7 +110,7 @@
         </section>
 
         <!-- Right Column (Order Items) -->
-        <aside class="order-1 space-y-4 md:order-2">
+        <aside id="checkout-items" class="order-1 space-y-4 md:order-2">
             <h3 class="font-semibold">Order Items</h3>
 
             <!-- Item -->
@@ -218,7 +215,7 @@
                     <img src="https://vectorseek.com/wp-content/uploads/2023/08/Gcash-Logo-Vector.svg-.png" alt="GCash" class="h-8 mx-auto">
 
                     <p class="font-medium">Total amount</p>
-                    <p class="text-3xl font-bold">₱567.00</p>
+                    <p id="payment-total" class="text-3xl font-bold">₱0.00</p>
 
                     <!-- QR -->
                     <div class="border p-4 rounded-lg inline-block">
@@ -236,20 +233,24 @@
                             placeholder="Enter Ref No.">
                     </div>
 
-                    <!-- Upload -->
-                    <div class="text-left">
-                        <label class="block mb-1 text-sm font-medium">Please upload screenshot of your GCash payment
-                            receipt</label>
-                        <div
-                            class="relative border-2 border-dashed rounded-lg p-6 flex flex-col items-center justify-center text-gray-500">
-                            <span class="material-symbols-outlined text-3xl">image</span>
-                            <p class="text-xs mt-2">Click to upload</p>
-                            <input type="file" class="absolute inset-0 opacity-0 cursor-pointer">
+<!-- Upload -->
+<div class="text-left">
+    <label class="block mb-1 text-sm font-medium">Please upload screenshot of your GCash payment receipt</label>
+    <div
+        class="relative border-2 border-dashed rounded-lg p-6 flex flex-col items-center justify-center text-gray-500">
+        
+        <!-- Preview Image (hidden by default) -->
+        <img id="preview" class="hidden mb-2 w-full h-auto rounded-md" alt="Preview Image" />
+
+        <span class="material-symbols-outlined text-3xl">image</span>
+        <p class="text-xs mt-2">Click to upload</p>
+
+        <!-- File Input -->
+        <input type="file" id="file-input" class="absolute inset-0 opacity-0 cursor-pointer" accept="image/*" />
+    </div>
+</div>
 
 
-                        </div>
-
-                    </div>
                 </div>
 
                 <!-- Modal footer -->
@@ -263,6 +264,90 @@
             </div>
         </div>
     </div>
+
+    <script>
+document.getElementById("file-input").addEventListener("change", function(event) {
+    const file = event.target.files[0]; // Get the selected file
+    const preview = document.getElementById("preview");
+
+    // Check if a file is selected and it's an image
+    if (file && file.type.startsWith("image/")) {
+        // Create a URL for the image and set it as the preview source
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+            preview.src = e.target.result; // Set image preview source
+            preview.classList.remove("hidden"); // Show the preview
+        };
+        
+        reader.readAsDataURL(file); // Read the image as a data URL
+    } else {
+        preview.classList.add("hidden"); // Hide preview if not an image
+        alert("Please upload a valid image file.");
+    }
+});
+
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+      const myButton = document.getElementById('paymentMethodBtn');
+      setTimeout(() => {
+       if (myButton) {
+        myButton.click();
+      }
+    }, 200);
+      
+    });
+</script>
+
+<script>
+</script>
+
+    <script>
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const container = document.getElementById("checkout-items");
+    const totalEl = document.getElementById("checkout-total");
+    const paymentTotalEl = document.getElementById("payment-total");
+
+    let total = 0;
+
+    // Clear existing (keep header)
+    container.innerHTML = "<h3 class='font-semibold'>Order Items</h3>";
+
+    if (cart.length === 0) {
+        container.innerHTML += `
+            <p class="text-gray-500 text-sm">Your cart is empty.</p>
+        `;
+    } else {
+        cart.forEach(item => {
+            const price = parseFloat(item.price.replace(/[₱,]/g, ""));
+            const subtotal = price * item.qty;
+            total += subtotal;
+
+            container.innerHTML += `
+                <div class="flex items-center justify-between p-2 border rounded-lg shadow-sm">
+                    <div class="flex items-center gap-3">
+                        <img src="${item.img}" alt="${item.title}" class="h-16 rounded-md">
+                        <div>
+                            <p class="font-semibold">${item.title}</p>
+                            <p class="text-sm text-gray-600">Quantity: ${item.qty}</p>
+                        </div>
+                    </div>
+                    <span class="font-semibold">₱${subtotal.toFixed(2)}</span>
+                </div>
+            `;
+        });
+    }
+
+    totalEl.textContent = "₱" + total.toFixed(2);
+    paymentTotalEl.textContent = "₱" + total.toFixed(2);
+});
+</script>
+
 </body>
 
 </html>
