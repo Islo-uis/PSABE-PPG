@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profile - ABECON 2025</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWixn/LLJAJ96C/C/h4R/h12f5Qo4a4a16f5c868d4d4d2d6c14c5c2a1c2a12a14e1a12e12e1c14" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #F7C469;
+    }
+
+    .container {
+      max-width: 960px;
+    }
+  </style>
+</head>
+
+<body class="bg-[#F7C469]">
+  <!-- Main Container -->
+  <div class="container mx-auto p-4 md:p-8">
+    <!-- Header -->
+    <header class="flex flex-col md:flex-row justify-between items-center bg-[#F7C469] p-4 rounded-lg mb-6">
+      <div class="flex items-center space-x-4">
+        <a href="index.html" class="text-3xl font-bold text-white tracking-wide">
+          <i class="fas fa-home"></i> ABECON 2025
+        </a>
+      </div>
+      <nav class="mt-4 md:mt-0">
+        <ul class="flex space-x-4 text-white font-medium">
+          <li><a href="profile.html" class="hover:text-gray-200">Profile</a></li>
+          <li><a href="merch.html" class="hover:text-gray-200">Merch</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Profile Card -->
+    <div class="bg-white p-6 rounded-lg shadow-xl border border-gray-200">
+      <div class="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6">
+        <img id="profile-pic-preview" class="w-32 h-32 rounded-full border-4 border-[#F7C469] shadow-md" src="https://placehold.co/128x128/FFF7E6/745217?text=U" alt="User Avatar">
+        <div class="text-center md:text-left">
+          <h1 class="text-3xl font-bold text-gray-800">User's Name</h1>
+          <p class="text-gray-500">Abecon 2025 Participant</p>
+          <div class="mt-2 text-sm text-gray-600 space-y-1">
+            <p><i class="fas fa-envelope mr-2"></i>user.email@example.com</p>
+            <p><i class="fas fa-phone mr-2"></i>(123) 456-7890</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Account Settings Section -->
+      <div class="mt-8 border-t border-gray-200 pt-6">
+        <h2 class="text-xl font-bold text-gray-800 mb-4">Account Settings</h2>
+
+        <!-- Profile Photo Upload -->
+        <div class="mb-6">
+          <label class="block text-gray-700 font-medium mb-2">Profile Photo</label>
+          <input type="file" id="profile-pic-upload" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-yellow-50 file:text-yellow-700 hover:file:bg-yellow-100">
+        </div>
+
+        <!-- Change Password Form -->
+        <form id="password-form">
+          <div class="mb-4">
+            <label for="old-password" class="block text-gray-700 font-medium mb-2">Old Password</label>
+            <input type="password" id="old-password" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#745217]" required>
+          </div>
+          <div class="mb-4">
+            <label for="new-password" class="block text-gray-700 font-medium mb-2">New Password</label>
+            <input type="password" id="new-password" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#745217]" required>
+          </div>
+          <button type="submit" class="bg-[#745217] text-white font-semibold py-2 px-6 rounded-full hover:bg-yellow-700 transition duration-300">
+            Change Password
+          </button>
+        </form>
+      </div>
+
+      <!-- Event History Section -->
+      <div class="mt-8 border-t border-gray-200 pt-6">
+        <h2 class="text-xl font-bold text-gray-800 mb-4">Event History</h2>
+        <div class="space-y-4">
+          <!-- History Item -->
+          <div class="bg-gray-50 p-4 rounded-lg flex items-center justify-between">
+            <div>
+              <p class="font-semibold text-gray-700">Hackathon</p>
+              <p class="text-sm text-gray-500">November 23, 2025</p>
+            </div>
+            <div class="flex items-center space-x-2">
+              <span class="text-sm font-semibold text-yellow-500">Rank: #5</span>
+              <span class="text-sm font-semibold text-gray-700">Score: 150</span>
+            </div>
+          </div>
+
+          <!-- History Item -->
+          <div class="bg-gray-50 p-4 rounded-lg flex items-center justify-between">
+            <div>
+              <p class="font-semibold text-gray-700">Capture the Flag</p>
+              <p class="text-sm text-gray-500">November 24, 2025</p>
+            </div>
+            <div class="flex items-center space-x-2">
+              <span class="text-sm font-semibold text-yellow-500">Rank: #1</span>
+              <span class="text-sm font-semibold text-gray-700">Score: 280</span>
+            </div>
+          </div>
+          
+          <!-- History Item -->
+          <div class="bg-gray-50 p-4 rounded-lg flex items-center justify-between">
+            <div>
+              <p class="font-semibold text-gray-700">Esports Tournament</p>
+              <p class="text-sm text-gray-500">November 25, 2025</p>
+            </div>
+            <div class="flex items-center space-x-2">
+              <span class="text-sm font-semibold text-yellow-500">Rank: #12</span>
+              <span class="text-sm font-semibold text-gray-700">Score: 90</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('profile-pic-upload').addEventListener('change', function(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById('profile-pic-preview').src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    document.getElementById('password-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      // Here you would add the logic to handle the password change.
+      // This is a client-side only example, so there's no real
+      // backend interaction.
+      const oldPassword = document.getElementById('old-password').value;
+      const newPassword = document.getElementById('new-password').value;
+
+      console.log('Old Password:', oldPassword);
+      console.log('New Password:', newPassword);
+
+      // You would likely send a request to a server here.
+      // For a real application, you'd use a server-side framework
+      // like Node.js, Python, etc. with a database.
+      
+      alert('Password change request submitted. (This is a placeholder, no real change has been made)');
+
+      // Clear the form fields after submission
+      document.getElementById('old-password').value = '';
+      document.getElementById('new-password').value = '';
+    });
+  </script>
+</body>
+
+</html>

@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <link rel="icon" href="logo.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ABECON2025 | Shop Merch</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-   
+
 </head>
+
 <body>
     <header>
         <nav class="container navbar">
@@ -27,16 +30,16 @@
                 <a href="about.html">About</a>
                 <a href="about.html">Events</a>
                 <a href="schedule.html">Schedule</a>
-                <a href="speakers.html" ><b>Merch</b></a>
+                <a href="speakers.html"><b>Merch</b></a>
             </div>
             <div class="actions">
-                
+
                 <button class="icon-btn cart-btn" id="openCart" aria-label="Cart">
                     <span class="material-symbols-outlined">shopping_cart</span>
-                    <span class="badge">0</span> 
+                    <span class="badge">0</span>
                 </button>
                 <span class="material-symbols-outlined">account_circle</span>
-                
+
             </div>
         </nav>
     </header>
@@ -44,86 +47,85 @@
     <main style="position: absolute; top: 0;">
         <section>
             <div class="hero">
-                <img src="/images/merchbanner.jpg" alt="Merch Banner" class="hero-image">    
+                <img src="/images/merchbanner.jpg" alt="Merch Banner" class="hero-image">
             </div>
         </section>
 
 
-<div id="overlay" class="overlay"></div>
+        <div id="overlay" class="overlay"></div>
 
-<!-- Cart Drawer -->
-<div id="cartDrawer" class="cart-drawer">
-  
-  <!-- Header -->
-  <div class="cart-header">
-    <button class="back-btn">
-      <span class="material-symbols-outlined" id="closeCart">arrow_back_ios</span>
-    </button>
-    <h2>Cart</h2>
-  </div>
+        <!-- Cart Drawer -->
+        <div id="cartDrawer" class="cart-drawer">
 
-  <!-- Empty Cart State -->
-  <div class="cart-empty">
-    <p>You have no items in your cart.</p>
-  </div>
+            <!-- Header -->
+            <div class="cart-header">
+                <button class="back-btn">
+                    <span class="material-symbols-outlined" id="closeCart">arrow_back_ios</span>
+                </button>
+                <h2>Cart</h2>
+            </div>
 
-  <!-- Cart Items -->
-  <div class="cart-items">
-    <!-- Item 1 -->
-    <div class="cart-item">
-      <img src="/images/product-images/image 5.png" alt="White Shirt Small">
-      <div class="item-info">
-        <p class="item-name">White Shirt Small</p>
-        <p class="item-price">₱189.00</p>
-        <div class="item-qty">
-          <button class="qty-btn">-</button>
-          <span class="qty">1</span>
-          <button class="qty-btn">+</button>
+            <!-- Empty Cart State -->
+            <div class="cart-empty">
+                <p>You have no items in your cart.</p>
+            </div>
+
+            <!-- Cart Items -->
+            <div class="cart-items">
+                <!-- Item 1 -->
+                <div class="cart-item">
+                    <img src="/images/product-images/image 5.png" alt="White Shirt Small">
+                    <div class="item-info">
+                        <p class="item-name">White Shirt Small</p>
+                        <p class="item-price">₱189.00</p>
+                        <div class="item-qty">
+                            <button class="qty-btn">-</button>
+                            <span class="qty">1</span>
+                            <button class="qty-btn">+</button>
+                        </div>
+                    </div>
+                    <button class="remove-btn">×</button>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="cart-item">
+                    <img src="/images/product-images/image 5.png" alt="White Shirt Medium">
+                    <div class="item-info">
+                        <p class="item-name">White Shirt Medium</p>
+                        <p class="item-price">₱189.00</p>
+                        <div class="item-qty">
+                            <button class="qty-btn">-</button>
+                            <span class="qty">1</span>
+                            <button class="qty-btn">+</button>
+                        </div>
+                    </div>
+                    <button class="remove-btn">×</button>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="cart-item">
+                    <img src="/images/product-images/image 5.png" alt="White Shirt Large">
+                    <div class="item-info">
+                        <p class="item-name">White Shirt Large</p>
+                        <p class="item-price">₱189.00</p>
+                        <div class="item-qty">
+                            <button class="qty-btn">-</button>
+                            <span class="qty">1</span>
+                            <button class="qty-btn">+</button>
+                        </div>
+                    </div>
+                    <button class="remove-btn">×</button>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="cart-footer">
+                <p class="total">Total <span>₱567.00</span></p>
+                <button class="checkout-btn">Checkout</button>
+            </div>
+
         </div>
-      </div>
-      <button class="remove-btn">×</button>
-    </div>
 
-    <!-- Item 2 -->
-    <div class="cart-item">
-      <img src="/images/product-images/image 5.png" alt="White Shirt Medium">
-      <div class="item-info">
-        <p class="item-name">White Shirt Medium</p>
-        <p class="item-price">₱189.00</p>
-        <div class="item-qty">
-          <button class="qty-btn">-</button>
-          <span class="qty">1</span>
-          <button class="qty-btn">+</button>
-        </div>
-      </div>
-      <button class="remove-btn">×</button>
-    </div>
-
-    <!-- Item 3 -->
-    <div class="cart-item">
-      <img src="/images/product-images/image 5.png" alt="White Shirt Large">
-      <div class="item-info">
-        <p class="item-name">White Shirt Large</p>
-        <p class="item-price">₱189.00</p>
-        <div class="item-qty">
-          <button class="qty-btn">-</button>
-          <span class="qty">1</span>
-          <button class="qty-btn">+</button>
-        </div>
-      </div>
-      <button class="remove-btn">×</button>
-    </div>
-  </div>
-
-  <!-- Footer -->
-  <div class="cart-footer">
-    <p class="total">Total <span>₱567.00</span></p>
-    <button class="checkout-btn">Checkout</button>
-  </div>
-
-</div>
-
-       
 
         <section class="container merch-section">
             <h1 style="font-size: larger; padding-bottom: 50px;">Shop Our Exclusive Merch</h1>
@@ -146,7 +148,7 @@
                     </button>
                 </div>
 
-  <!-- Product Card -->
+                <!-- Product Card -->
                 <div class="product-card">
                     <div class="product-image">
                         <img src="/images/product-images/image 5.png" alt="White Shirt Small">
@@ -161,7 +163,7 @@
                         Add to cart
                     </button>
                 </div>
-  <!-- Product Card -->
+                <!-- Product Card -->
                 <div class="product-card">
                     <div class="product-image">
                         <img src="/images/product-images/image 5.png" alt="White Shirt Small">
@@ -176,54 +178,7 @@
                         Add to cart
                     </button>
                 </div>
-  <!-- Product Card -->
-                <div class="product-card">
-                    <div class="product-image">
-                        <img src="/images/product-images/image 5.png" alt="White Shirt Small">
-                    </div>
-                    <h3 class="product-title" id="prod-name">White Shirt Small Medium Large</h3>
-                    <div class="meta-row">
-                        <span class="price" id="prod-price">₱189.00</span>
-                        <span class="qty">Qty: <span id="prod-qty">13</span></span>
-                    </div>
-                    <button class="add-cart-btn">
-                        <span class="material-symbols-outlined">add_shopping_cart</span>
-                        Add to cart
-                    </button>
-                </div>
-
-           
-  <!-- Product Card -->
-                <div class="product-card">
-                    <div class="product-image">
-                        <img src="/images/product-images/image 5.png" alt="White Shirt Small">
-                    </div>
-                    <h3 class="product-title" id="prod-name">White Shirt Small Medium Large</h3>
-                    <div class="meta-row">
-                        <span class="price" id="prod-price">₱189.00</span>
-                        <span class="qty">Qty: <span id="prod-qty">13</span></span>
-                    </div>
-                    <button class="add-cart-btn">
-                        <span class="material-symbols-outlined">add_shopping_cart</span>
-                        Add to cart
-                    </button>
-                </div>
-  <!-- Product Card -->
-                <div class="product-card">
-                    <div class="product-image">
-                        <img src="/images/product-images/image 5.png" alt="White Shirt Small">
-                    </div>
-                    <h3 class="product-title" id="prod-name">White Shirt Small Medium Large</h3>
-                    <div class="meta-row">
-                        <span class="price" id="prod-price">₱189.00</span>
-                        <span class="qty">Qty: <span id="prod-qty">13</span></span>
-                    </div>
-                    <button class="add-cart-btn">
-                        <span class="material-symbols-outlined">add_shopping_cart</span>
-                        Add to cart
-                    </button>
-                </div>
-  <!-- Product Card -->
+                <!-- Product Card -->
                 <div class="product-card">
                     <div class="product-image">
                         <img src="/images/product-images/image 5.png" alt="White Shirt Small">
@@ -239,8 +194,8 @@
                     </button>
                 </div>
 
-           
-  <!-- Product Card -->
+
+                <!-- Product Card -->
                 <div class="product-card">
                     <div class="product-image">
                         <img src="/images/product-images/image 5.png" alt="White Shirt Small">
@@ -255,7 +210,7 @@
                         Add to cart
                     </button>
                 </div>
-  <!-- Product Card -->
+                <!-- Product Card -->
                 <div class="product-card">
                     <div class="product-image">
                         <img src="/images/product-images/image 5.png" alt="White Shirt Small">
@@ -270,7 +225,7 @@
                         Add to cart
                     </button>
                 </div>
-  <!-- Product Card -->
+                <!-- Product Card -->
                 <div class="product-card">
                     <div class="product-image">
                         <img src="/images/product-images/image 5.png" alt="White Shirt Small">
@@ -286,7 +241,54 @@
                     </button>
                 </div>
 
-           
+
+                <!-- Product Card -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="/images/product-images/image 5.png" alt="White Shirt Small">
+                    </div>
+                    <h3 class="product-title" id="prod-name">White Shirt Small Medium Large</h3>
+                    <div class="meta-row">
+                        <span class="price" id="prod-price">₱189.00</span>
+                        <span class="qty">Qty: <span id="prod-qty">13</span></span>
+                    </div>
+                    <button class="add-cart-btn">
+                        <span class="material-symbols-outlined">add_shopping_cart</span>
+                        Add to cart
+                    </button>
+                </div>
+                <!-- Product Card -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="/images/product-images/image 5.png" alt="White Shirt Small">
+                    </div>
+                    <h3 class="product-title" id="prod-name">White Shirt Small Medium Large</h3>
+                    <div class="meta-row">
+                        <span class="price" id="prod-price">₱189.00</span>
+                        <span class="qty">Qty: <span id="prod-qty">13</span></span>
+                    </div>
+                    <button class="add-cart-btn">
+                        <span class="material-symbols-outlined">add_shopping_cart</span>
+                        Add to cart
+                    </button>
+                </div>
+                <!-- Product Card -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="/images/product-images/image 5.png" alt="White Shirt Small">
+                    </div>
+                    <h3 class="product-title" id="prod-name">White Shirt Small Medium Large</h3>
+                    <div class="meta-row">
+                        <span class="price" id="prod-price">₱189.00</span>
+                        <span class="qty">Qty: <span id="prod-qty">13</span></span>
+                    </div>
+                    <button class="add-cart-btn">
+                        <span class="material-symbols-outlined">add_shopping_cart</span>
+                        Add to cart
+                    </button>
+                </div>
+
+
 
             </div>
         </section>
@@ -301,32 +303,33 @@
             <div class="footer-section">
                 <h3>Contact</h3>
                 <p>Email:</p>
-                </div>
+            </div>
         </div>
-        </footer>
-    
+    </footer>
 
-        <script>
-const cartDrawer = document.getElementById("cartDrawer");
-const overlay = document.getElementById("overlay");
-const openCart = document.getElementById("openCart");
-const closeCart = document.getElementById("closeCart");
 
-openCart.addEventListener("click", () => {
-  cartDrawer.classList.add("active");
-  overlay.classList.add("active");
-  document.body.classList.add("no-scroll");
-});
+    <script>
+        const cartDrawer = document.getElementById("cartDrawer");
+        const overlay = document.getElementById("overlay");
+        const openCart = document.getElementById("openCart");
+        const closeCart = document.getElementById("closeCart");
 
-function closeCartDrawer() {
-  cartDrawer.classList.remove("active");
-  overlay.classList.remove("active");
-  document.body.classList.remove("no-scroll");
-}
+        openCart.addEventListener("click", () => {
+            cartDrawer.classList.add("active");
+            overlay.classList.add("active");
+            document.body.classList.add("no-scroll");
+        });
 
-closeCart.addEventListener("click", closeCartDrawer);
-overlay.addEventListener("click", closeCartDrawer);
+        function closeCartDrawer() {
+            cartDrawer.classList.remove("active");
+            overlay.classList.remove("active");
+            document.body.classList.remove("no-scroll");
+        }
 
-        </script>
+        closeCart.addEventListener("click", closeCartDrawer);
+        overlay.addEventListener("click", closeCartDrawer);
+
+    </script>
 </body>
+
 </html>

@@ -65,29 +65,28 @@
             height: 100%;
             position: relative;
         }
-
-        /* Seminar card carousel styles */
-        .seminar-card-container {
+        
+        /* --- START: Styles for New Event/Seminar Design --- */
+        .events-carousel {
             display: flex;
             overflow-x: auto;
             scroll-snap-type: x mandatory;
             -webkit-overflow-scrolling: touch;
         }
-
-        .seminar-card-container::-webkit-scrollbar {
-            display: none;
+        .events-carousel::-webkit-scrollbar {
+            display: none; /* Hide scrollbar */
         }
-
-        .seminar-card {
-            flex: 0 0 100%;
-            scroll-snap-align: start;
+        .event-card-new {
+            flex: 0 0 80%;
+            scroll-snap-align: center;
+            margin-right: 1rem;
         }
-
-        @media (min-width: 768px) {
-            .seminar-card {
-                flex: 0 0 calc(100% / 3);
+        @media (min-width: 640px) {
+            .event-card-new {
+                flex-basis: 300px;
             }
         }
+        /* --- END: Styles for New Event/Seminar Design --- */
 
         /* Custom Nav Styles for Scroll Effect */
         .nav-transparent {
@@ -261,101 +260,110 @@
             </section>
 
 
-            <div class="container mx-auto px-4 py-12">
-                <section id="events" class="fade-in-hidden">
-                    <div class="flex items-center gap-4 mb-8">
-                        <div class="flex-shrink-0 w-10 h-10 yellow-gradient-bg rounded-lg p-1 grid place-content-center">
-                             <i class="fa-solid fa-calendar-star text-white text-xl"></i>
+            <div class="bg-[#FDEFB2]/30 py-16 lg:py-24">
+                <div class="container mx-auto px-4">
+                    <section id="events" class="fade-in-hidden">
+                        <div class="text-center mb-12">
+                            <h2 class="text-4xl md:text-5xl font-extrabold tracking-wide text-yellow-gradient">Featured Events</h2>
+                            <p class="mt-4 text-lg text-gray-600">Join us for these exciting events during the conference.</p>
                         </div>
-                        <h2 class="text-3xl md:text-4xl font-bold text-gray-700 tracking-wider">EVENTS</h2>
-                    </div>
 
-                    <div class="relative">
-                        <div id="carousel-container" class="w-full overflow-hidden">
-                            <div id="carousel-track" class="flex transition-transform duration-500 ease-in-out">
-                                </div>
-                        </div>
-                        <button id="next-btn" class="absolute top-1/2 -translate-y-1/2 -right-4 md:right-0 text-gray-600 hover:text-orange-500 transition-colors duration-300 z-10 bg-white/80 rounded-full p-2 shadow-md backdrop-blur-sm hover:scale-110">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="m9 18 6-6-6-6" />
-                            </svg>
-                        </button>
-                    </div>
-                </section>
-
-                <section id="seminars" class="mt-20 fade-in-hidden">
-                    <div class="flex items-center gap-4 mb-8">
-                         <div class="flex-shrink-0 w-10 h-10 yellow-gradient-bg rounded-lg p-1 grid place-content-center">
-                             <i class="fa-solid fa-person-chalkboard text-white text-xl"></i>
-                        </div>
-                        <h2 class="text-3xl md:text-4xl font-bold text-gray-700 tracking-wider">SEMINAR SESSIONS</h2>
-                    </div>
-
-                    <div class="relative">
-                        <div class="seminar-card-container w-full -mx-4">
-                            <div class="seminar-card p-4">
-                                <div class="bg-white rounded-xl shadow-lg p-6 h-full flex flex-col">
-                                    <h3 class="text-xl font-bold text-gray-800 mb-2">AI in Agriculture</h3>
-                                    <p class="text-gray-600 mb-4 flex-grow">Innovations in smart farming and crop management.</p>
-                                    <img src="https://placehold.co/600x400/4d5a6e/ffffff?text=AI" alt="AI in Agriculture" class="w-full h-40 object-cover rounded-lg mb-4">
-                                    <button class="register-button green-gradient-bg text-white font-bold py-2 px-4 rounded-full w-full hover:brightness-110 transition-colors" data-seminar="ai">
-                                        Register
-                                    </button>
+                        <div class="events-carousel pb-4">
+                            <div class="event-card-new">
+                                <div class="w-full h-64 rounded-xl p-6 flex flex-col justify-between text-white shadow-lg bg-[#D1D1D1] transition-transform duration-300 hover:scale-105">
+                                    <div>
+                                        <h3 class="text-4xl font-extrabold uppercase tracking-wider text-gray-700">Mixer</h3>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-gray-800">Corporate Mixer</h4>
+                                        <p class="text-sm text-gray-700">Network with industry leaders.</p>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="seminar-card p-4">
-                                <div class="bg-white rounded-xl shadow-lg p-6 h-full flex flex-col">
-                                    <h3 class="text-xl font-bold text-gray-800 mb-2">Sustainable Farming</h3>
-                                    <p class="text-gray-600 mb-4 flex-grow">Eco-friendly practices for a greener future.</p>
-                                    <img src="https://placehold.co/600x400/e29b6a/ffffff?text=Sustainable" alt="Sustainable Farming" class="w-full h-40 object-cover rounded-lg mb-4">
-                                    <button class="register-button green-gradient-bg text-white font-bold py-2 px-4 rounded-full w-full hover:brightness-110 transition-colors" data-seminar="sustainable">
-                                        Register
-                                    </button>
+                            <div class="event-card-new">
+                                <div class="w-full h-64 rounded-xl p-6 flex flex-col justify-between text-white shadow-lg bg-[#2D7A8D] transition-transform duration-300 hover:scale-105">
+                                    <div><h3 class="text-4xl font-extrabold uppercase tracking-wider">Party</h3></div>
+                                    <div>
+                                        <h4 class="font-bold">New Year Party</h4>
+                                        <p class="text-sm opacity-90">Celebrate the new year with a grand party.</p>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="seminar-card p-4">
-                                <div class="bg-white rounded-xl shadow-lg p-6 h-full flex flex-col">
-                                    <h3 class="text-xl font-bold text-gray-800 mb-2">Biosystems Engineering</h3>
-                                    <p class="text-gray-600 mb-4 flex-grow">The role of bio-design in modern systems.</p>
-                                    <img src="https://placehold.co/600x400/d1d1d1/5e5e5e?text=Bio" alt="Biosystems Engineering" class="w-full h-40 object-cover rounded-lg mb-4">
-                                    <button class="register-button green-gradient-bg text-white font-bold py-2 px-4 rounded-full w-full hover:brightness-110 transition-colors" data-seminar="biosystems">
-                                        Register
-                                    </button>
+                            <div class="event-card-new">
+                                <div class="w-full h-64 rounded-xl p-6 flex flex-col justify-between text-white shadow-lg bg-[#F5C96B] transition-transform duration-300 hover:scale-105">
+                                    <div><h3 class="text-4xl font-extrabold uppercase tracking-wider text-gray-800">Summer</h3></div>
+                                    <div>
+                                        <h4 class="font-bold text-gray-800">Summer Fest</h4>
+                                        <p class="text-sm text-gray-700">Enjoy the sun with music and fun.</p>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="seminar-card p-4">
-                                <div class="bg-white rounded-xl shadow-lg p-6 h-full flex flex-col">
-                                    <h3 class="text-xl font-bold text-gray-800 mb-2">Water Management</h3>
-                                    <p class="text-gray-600 mb-4 flex-grow">Efficient irrigation and conservation techniques.</p>
-                                    <img src="https://placehold.co/600x400/2d7a8d/ffffff?text=Water" alt="Water Management" class="w-full h-40 object-cover rounded-lg mb-4">
-                                    <button class="register-button green-gradient-bg text-white font-bold py-2 px-4 rounded-full w-full hover:brightness-110 transition-colors" data-seminar="water">
-                                        Register
-                                    </button>
+                            <div class="event-card-new">
+                                <div class="w-full h-64 rounded-xl p-6 flex flex-col justify-between text-white shadow-lg bg-[#8D2D5A] transition-transform duration-300 hover:scale-105">
+                                    <div><h3 class="text-4xl font-extrabold uppercase tracking-wider">Charity</h3></div>
+                                    <div>
+                                        <h4 class="font-bold">Charity Ball</h4>
+                                        <p class="text-sm opacity-90">A night of giving back to the community.</p>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="seminar-card p-4">
-                                <div class="bg-white rounded-xl shadow-lg p-6 h-full flex flex-col">
-                                    <h3 class="text-xl font-bold text-gray-800 mb-2">Crop Yield Optimization</h3>
-                                    <p class="text-gray-600 mb-4 flex-grow">Maximizing output with data analytics.</p>
-                                    <img src="https://placehold.co/600x400/f5c96b/ffffff?text=Crops" alt="Crop Yield Optimization" class="w-full h-40 object-cover rounded-lg mb-4">
-                                    <button class="register-button green-gradient-bg text-white font-bold py-2 px-4 rounded-full w-full hover:brightness-110 transition-colors" data-seminar="crop-yield">
-                                        Register
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="seminar-card p-4">
-                                <div class="bg-white rounded-xl shadow-lg p-6 h-full flex flex-col">
-                                    <h3 class="text-xl font-bold text-gray-800 mb-2">Post-Harvest Tech</h3>
-                                    <p class="text-gray-600 mb-4 flex-grow">Reducing waste and improving food quality.</p>
-                                    <img src="https://placehold.co/600x400/8d2d5a/ffffff?text=Harvest" alt="Post-Harvest Technology" class="w-full h-40 object-cover rounded-lg mb-4">
-                                    <button class="register-button green-gradient-bg text-white font-bold py-2 px-4 rounded-full w-full hover:brightness-110 transition-colors" data-seminar="post-harvest">
-                                        Register
-                                    </button>
+                            <div class="event-card-new">
+                                <div class="w-full h-64 rounded-xl p-6 flex flex-col justify-between text-white shadow-lg bg-[#E29B6A] transition-transform duration-300 hover:scale-105">
+                                    <div><h3 class="text-4xl font-extrabold uppercase tracking-wider">Gala</h3></div>
+                                    <div>
+                                        <h4 class="font-bold">Gala Dinner</h4>
+                                        <p class="text-sm opacity-90">An evening of elegance and fine dining.</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </section>
+                    <section id="seminars" class="mt-20 fade-in-hidden">
+                        <div class="text-center mb-12">
+                            <h2 class="text-4xl md:text-5xl font-extrabold tracking-wide text-yellow-gradient">Seminars & Workshops</h2>
+                            <p class="mt-4 text-lg text-gray-600">Discover new insights from industry leaders.</p>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            <div class="bg-white rounded-lg shadow-md p-6 text-center border-t-4 border-[#4d5a6e] transition-transform duration-300 hover:-translate-y-2">
+                                <div class="mb-4 text-4xl text-[#4d5a6e]"><i class="fa-solid fa-microchip"></i></div>
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">AI in Agriculture</h3>
+                                <p class="text-gray-600 mb-6 h-16">Learn how AI is revolutionizing farming.</p>
+                                <button class="register-button text-white font-bold py-2 px-6 rounded-full transition-colors bg-[#4d5a6e] hover:bg-[#3e4a5c]" data-seminar="ai">Register</button>
+                            </div>
+                            <div class="bg-white rounded-lg shadow-md p-6 text-center border-t-4 border-[#6a994e] transition-transform duration-300 hover:-translate-y-2">
+                                <div class="mb-4 text-4xl text-[#6a994e]"><i class="fa-solid fa-leaf"></i></div>
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">Sustainable Farming</h3>
+                                <p class="text-gray-600 mb-6 h-16">Eco-friendly practices for a greener future.</p>
+                                <button class="register-button text-white font-bold py-2 px-6 rounded-full transition-colors bg-[#6a994e] hover:bg-[#567d40]" data-seminar="sustainable">Register</button>
+                            </div>
+                            <div class="bg-white rounded-lg shadow-md p-6 text-center border-t-4 border-[#a5a58d] transition-transform duration-300 hover:-translate-y-2">
+                                <div class="mb-4 text-4xl text-[#a5a58d]"><i class="fa-solid fa-dna"></i></div>
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">Biosystems Engineering</h3>
+                                <p class="text-gray-600 mb-6 h-16">Exploring the future of biological systems.</p>
+                                <button class="register-button text-white font-bold py-2 px-6 rounded-full transition-colors bg-[#a5a58d] hover:bg-[#8a8a73]" data-seminar="biosystems">Register</button>
+                            </div>
+                            <div class="bg-white rounded-lg shadow-md p-6 text-center border-t-4 border-[#2d7a8d] transition-transform duration-300 hover:-translate-y-2">
+                                <div class="mb-4 text-4xl text-[#2d7a8d]"><i class="fa-solid fa-droplet"></i></div>
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">Water Management</h3>
+                                <p class="text-gray-600 mb-6 h-16">Efficient use of water resources in agriculture.</p>
+                                <button class="register-button text-white font-bold py-2 px-6 rounded-full transition-colors bg-[#2d7a8d] hover:bg-[#235f6e]" data-seminar="water">Register</button>
+                            </div>
+                            <div class="bg-white rounded-lg shadow-md p-6 text-center border-t-4 border-[#f5c96b] transition-transform duration-300 hover:-translate-y-2">
+                                <div class="mb-4 text-4xl text-[#f5c96b]"><i class="fa-solid fa-chart-line"></i></div>
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">Maximizing Crop Yield</h3>
+                                <p class="text-gray-600 mb-6 h-16">Techniques for increasing agricultural productivity.</p>
+                                <button class="register-button text-gray-800 font-bold py-2 px-6 rounded-full transition-colors bg-[#f5c96b] hover:bg-[#eab34b]" data-seminar="crop-yield">Register</button>
+                            </div>
+                            <div class="bg-white rounded-lg shadow-md p-6 text-center border-t-4 border-[#8d2d5a] transition-transform duration-300 hover:-translate-y-2">
+                                <div class="mb-4 text-4xl text-[#8d2d5a]"><i class="fa-solid fa-warehouse"></i></div>
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">Post-Harvest Technology</h3>
+                                <p class="text-gray-600 mb-6 h-16">Innovations in food preservation and storage.</p>
+                                <button class="register-button text-white font-bold py-2 px-6 rounded-full transition-colors bg-[#8d2d5a] hover:bg-[#722448]" data-seminar="post-harvest">Register</button>
+                            </div>
+                        </div>
 
+                    </section>
                     <div id="registration-modal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center p-4 hidden z-50">
                         <div class="bg-white rounded-xl shadow-2xl p-6 w-full max-w-md relative">
                             <button class="close-modal-button absolute top-4 right-4 text-gray-500 hover:text-gray-800 transition-colors">
@@ -372,8 +380,10 @@
                             <button class="green-gradient-bg text-white font-bold py-3 px-6 rounded-full mt-6 w-full hover:brightness-110 transition-colors">Confirm Registration</button>
                         </div>
                     </div>
-                </section>
+                </div>
+            </div>
 
+            <div class="container mx-auto px-4 py-12">
                 <section id="schedule" class="mt-20 fade-in-hidden">
                     <div class="flex items-center gap-4 mb-8">
                          <div class="flex-shrink-0 w-10 h-10 yellow-gradient-bg rounded-lg p-1 grid place-content-center">
@@ -594,70 +604,17 @@
         // --- HERO CAROUSEL SCRIPT ---
         const heroTrack = document.getElementById('hero-carousel-track');
         if (heroTrack) {
-            let heroSlideInterval = setInterval(() => advanceHeroCarousel(), 4000);
+            let heroSlideInterval;
             const heroSlides = Array.from(heroTrack.children);
             const totalHeroSlides = heroSlides.length;
             let currentHeroIndex = 0;
 
-            function advanceHeroCarousel() {
+            const advanceHeroCarousel = () => {
                 currentHeroIndex = (currentHeroIndex + 1) % totalHeroSlides;
                 heroTrack.style.transform = `translateX(-${currentHeroIndex * 100}%)`;
             };
-        }
-
-        // --- EVENTS CAROUSEL SCRIPT ---
-        const eventsTrack = document.getElementById('carousel-track');
-        const eventsNextButton = document.getElementById('next-btn');
-        if (eventsTrack && eventsNextButton) {
-            const eventData = [
-                { name: 'Gala Dinner', description: 'An evening of elegance and fine dining.', img: 'https://placehold.co/600x800/e29b6a/ffffff?text=Gala' },
-                { name: 'Wine Tasting', description: 'Explore exquisite wines from around the world.', img: 'https://placehold.co/600x800/4d5a6e/ffffff?text=Wine' },
-                { name: 'Corporate Mixer', description: 'Network with industry leaders.', img: 'https://placehold.co/600x800/d1d1d1/5e5e5e?text=Mixer' },
-                { name: 'New Year Party', description: 'Celebrate the new year with a grand party.', img: 'https://placehold.co/600x800/2d7a8d/ffffff?text=Party' },
-                { name: 'Summer Fest', description: 'Enjoy the sun with music and fun.', img: 'https://placehold.co/600x800/f5c96b/ffffff?text=Summer' },
-                { name: 'Charity Ball', description: 'A night of giving back to the community.', img: 'https://placehold.co/600x800/8d2d5a/ffffff?text=Charity' }
-            ];
-
-            const createCard = (event) => `
-                <div class="event-card flex-shrink-0 w-64 md:w-72 p-2">
-                    <div class="w-full h-[400px] rounded-2xl overflow-hidden shadow-lg relative group cursor-pointer">
-                        <img src="${event.img}" alt="${event.name}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
-                        <div class="absolute bottom-0 left-0 right-0 yellow-gradient-bg p-4 rounded-b-2xl text-white backdrop-blur-sm bg-black/20">
-                            <h3 class="text-xl font-bold truncate">${event.name}</h3>
-                            <p class="text-sm text-yellow-50">${event.description}</p>
-                        </div>
-                    </div>
-                </div>`;
-
-            const allCardsData = [...eventData, ...eventData];
-            eventsTrack.innerHTML = allCardsData.map(createCard).join('');
-
-            let cardWidth = eventsTrack.children[0].offsetWidth;
-            let currentIndex = 0;
-            let slideInterval = setInterval(advanceCarousel, 3000);
-
-            function advanceCarousel() {
-                currentIndex++;
-                eventsTrack.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
-                eventsTrack.style.transform = `translateX(${-currentIndex * cardWidth}px)`;
-
-                if (currentIndex >= eventData.length) {
-                    setTimeout(() => {
-                        eventsTrack.style.transition = 'none';
-                        currentIndex = 0;
-                        eventsTrack.style.transform = `translateX(0px)`;
-                    }, 500);
-                }
-            };
-
-            eventsNextButton.addEventListener('click', advanceCarousel);
-            window.addEventListener('resize', () => {
-                if (eventsTrack.children.length > 0) {
-                    cardWidth = eventsTrack.children[0].offsetWidth;
-                    eventsTrack.style.transition = 'none';
-                    eventsTrack.style.transform = `translateX(${-currentIndex * cardWidth}px)`;
-                }
-            });
+            
+            heroSlideInterval = setInterval(advanceHeroCarousel, 4000);
         }
         
         // --- FADE-IN ON SCROLL SCRIPT ---
@@ -691,7 +648,7 @@
                     const seminarKey = button.dataset.seminar;
                     const details = seminarDetails[seminarKey];
                     if (details) {
-                        document.getElementById('modal-title').textContent = `Register for ${button.closest('.bg-white').querySelector('h3').textContent}`;
+                        document.getElementById('modal-title').textContent = `Register for ${button.closest('div').querySelector('h3').textContent}`;
                         document.getElementById('modal-venue').textContent = details.venue;
                         document.getElementById('modal-time').textContent = details.time;
                         document.getElementById('modal-slots').textContent = `${details.slots} available`;
