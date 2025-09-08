@@ -114,7 +114,8 @@
                     <span>Total</span>
                     <span id="cart-total">₱0.00</span>
                 </div>
-                <button id="checkoutBtn" class="w-full bg-green-700 hover:bg-green-800 text-white font-semibold py-2 rounded-lg">Checkout</button>
+                <button id="checkoutBtn"
+                    class="w-full bg-green-700 hover:bg-green-800 text-white font-semibold py-2 rounded-lg">Checkout</button>
             </div>
 
         </div>
@@ -376,16 +377,16 @@
         });
 
         function toggleCheckoutButton() {
-    const checkoutBtn = document.getElementById("checkoutBtn");
+            const checkoutBtn = document.getElementById("checkoutBtn");
 
-    if (cart.length === 0) {
-        checkoutBtn.disabled = true; // Disable the button
-        checkoutBtn.classList.add('opacity-50', 'cursor-not-allowed');
-    } else {
-        checkoutBtn.disabled = false; // Enable the button
-        checkoutBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-    }
-}
+            if (cart.length === 0) {
+                checkoutBtn.disabled = true; // Disable the button
+                checkoutBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            } else {
+                checkoutBtn.disabled = false; // Enable the button
+                checkoutBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+        }
 
 
 
@@ -404,7 +405,7 @@
         function updateCartCount() {
             const count = cart.reduce((sum, item) => sum + item.qty, 0);
             document.getElementById("cart-count").textContent = count;
-            
+
         }
 
         function renderCartItems() {
@@ -474,12 +475,12 @@
         renderCartItems();
 
         document.getElementById("checkoutBtn").addEventListener("click", () => {
-    // Save the cart to localStorage (already done in your code)
-    localStorage.setItem("cart", JSON.stringify(cart));
-    
-    // Redirect to checkout.html
-    window.location.href = "checkout.html";
-});
+            // Save the cart to localStorage (already done in your code)
+            localStorage.setItem("cart", JSON.stringify(cart));
+
+            // Redirect to checkout.html
+            window.location.href = "checkout.html";
+        });
 
     </script>
 
