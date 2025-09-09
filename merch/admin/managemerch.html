@@ -296,38 +296,40 @@
                     </div>
 
                     <!-- Modal body -->
-                    <form action="#">
+                    <form action="" method="post" type="multipart/form-data">
                         <div class="grid gap-4 mb-4 sm:grid-cols-2">
                             <div>
-                                <label for="name" class="block mb-2 text-sm font-medium text-gray-900 ">Product
+                                <label for="prod_name" class="block mb-2 text-sm font-medium text-gray-900 ">Product
                                     Name</label>
-                                <input type="text" maxlength="30" maxlength="30" name="name" id="name"
+                                <input type="text" maxlength="30" maxlength="30" name="prod_name" id="prod_name"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
-                                    placeholder="Type product name" required>
+                                    placeholder="Enter product name" required>
                             </div>
 
 
 
                             <div>
-                                <label for="price" class="block mb-2 text-sm font-medium text-gray-900 ">Price</label>
-                                <input type="number" step="1" name="price" id="price"
+                                <label for="prod_price" class="block mb-2 text-sm font-medium text-gray-900 ">Price</label>
+                                <input type="number" step="1" name="prod_price" id="prod_price"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                                     placeholder="$2999" required
                                     onkeydown="if(['e','E','+','-'].includes(event.key)) event.preventDefault()">
                             </div>
 
                             <div>
-                                <label for="quantity" class="block mb-2 text-sm font-medium text-gray-900 ">Item
+                                <label for="prod_qty" class="block mb-2 text-sm font-medium text-gray-900 ">Item
                                     Quantity
                                     (PCS)</label>
-                                <input type="number" step="1" name="weight" id="weight"
+                                <input type="number" step="1" name="prod_qty" id="prod_qty"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                                     placeholder="E.g. 23" required
                                     onkeydown="if(['e','E','+','-'].includes(event.key)) event.preventDefault()">
                             </div>
-                            <div class="sm:col-span-2"><label for="description"
-                                    class="block mb-2 text-sm font-medium text-gray-900 ">Description</label><textarea
-                                    id="description" rows="4"
+                            <div class="sm:col-span-2">
+                                <label for="prod_description"
+                                    class="block mb-2 text-sm font-medium text-gray-900 ">Description</label>
+                                    <textarea
+                                    id="prod_description" rows="4"
                                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 "
                                     placeholder="Write product description here"></textarea></div>
                         </div>
@@ -341,7 +343,11 @@
                                 <div class="w-full" data-hs-file-upload='{
                                     "url": "/upload",
                                     "acceptedFiles": "image/*",
-                                    "autoHideTrigger": false,
+                                    "maxFiles": 3,
+                                    "maxFileSize": 2000000,
+                                    "autoHideTrigger": true,
+                                    "thumbnailMethod": "crop",
+                                    "uploadMultiple": true,
                                     "extensions": {
                                         "default": {
                                         "class": "shrink-0 size-5"
@@ -355,6 +361,7 @@
                                         "csv": {
                                         "icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 22h14a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v4\"/><path d=\"M14 2v4a2 2 0 0 0 2 2h4\"/><path d=\"m5 12-3 3 3 3\"/><path d=\"m9 18 3-3-3-3\"/></svg>",
                                         "class": "shrink-0 size-5"
+                                        
                                         }
                                     }
                                     }'>
@@ -430,6 +437,7 @@
 
 
                         </div>
+                        
                         <div class="items-center flex justify-center space-y-4 sm:flex sm:space-y-0 sm:space-x-4">
                             <button type="submit"
                                 class="w-full sm:w-auto justify-center text-white items-center inline-flex center bg-blue-400 border-gray-200 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">
