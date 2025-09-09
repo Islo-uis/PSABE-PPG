@@ -12,7 +12,7 @@ class dboperations {
     }
 
     // Insert a record
-  public function addproduct( $prod_name, $prod_description, $prod_price, $prod_qty, $photo_url, $doer_name) {
+  public function addproduct($prod_name, $prod_description, $prod_price, $prod_qty, $photo_url, $doer_name) {
 
         $target =  $_SERVER['DOCUMENT_ROOT'] . '/images/product-images/';
         $upload_done = 1;

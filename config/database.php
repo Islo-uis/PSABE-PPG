@@ -15,7 +15,7 @@ class Database {
     private function connect() {
         $this->conn = new mysqli($this->host, $this->username, $this->password, $this->dbname);
         if ($this->conn->connect_error) {
-            die("Connection failed: " . $this->conn->connect_error);
+            throw new Exception("Connection failed: " . $this->conn->connect_error);
         }
     }
 
@@ -28,8 +28,15 @@ class Database {
     private function __clone() {}
 
 
+ // Prevent from being unserialized (Singleton Pattern)
+    private function __wakeup() {}
 
+    // Destructor to close the connection
+    public function __destruct() {
+        if ($this->conn) {
+            $this->conn->close();
+        }
+    }
     
 }
-
-
+?>
