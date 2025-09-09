@@ -120,11 +120,21 @@
                     <h1 class="text-4xl md:text-5xl font-bold mb-4" style="margin-top: 5px;">Welcome!<br>ABECON 2025
                     </h1>
 
-                    <p class="text-sm text-white/80">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nisi risus.
                     </p>
+
+                    <!-- GCash QR Code Section -->
+                    <div
+                        class="bg-white/10 backdrop-blur-sm p-4 rounded-xl inline-flex flex-col items-center justify-center text-center">
+                        <p class="text-white font-semibold mb-2">Scan to Pay via GCash</p>
+                        <div class="w-32 h-32 bg-white rounded-lg flex items-center justify-center">
+                            <span class="text-gray-400 text-xs">GCash QR Placeholder</span>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+
 
             <div class="right-panel">
                 <form action="#" method="POST" class="w-full">
@@ -172,6 +182,7 @@
                             class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#9BBE3C] focus:border-transparent transition-colors duration-200">
                     </div>
 
+<<<<<<< HEAD
                     <!-- Upload -->
                     <div class="text-left mb-4">
                         <label class="block mb-1 text-sm font-medium">ID Picture</label>
@@ -205,8 +216,25 @@
                             <!-- File Input -->
                             <input required type="file" id="receipt-input"
                                 class="absolute inset-0 opacity-0 cursor-pointer" accept="image/jpeg, image/png" />
+=======
+                    <div class="mb-4 flex gap-x-4">
+                        <div class="w-1/2">
+                            <label for="file_upload" class="block text-sm font-medium text-gray-700 mb-2">
+                                ID Picture</label>
+                            <input type="file" id="file_upload" name="file_upload"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#9BBE3C] focus:border-transparent transition-colors duration-200">
+>>>>>>> bca65ad24989797fad0d2de430691be5bfa32596
                         </div>
+
+                        <div class="w-1/2">
+                            <label for="file_upload" class="block text-sm font-medium text-gray-700 mb-2">
+                                GCash Receipt</label>
+                            <input type="file" id="file_upload" name="file_upload"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#9BBE3C] focus:border-transparent transition-colors duration-200">
+                        </div>
+
                     </div>
+
                     <div class="mb-4">
                         <label for="password" class="sr-only">Gcash Transaction Number</label>
                         <input type="password" id="password" name="password" placeholder="Gcash Transaction Number"
@@ -271,6 +299,7 @@
         </div>
     </div>
 
+<<<<<<< HEAD
     <script>
         document.getElementById("receipt-input").addEventListener("change", function (event) {
             const file = event.target.files[0]; // Get the selected file
@@ -324,6 +353,8 @@
         });
     </script>
 
+=======
+>>>>>>> bca65ad24989797fad0d2de430691be5bfa32596
 </body>
 
 </html>
