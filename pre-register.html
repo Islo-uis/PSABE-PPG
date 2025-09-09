@@ -172,13 +172,22 @@
                             class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#9BBE3C] focus:border-transparent transition-colors duration-200">
                     </div>
 
-                    <div class="mb-4">
-                        <label for="file_upload" class="block text-sm font-medium text-gray-700 mb-2">
-                            ID Picture</label>
-                        <input type="file" id="file_upload" name="file_upload"
-                            class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#9BBE3C] focus:border-transparent transition-colors duration-200">
+                    <!-- Upload -->
+                    <div class="text-left mb-4">
+                        <label class="block mb-1 text-sm font-medium">ID Picture</label>
+                        <div
+                            class="relative border-2 border-dashed rounded-lg p-6 flex flex-col items-center justify-center text-gray-500">
 
-
+                            <!-- Preview Image (hidden by default) -->
+                            <img id="profile-preview" class="hidden mb-2 w-full h-auto rounded-md" alt="Preview Image" />
+                            <div id="profileinput" class="flex flex-col items-center justify-center">
+                                <span class="material-symbols-outlined text-3xl">image</span>
+                                <p class="text-xs mt-2">Click to upload</p>
+                            </div>
+                            <!-- File Input -->
+                            <input required type="file" id="profile-input"
+                                class="absolute inset-0 opacity-0 cursor-pointer" accept="image/jpeg, image/png" />
+                        </div>
                     </div>
 
                     <!-- Upload -->
@@ -188,13 +197,13 @@
                             class="relative border-2 border-dashed rounded-lg p-6 flex flex-col items-center justify-center text-gray-500">
 
                             <!-- Preview Image (hidden by default) -->
-                            <img id="preview" class="hidden mb-2 w-full h-auto rounded-md" alt="Preview Image" />
-                            <div id="photoinput" class="flex flex-col items-center justify-center">
+                            <img id="gcash-preview" class="hidden mb-2 w-full h-auto rounded-md" alt="Preview Image" />
+                            <div id="receiptinput" class="flex flex-col items-center justify-center">
                                 <span class="material-symbols-outlined text-3xl">image</span>
                                 <p class="text-xs mt-2">Click to upload</p>
                             </div>
                             <!-- File Input -->
-                            <input required type="file" id="file-input"
+                            <input required type="file" id="receipt-input"
                                 class="absolute inset-0 opacity-0 cursor-pointer" accept="image/jpeg, image/png" />
                         </div>
                     </div>
@@ -265,8 +274,8 @@
     <script>
         document.getElementById("receipt-input").addEventListener("change", function (event) {
             const file = event.target.files[0]; // Get the selected file
-            const preview = document.getElementById("preview");
-            const photoinput = document.getElementById("receipt");
+            const preview = document.getElementById("gcash-preview");
+            const photoinput = document.getElementById("receiptinput");
 
             // Check if a file is selected and it's an image
             if (file && (file.type === "image/jpeg" || file.type === "image/png")) {
@@ -288,7 +297,31 @@
 
             }
         });
+        document.getElementById("profile-input").addEventListener("change", function (event) {
+            const file = event.target.files[0]; // Get the selected file
+            const preview = document.getElementById("profile-preview");
+            const photoinput = document.getElementById("profileinput");
 
+            // Check if a file is selected and it's an image
+            if (file && (file.type === "image/jpeg" || file.type === "image/png")) {
+                // Create a URL for the image and set it as the preview source
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    preview.src = e.target.result; // Set image preview source
+                    preview.classList.remove("hidden"); // Show the preview
+
+                    photoinput.style.display = "none"; // Hide the upload prompt
+                };
+
+                reader.readAsDataURL(file); // Read the image as a data URL
+            } else {
+                preview.classList.add("hidden"); // Hide preview if not an image
+                alert("Please upload a valid image file.");
+                photoinput.style.display = "flex"; // Hide the upload prompt
+
+            }
+        });
     </script>
 
 </body>
