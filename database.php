@@ -2,7 +2,7 @@
 $db_server = "localhost";
 $db_user = "root";
 $db_pass = "";
-$db_name = "psabe";
+$db_name = "abecon";
 try {
     $conn = mysqli_connect($db_server, $db_user, $db_pass);
 } catch (mysqli_sql_exception) {
@@ -10,7 +10,7 @@ try {
 }
 
 //db creeattioonnn    
-$dbName = "CREATE DATABASE IF NOT EXISTS psabe CHARACTER SET utf8 COLLATE utf8_general_ci";
+$dbName = "CREATE DATABASE IF NOT EXISTS abecon CHARACTER SET utf8 COLLATE utf8_general_ci";
 if (mysqli_query($conn, $dbName)) {
     $conn = mysqli_connect($db_server, $db_user, $db_pass, $db_name);
 } else {
@@ -76,6 +76,9 @@ $schedule = "CREATE table if not exists schedule (
 if (! mysqli_query($conn, $schedule)) {
     die("Error creating users table: " . mysqli_error($conn));
 }
+else{
+    sched();
+}
 
 
 $merch = "CREATE table if not exists merch (
@@ -120,6 +123,34 @@ $eventSched = "CREATE table if not exists eventSched (
 if (! mysqli_query($conn, $eventSched)) {
     die("Error creating users table: " . mysqli_error($conn));
 }
+
+$user = "CREATE table if not exists user (
+    userID INT PRIMARY KEY AUTO_INCREMENT,
+    firstName TEXT NOT NULL,
+    lastName TEXT NOT NULL,
+    email TEXT NOT NULL,
+    university TEXT NOT NULL,
+    nickname TEXT NOT NULL,
+    password TEXT NOT NULL,
+    idPic TEXT NOT NULL,
+    status INT NOT NULL)
+";
+if (! mysqli_query($conn, $user)) {
+    die("Error creating users table: " . mysqli_error($conn));
+}
+
+$transactions = "CREATE table if not exists preregtransaction (
+    transactionID INT PRIMARY KEY AUTO_INCREMENT,
+    userID INT NOT NULL,
+    wave TEXT NOT NULL,
+    transactionNum TEXT NOT NULL,
+    picture TEXT NOT NULL,
+    FOREIGN KEY (userID) REFERENCES user(userID))
+";
+if (! mysqli_query($conn, $transactions)) {
+    die("Error creating users table: " . mysqli_error($conn));
+}
+
 
 
 // ('ORD-2002005', 'Emma Svensson',     
@@ -176,7 +207,36 @@ function adminAccount()
         echo "Error checking admin table: " . $conn->error;
     }
 }
+function sched()
+{
+    global $conn;
 
+    // Check how many admin rows exist
+    $sql = "SELECT COUNT(*) AS cnt FROM schedule";
+    $result = $conn->query($sql);
+
+    if ($result && ($row = $result->fetch_assoc()) && $row['cnt'] == 0) {
+        $user = "miaw.jpg";
+
+        // Prepare the INSERT
+        $stmt = $conn->prepare("INSERT INTO schedule VALUES (?)");
+        if (! $stmt) {
+            echo "Prepare failed: " . $conn->error;
+            return;
+        }
+        // Bind parameters and execute
+        $stmt->bind_param("s", $user);
+        if ($stmt->execute()) {
+            // Admin created successfully
+        } else {
+            echo "Error creating admin: " . $stmt->error;
+        }
+
+        $stmt->close();
+    } else if (!$result) {
+        echo "Error checking admin table: " . $conn->error;
+    }
+}
 
 
 mysqli_close($conn);
