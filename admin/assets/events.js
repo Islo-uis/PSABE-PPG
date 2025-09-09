@@ -49,7 +49,7 @@ function addSched() {
         contentType: false,
         data: formData,
         success: function (response) {
-            viewEventData(id)
+            window.location.href = "dashboard.html"
         },
         error: function (xhr, status, error) {
             console.error("AJAX error: " + status + " - " + error);
@@ -156,12 +156,31 @@ function viewEventSched(id) {
             let sched = response.sched;
             let name = response.name;
             console.log(sched)
-            document.getElementById("vs-title").textContent = "View Schedule for "+name;
+            document.getElementById("vs-title").textContent = "View Schedule for " + name;
             document.getElementById("asd-id").value = id;
-
+            let tableBody = document.querySelector("#vs-table tbody");
+            
+            for (let i = 0; i < sched.length; i++) {
+                console.log(sched[i].desc)
+                // Create a new row
+                let row = document.createElement("tr");
+                // Add cells
+                row.innerHTML = `
+                <td>${sched[i].desc}</td>
+                <td>${sched[i].venue}</td>
+                <td>${sched[i].date}</td>
+                <td>${sched[i].start}</td>
+                <td>${sched[i].end}</td>
+                <td><button class="btn btn-sm btn-primary">asd</button></td>
+                `;
+                // Append row to table body
+                tableBody.appendChild(row);
+            }
         },
         error: function (xhr, status, error) {
             console.error("AJAX error: " + status + " - " + error);
+            console.log("Response text: " + xhr.responseText);
         }
     });
 }
+

@@ -1034,7 +1034,7 @@ if (isset($_GET["action"])) {
 
         $id = $_POST['id'];
 
-        $sql = "SELECT schedID, eventsched.eventID, eventsched.description, venue, datee, timeStart, timeEnd from eventsched where eventID = ?";
+        $sql = "SELECT schedID, eventsched.eventID, eventsched.description, venue, datee, timeStart, timeEnd from eventsched where eventID = ? order by schedID desc";
 
         $stmt = mysqli_prepare($conn, $sql);
         mysqli_stmt_bind_param($stmt, "s", $id);
@@ -1105,12 +1105,15 @@ if (isset($_GET["action"])) {
             $end = $_POST['asd-end'];
 
             // Prepare statement for sched
-            if ($stmt = $conn->prepare("INSERT INTO events VALUES (NULL, ?, ?, 1, ?)")) {
+            if ($stmt = $conn->prepare("INSERT INTO eventsched VALUES (NULL, ?, ?, ?, ?, ?, ?, 1)")) {
                 $stmt->bind_param(
-                    "sss",
-                    $title,
+                    "ssssss",
+                    $id,
                     $description,
-                    $fileNameNew
+                    $venue,
+                    $date,
+                    $start,
+                    $end
                 );
                 $success = $stmt->execute();
                 $stmt->close();
