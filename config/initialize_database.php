@@ -67,7 +67,14 @@ $merch = "CREATE table if not exists products (
     prod_description TEXT NULL,
     prod_qty SMALLINT UNSIGNED NOT NULL,
     prod_price DECIMAL(10,2) NOT NULL,
-    prod_status ENUM('in_stock','sold_out'))
+    prod_status ENUM('in_stock','sold_out') 
+    GENERATED ALWAYS AS (
+      CASE 
+        WHEN prod_qty > 0 THEN 'in_stock'
+        ELSE 'sold_out'
+      END
+    ) STORED
+)
 ";
 if (! mysqli_query($conn, $merch)) {
     die("Error creating merch table: " . mysqli_error($conn));

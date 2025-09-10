@@ -65,7 +65,7 @@ class Database
     private function __clone() {}
 
     // Prevent from being unserialized (Singleton Pattern)
-    private function __wakeup() {}
+    public function __wakeup() {}
 
     // Destructor to close the connection
     public function __destruct()

@@ -9,15 +9,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
     <!-- <link rel="stylesheet" href="style.css"> -->
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindplus/elements@1" type="module"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/preline@latest/dist/preline.min.css" rel="stylesheet">
     <!-- Dropzone CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/basic.min.css" rel="stylesheet">
-
+    <script src="https://fonts.googleapis.com/icon?family=Material+Icons"></script>
+    <!-- Include Dropzone.js -->
+    <script src="/assets/node_modules/dropzone/dist/dropzone-min.js"></script>
+    <script src="/assets/node_modules/lodash/lodash.js"></script>
+    <script src="/assets/node_modules/@preline/file-upload/index.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Preline UI File Upload CSS -->
     <link href="https://cdn.jsdelivr.net/npm/@preline/file-upload@3.2.3/dist/index.css" rel="stylesheet">
 
@@ -233,7 +238,6 @@
                                             </div>
                                         </td>
                                     </tr>
-
                                 </tbody>
                             </table>
                         </div>
@@ -242,7 +246,7 @@
             </div>
         </section>
 
-        <!-- Delete Modal -->
+        <!-- Delete Modal
         <div id="delete-modal" tabindex="-1"
             class="fixed top-0 left-0 right-0 z-50 hidden p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
             <div class="relative w-full h-auto max-w-md max-h-full">
@@ -276,185 +280,8 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
-        <!-- End block -->
-        <div id="createProductModal" tabindex="-1" aria-hidden="true"
-            class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] md:h-full">
-            <div class="relative p-4 w-full max-w-3xl h-full md:h-auto">
-                <!-- Modal content -->
-                <div class="relative p-4 bg-white rounded-lg shadow  sm:p-5">
-                    <!-- Modal header -->
-                    <div class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 ">
-                        <h3 class="text-lg font-semibold text-gray-900 ">Add Product</h3>
-                        <button type="button"
-                            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center "
-                            data-modal-toggle="createProductModal">
-                            <span class="material-icons text-base">close</span>
-                            <span class="sr-only">Close modal</span>
-                        </button>
-                    </div>
-
-                    <!-- Modal body -->
-                    <form action="" method="post" type="multipart/form-data">
-                        <div class="grid gap-4 mb-4 sm:grid-cols-2">
-                            <div>
-                                <label for="prod_name" class="block mb-2 text-sm font-medium text-gray-900 ">Product
-                                    Name</label>
-                                <input type="text" maxlength="30" maxlength="30" name="prod_name" id="prod_name"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
-                                    placeholder="Enter product name" required>
-                            </div>
-
-
-
-                            <div>
-                                <label for="prod_price" class="block mb-2 text-sm font-medium text-gray-900 ">Price</label>
-                                <input type="number" step="1" name="prod_price" id="prod_price"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
-                                    placeholder="$2999" required
-                                    onkeydown="if(['e','E','+','-'].includes(event.key)) event.preventDefault()">
-                            </div>
-
-                            <div>
-                                <label for="prod_qty" class="block mb-2 text-sm font-medium text-gray-900 ">Item
-                                    Quantity
-                                    (PCS)</label>
-                                <input type="number" step="1" name="prod_qty" id="prod_qty"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
-                                    placeholder="E.g. 23" required
-                                    onkeydown="if(['e','E','+','-'].includes(event.key)) event.preventDefault()">
-                            </div>
-                            <div class="sm:col-span-2">
-                                <label for="prod_description"
-                                    class="block mb-2 text-sm font-medium text-gray-900 ">Description</label>
-                                    <textarea
-                                    id="prod_description" rows="4"
-                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 "
-                                    placeholder="Write product description here"></textarea></div>
-                        </div>
-
-                        <div class="mb-4">
-                            <span class="block mb-2 text-sm font-medium text-gray-900 ">Product
-                                Images</span>
-
-                            <div class="flex justify-center items-center w-full">
-
-                                <div class="w-full" data-hs-file-upload='{
-                                    "url": "/upload",
-                                    "acceptedFiles": "image/*",
-                                    "maxFiles": 3,
-                                    "maxFileSize": 2000000,
-                                    "autoHideTrigger": true,
-                                    "thumbnailMethod": "crop",
-                                    "uploadMultiple": true,
-                                    "extensions": {
-                                        "default": {
-                                        "class": "shrink-0 size-5"
-                                        },
-                                        "xls": {
-                                        "class": "shrink-0 size-5"
-                                        },
-                                        "zip": {
-                                        "class": "shrink-0 size-5"
-                                        },
-                                        "csv": {
-                                        "icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 22h14a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v4\"/><path d=\"M14 2v4a2 2 0 0 0 2 2h4\"/><path d=\"m5 12-3 3 3 3\"/><path d=\"m9 18 3-3-3-3\"/></svg>",
-                                        "class": "shrink-0 size-5"
-                                        
-                                        }
-                                    }
-                                    }'>
-                                    <template data-hs-file-upload-preview="">
-                                        <div
-                                            class="relative mt-2 p-2 bg-white border border-gray-200 rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
-                                            <img class="mb-2 w-full object-cover rounded-lg" data-dz-thumbnail="">
-
-                                            <div
-                                                class="mb-1 flex justify-between items-center gap-x-3 whitespace-nowrap">
-                                                <div class="w-10">
-                                                    <span class="text-sm text-gray-800 dark:text-white">
-                                                        <span data-hs-file-upload-progress-bar-value="">0</span>%
-                                                    </span>
-                                                </div>
-
-                                                <div class="flex items-center gap-x-2">
-                                                    <button type="button"
-                                                        class="text-gray-500 hover:text-gray-800 focus:outline-hidden focus:text-gray-800 dark:text-neutral-500 dark:hover:text-neutral-200 dark:focus:text-neutral-200"
-                                                        data-hs-file-upload-remove="">
-                                                        <svg class="shrink-0 size-3.5"
-                                                            xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                            stroke-width="2" stroke-linecap="round"
-                                                            stroke-linejoin="round">
-                                                            <path d="M3 6h18"></path>
-                                                            <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
-                                                            <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
-                                                            <line x1="10" x2="10" y1="11" y2="17"></line>
-                                                            <line x1="14" x2="14" y1="11" y2="17"></line>
-                                                        </svg>
-                                                    </button>
-                                                </div>
-                                            </div>
-
-                                            <div class="flex w-full h-2 bg-gray-200 rounded-full overflow-hidden dark:bg-neutral-700"
-                                                role="progressbar" aria-valuenow="0" aria-valuemin="0"
-                                                aria-valuemax="100" data-hs-file-upload-progress-bar="">
-                                                <div class="flex flex-col justify-center rounded-full overflow-hidden bg-blue-600 text-xs text-white text-center whitespace-nowrap transition-all duration-500 hs-file-upload-complete:bg-green-500"
-                                                    style="width: 0" data-hs-file-upload-progress-bar-pane=""></div>
-                                            </div>
-                                        </div>
-                                    </template>
-
-                                    <div class="cursor-pointer p-12 flex justify-center bg-white border border-dashed border-gray-300 rounded-xl dark:bg-neutral-800 dark:border-neutral-600"
-                                        data-hs-file-upload-trigger="">
-                                        <div class="text-center">
-                                            <span class="inline-flex justify-center items-center size-16">
-                                                <span class="material-icons text-6xl text-blue-300">
-                                                    add_photo_alternate
-                                                </span>
-                                            </span>
-
-                                            <div class="mt-4 flex flex-wrap justify-center text-sm/6 text-gray-600">
-                                                <span class="pe-1 font-medium text-gray-800 dark:text-neutral-200">
-                                                    Drop product images or
-                                                </span>
-                                                <span
-                                                    class="bg-white font-semibold text-blue-600 hover:text-blue-700 rounded-lg decoration-2 hover:underline focus-within:outline-hidden focus-within:ring-2 focus-within:ring-blue-600 focus-within:ring-offset-2 dark:bg-neutral-800 dark:text-blue-500 dark:hover:text-blue-600">browse</span>
-                                            </div>
-
-                                            <p class="mt-1 text-xs text-gray-400 dark:text-neutral-400">
-                                                Pick a file up to 2MB.
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                    <div class="grid grid-cols-4 gap-x-2 empty:gap-0" data-hs-file-upload-previews="">
-                                    </div>
-                                </div>
-
-                            </div>
-
-
-                        </div>
-                        
-                        <div class="items-center flex justify-center space-y-4 sm:flex sm:space-y-0 sm:space-x-4">
-                            <button type="submit"
-                                class="w-full sm:w-auto justify-center text-white items-center inline-flex center bg-blue-400 border-gray-200 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">
-                                <span class="material-icons mr-2">add</span>
-
-                                Add product</button>
-
-                            <button data-modal-toggle="createProductModal" type="button"
-                                class="w-full justify-center sm:w-auto text-gray-500 inline-flex items-center bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-primary-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 ">
-                                <span class="material-icons text-base mr-2">close</span>
-                                Discard
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
 
         <!-- drawer component -->
         <form action="#" id="drawer-update-product"
@@ -508,7 +335,7 @@
                             onkeydown="if(['e','E','+','-'].includes(event.key)) event.preventDefault()"
                             name="item-quantity" id="item-quantity"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
-                            value=" " placeholder="">
+                            value="" placeholder="">
                     </div>
                     <div>
                         <label for="status" class="block mb-2 text-sm font-medium text-gray-900 ">Status</label>
@@ -592,46 +419,219 @@
             </div>
         </form>
 
-        <button data-modal-target="popup-modal" data-modal-toggle="popup-modal"
-            class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            type="button">
-            Toggle modal
-        </button>
 
-        <div id="popup-modal" tabindex="-1"
-            class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-            <div class="relative p-4 w-full max-w-md max-h-full">
-                <div class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
-                    <button type="button"
-                        class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                        data-modal-hide="popup-modal">
-                        <span class="material-icons text-base">close</span>
-                        <span class="sr-only">Close modal</span>
-                    </button>
-                    <div class="p-4 md:p-5 text-center">
-                        <span class="material-icons text-4xl text-gray-400">add_circle</span>
-                        <h3 class="mb-5 text-sm font-normal text-gray-500 dark:text-gray-400">Are you sure you want to
-                            add this product?</h3>
-                        <button data-modal-hide="popup-modal" type="button"
-                            class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
-                            Yes, I'm sure
+        <!-- End block -->
+        <div id="createProductModal" tabindex="-1" aria-hidden="true"
+            class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] md:h-full">
+            <div class="relative p-4 w-full max-w-3xl h-full md:h-auto">
+                <!-- Modal content -->
+                <div class="relative p-4 bg-white rounded-lg shadow  sm:p-5">
+
+                    <!-- Modal header -->
+                    <div class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 ">
+                        <h3 class="text-lg font-semibold text-gray-900 ">Add Product</h3>
+                        <button type="button"
+                            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center "
+                            data-modal-toggle="createProductModal">
+                            <span class="material-icons text-base">close</span>
+                            <span class="sr-only">Close modal</span>
                         </button>
-                        <button data-modal-hide="popup-modal" type="button"
-                            class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">No,
-                            cancel</button>
                     </div>
+
+
+
+
+                    <!-- Modal body -->
+                    <form id="addProductForm" action="upload.php" method="post" enctype="multipart/form-data">
+                        <div class="grid gap-4 mb-4 sm:grid-cols-2">
+                            <div>
+                                <label for="prod_name" class="block mb-2 text-sm font-medium text-gray-900 ">Product
+                                    Name</label>
+                                <input type="text" maxlength="30" maxlength="30" name="prod_name" id="prod_name"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                                    placeholder="Enter product name" required>
+                            </div>
+                            <div>
+                                <label for="prod_price"
+                                    class="block mb-2 text-sm font-medium text-gray-900 ">Price</label>
+                                <input type="number" step="1" name="prod_price" id="prod_price"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                                    placeholder="$2999" required
+                                    onkeydown="if(['e','E','+','-'].includes(event.key)) event.preventDefault()">
+                            </div>
+
+                            <div>
+                                <label for="prod_qty" class="block mb-2 text-sm font-medium text-gray-900 ">Item
+                                    Quantity
+                                    (PCS)</label>
+                                <input type="number" step="1" name="prod_qty" id="prod_qty"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                                    placeholder="E.g. 23" required
+                                    onkeydown="if(['e','E','+','-'].includes(event.key)) event.preventDefault()">
+                            </div>
+                            <div class="sm:col-span-2">
+                                <label for="prod_description"
+                                    class="block mb-2 text-sm font-medium text-gray-900 ">Description</label>
+                                <textarea id="prod_description" name="prod_description" rows="4"
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 "
+                                    placeholder="Write product description here"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <span class="block mb-2 text-sm font-medium text-gray-900 ">Product
+                                Images (Maximum 3 photos only)</span>
+
+                            <div 
+                                class="flex justify-center items-center w-full">
+
+                                <div class="w-full" data-hs-file-upload='{
+                                    "url": "upload.php",
+                                    "method": "POST",
+                                    "acceptedFiles": "image/*",
+                                    "maxFiles": 3,
+                                    "maxFileSize": 2000000,
+                                    "autoHideTrigger": true,
+                                    "thumbnailMethod": "crop",
+                                    "uploadMultiple": true
+                                    }'>
+
+                                    <input type="file" id="hiddenImages" name="images[]" multiple style="display:none;" />
+
+                                    <template data-hs-file-upload-preview="">
+                                        <div
+                                            class="relative mt-2 p-2 bg-white border border-gray-200 rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
+                                            <img class="mb-2 w-full h-[150px] object-cover rounded-lg"
+                                                data-dz-thumbnail="">
+
+                                            <div
+                                                class="mb-1 flex justify-between items-center gap-x-3 whitespace-nowrap">
+                                                <div class="w-10">
+                                                    <span class="text-sm text-gray-800 dark:text-white">
+                                                        <span data-hs-file-upload-progress-bar-value="">0</span>%
+                                                    </span>
+                                                </div>
+
+                                                <div class="flex items-center gap-x-2">
+                                                    <button type="button"
+                                                        class="text-gray-500 hover:text-gray-800 focus:outline-hidden focus:text-gray-800 dark:text-neutral-500 dark:hover:text-neutral-200 dark:focus:text-neutral-200"
+                                                        data-hs-file-upload-remove="">
+                                                        <span class="material-symbols-outlined ">delete</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <div class="flex w-full h-2 bg-gray-200 rounded-full overflow-hidden dark:bg-neutral-700"
+                                                role="progressbar" aria-valuenow="0" aria-valuemin="0"
+                                                aria-valuemax="100" data-hs-file-upload-progress-bar="">
+                                                <div class="flex flex-col justify-center rounded-full overflow-hidden bg-blue-600 text-xs text-white text-center whitespace-nowrap transition-all duration-500 hs-file-upload-complete:bg-green-500"
+                                                    style="width: 0" data-hs-file-upload-progress-bar-pane=""></div>
+                                            </div>
+                                        </div>
+                                    </template>
+
+                                    <div class="cursor-pointer p-12 flex justify-center bg-white border border-dashed border-gray-300 rounded-xl dark:bg-neutral-800 dark:border-neutral-600"
+                                        data-hs-file-upload-trigger="">
+                                        <div class="text-center">
+                                            <span class="inline-flex justify-center items-center size-16">
+                                                <span class="material-icons text-6xl text-blue-300">
+                                                    add_photo_alternate
+                                                </span>
+                                            </span>
+
+                                            <div class="mt-4 flex flex-wrap justify-center text-sm/6 text-gray-600">
+                                                <span class="pe-1 font-medium text-gray-800 dark:text-neutral-200">
+                                                    Drop product images or
+                                                </span>
+                                                <span
+                                                    class="bg-white font-semibold text-blue-600 hover:text-blue-700 rounded-lg decoration-2 hover:underline focus-within:outline-hidden focus-within:ring-2 focus-within:ring-blue-600 focus-within:ring-offset-2 dark:bg-neutral-800 dark:text-blue-500 dark:hover:text-blue-600">browse</span>
+                                            </div>
+
+                                            <p class="mt-1 text-xs text-gray-400 dark:text-neutral-400">
+                                                Pick a file up to 2MB.
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="grid grid-cols-4 gap-x-2 empty:gap-0" data-hs-file-upload-previews="">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="items-center flex justify-center space-y-4 sm:flex sm:space-y-0 sm:space-x-4">
+                            <button type="submit"
+                                class="w-full sm:w-auto justify-center text-white items-center inline-flex center bg-blue-400 border-gray-200 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">
+                                <span class="material-icons mr-2">add</span>Add product</button>
+
+                            <button data-modal-toggle="createProductModal" type="button"
+                                class="w-full justify-center sm:w-auto text-gray-500 inline-flex items-center bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-primary-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 ">
+                                <span class="material-icons text-base mr-2">close</span>Discard</button>
+                        </div>
+
+                    </form>
+
+
+
                 </div>
             </div>
         </div>
-
-
     </main>
-    <!-- Include Material Icons -->
-    <script src="https://fonts.googleapis.com/icon?family=Material+Icons"></script>
-    <!-- Include Dropzone.js -->
-    <script src="/assets/node_modules/dropzone/dist/dropzone-min.js"></script>
-    <script src="/assets/node_modules/lodash/lodash.js"></script>
-    <script src="/assets/node_modules/@preline/file-upload/index.js"></script>
+    
+<!-- WORKING FILE UPLOAD SCRIPT -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("addProductForm");
+    const hiddenInput = document.getElementById("hiddenImages");
+    const previewsContainer = form.querySelector("[data-hs-file-upload-previews]");
+
+    let fileList = [];
+
+    // Watch when the user selects files from the Preline trigger
+    form.querySelector("[data-hs-file-upload-trigger]").addEventListener("click", function () {
+        // open native file dialog
+        hiddenInput.click();
+    });
+
+    hiddenInput.addEventListener("change", function (e) {
+        // add chosen files to our list
+        [...e.target.files].forEach(file => {
+            fileList.push(file);
+            // attach to preview so Preline can render
+            // Preline doesn’t keep the File object by default, we do
+        });
+        updateHiddenInput();
+    });
+
+    // Remove file when delete button pressed
+    previewsContainer.addEventListener("click", function (e) {
+        if (e.target.closest("[data-hs-file-upload-remove]")) {
+            const preview = e.target.closest("[data-hs-file-upload-preview]");
+            const img = preview.querySelector("img[data-dz-thumbnail]");
+            const file = img?._file;
+
+            if (file) {
+                fileList = fileList.filter(f => f !== file);
+                updateHiddenInput();
+            }
+        }
+    });
+
+    function updateHiddenInput() {
+        const dt = new DataTransfer();
+        fileList.forEach(f => dt.items.add(f));
+        hiddenInput.files = dt.files;
+    }
+
+    form.addEventListener("submit", function () {
+        updateHiddenInput(); // final sync
+    });
+});
+</script>
+
+
+
 </body>
 
 </html>
