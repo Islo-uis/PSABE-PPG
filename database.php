@@ -81,22 +81,29 @@ else{
 }
 
 
-$merch = "CREATE table if not exists merch (
-    merchID INT PRIMARY KEY AUTO_INCREMENT,
-    merchName TEXT NOT NULL,
-    hasSize INT NOT NULL,
-    price FLOAT NOT NULL,
-    photo TEXT NOT NULL,
-    qty INT NOT NULL,
-    qtyS INT NOT NULL,
-    qtyM INT NOT NULL,
-    qtyL INT NOT NULL,
-    status INT NOT NULL)
+$merch = "CREATE table if not exists products (
+    prod_id SMALLINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    prod_name VARCHAR(160) NOT NULL,
+    prod_description TEXT NULL,
+    prod_qty SMALLINT UNSIGNED NOT NULL,
+    prod_price DECIMAL(10,2) NOT NULL,
+    prod_status ENUM('in_stock','sold_out’))
 ";
 if (! mysqli_query($conn, $merch)) {
-    die("Error creating users table: " . mysqli_error($conn));
+    die("Error creating merch table: " . mysqli_error($conn));
 }
 
+
+
+$prodimg = "CREATE TABLE product_images (
+  img_id SMALLINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+  prod_id SMALLINT UNSIGNED ,
+  img_url VARCHAR(255) NOT NULL,
+  FOREIGN KEY (prod_id) REFERENCES products(prod_id) ON DELETE CASCADE
+)";
+if (! mysqli_query($conn, $prodimg)) {
+    die("Error creating prodimg table: " . mysqli_error($conn));
+}
 
 $event = "CREATE table if not exists events (
     eventID INT PRIMARY KEY AUTO_INCREMENT,
