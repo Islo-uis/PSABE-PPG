@@ -7,9 +7,18 @@
     <title>Pre-Register for ABECON 2025</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="
+https://cdn.jsdelivr.net/npm/sweetalert2@11.23.0/dist/sweetalert2.all.min.js
+"></script>
+    <link href="
+https://cdn.jsdelivr.net/npm/sweetalert2@11.23.0/dist/sweetalert2.min.css
+" rel="stylesheet">
+
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -140,8 +149,7 @@
 
 
             <div class="right-panel">
-                <form enctype="multipart/form-data" id="pr-form" class="w-full">
-                    <input type="hidden" name="wave" id="wave" value="1">
+                <form autocomplete="off" enctype="multipart/form-data" id="pr-form" class="w-full">
                     <div class="mb-4">
                         <label for="university" class="sr-only">University</label>
                         <select id="university" name="university" required
@@ -156,33 +164,33 @@
 
                     <div class="mb-4">
                         <label for="email" class="sr-only">Email address</label>
-                        <input type="email" id="email" name="email" placeholder="Email address" required
+                        <input type="email" id="email" autocomplete="off" name="email" placeholder="Email address" required
                             class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#9BBE3C] focus:border-transparent transition-colors duration-200">
                     </div>
 
                     <div class="mb-4 flex gap-x-4">
                         <div class="w-1/2">
                             <label for="first_name" class="sr-only">First Name</label>
-                            <input type="text" id="first_name" name="first_name" placeholder="First Name" required
+                            <input type="text" id="first_name" autocomplete="off" name="first_name" placeholder="First Name" required
                                 class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#9BBE3C] focus:border-transparent transition-colors duration-200">
                         </div>
 
                         <div class="w-1/2">
                             <label for="last_name" class="sr-only">Last Name</label>
-                            <input type="text" id="last_name" name="last_name" placeholder="Last Name" required
+                            <input type="text" id="last_name" autocomplete="off" name="last_name" placeholder="Last Name" required
                                 class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#9BBE3C] focus:border-transparent transition-colors duration-200">
                         </div>
                     </div>
 
                     <div class="mb-4">
                         <label for="nickname" class="sr-only">Nickname</label>
-                        <input type="text" id="nickname" name="nickname" placeholder="Nickname" required
+                        <input type="text" id="nickname" autocomplete="off" name="nickname" placeholder="Nickname" required
                             class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#9BBE3C] focus:border-transparent transition-colors duration-200">
                     </div>
 
                     <div class="mb-4">
                         <label for="password" class="sr-only">Password</label>
-                        <input type="password" id="password" name="password" placeholder="Password" required
+                        <input type="password" autocomplete="new-password" id="password" name="password" placeholder="Password" required
                             class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#9BBE3C] focus:border-transparent transition-colors duration-200">
                     </div>
 
@@ -224,10 +232,29 @@
 
 
                     </div>
+                    <div class="mb-4">
+                        <div class="form-group form-group-default"
+                            style="display: flex; justify-content: center; gap: 10px;">
+                            <div>
+                                <input class="form-check-input" type="radio" name="paymentMode" value="installment"
+                                    id="installment" checked>
+                                <label class=" text-sm font-medium" for="installment">
+                                    Installment (500)
+                                </label>
+                            </div>
+                            <div>
+                                <input class="form-check-input" type="radio" name="paymentMode" value="onetime"
+                                    id="onetime">
+                                <label class="text-sm font-medium" for="onetime">
+                                    One Time (Wanmilyon)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="mb-4">
                         <label for="transaction-num" class="sr-only">Gcash Transaction Number</label>
-                        <input type="number" id="transaction-num" name="transaction-num" required
+                        <input type="number" autocomplete="off" id="transaction-num" name="transaction-num" required
                             placeholder="Gcash Transaction Number"
                             class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#9BBE3C] focus:border-transparent transition-colors duration-200">
                     </div>
@@ -249,7 +276,7 @@
                 <div class="mt-8 pt-6 border-t border-gray-200 text-center">
                     <p class="text-xs text-gray-500 mb-2">FOLLOW</p>
                     <div class="flex justify-center space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-[#16650F] transition-colors duration-200">
+                        <a href="https://www.facebook.com/joshuaajieamss" target="_blank" class="text-gray-400 hover:text-[#16650F] transition-colors duration-200">
                             <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                 <path fill-rule="evenodd"
                                     d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.505 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33V22H12c5.523 0 10-4.477 10-10z"

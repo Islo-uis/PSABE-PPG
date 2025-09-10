@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teno in Nach — Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.3.3/css/dataTables.dataTables.css" />
+
+  <style>
+    body,
+    html {
+      height: 100%;
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .d-flex {
+      display: flex;
+      height: 100%;
+    }
+
+    #sidebar {
+      width: 250px;
+      background: #343a40;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      padding: 1rem;
+    }
+
+    #sidebar h4 {
+      margin-bottom: 2rem;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    #sidebar .nav-link {
+      color: #ced4da;
+      margin-bottom: .5rem;
+      padding: .5rem 1rem;
+      border-radius: .25rem;
+      transition: background .2s;
+    }
+
+    #sidebar .nav-link.active,
+    #sidebar .nav-link:hover {
+      background: #495057;
+      color: #fff;
+    }
+
+    #sidebar .btn-logout {
+      margin-top: auto;
+      background: #ff416c;
+      border: none;
+      color: #fff;
+      padding: .5rem;
+      border-radius: .25rem;
+    }
+
+    #sidebar .btn-logout:hover {
+      background: #ff4b2b;
+    }
+
+    .card-draggable {
+      cursor: move;
+    }
+
+    .card-draggable img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+    }
+
+    .card-actions {
+      position: absolute;
+      top: .5rem;
+      right: .5rem;
+    }
+
+    .card-disabled {
+      opacity: .5;
+    }
+
+    .add-tile {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: #aaa;
+      cursor: pointer;
+      height: 100%;
+      min-height: 200px;
+      border: 2px dashed #ddd;
+      border-radius: .5rem;
+      transition: background .2s;
+    }
+
+    .add-tile:hover {
+      background: #e9ecef;
+    }
+
+    .stock-input {
+      width: 60px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="d-flex">
+    <nav id="sidebar">
+      <h4>Teno in Nach</h4>
+      <ul class="nav flex-column">
+        <li class="nav-item"><a class="nav-link " href="../dashboard.html">Dashboard</a></li>
+        <li class="nav-item"><a class="nav-link active" href="users.html">Users</a></li>
+        <li class="nav-item"><a class="nav-link" href="transactions.php">Transactions</a></li>
+        <li class="nav-item"><a class="nav-link" href="tabulation.html">Tabulation</a></li>
+      </ul>
+      <button class="btn btn-logout">Logout</button>
+    </nav>
+
+    <div style="width: 100%; padding: 2%;">
+      <div style="display: flex; justify-content: space-between;">
+        <select class="form-select w-25" id="universitySelect">
+          <option value="all" selected>All Universities</option>
+          <option value="University of Money">University of Money</option>
+          <option value="Unibersidad Sa Estudyanteng Pobre">Unibersidad Sa Estudyanteng Pobre</option>
+          <option value="Chan University">Chan University</option>
+          <option value="Lilamaya College Inc.">Lilamaya College Inc.</option>
+        </select>
+      </div>
+
+      <table id="myTable" class="display">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>University</th>
+            <th>Nickname</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <!-- Add Row Modal -->
+  <div class="modal fade" id="vu-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+      <div class="modal-content">
+        <div class="modal-header border-0">
+          <h5 class="modal-title">
+            <span class="fw-mediumbold"> View User Data </span>
+          </h5>
+          <button type="button" class="close" id="vu-exit" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body d-flex">
+          <div style="width: 50%;" class="mx-4">
+            <input type="hidden" id="vu-id">
+            <div class="row mb-3" id="size">
+              <div class="col-sm-6">
+                <div class="form-group form-group-default">
+                  <label>First Name</label>
+                  <input id="vu-first" type="text" class="form-control" readonly />
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group form-group-default">
+                  <label>Last Name</label>
+                  <input id="vu-last" type="text" class="form-control" readonly />
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12 mb-3">
+              <div class="form-group form-group-default">
+                <label>Nickname</label>
+                <input id="vu-nickname" type="text" class="form-control" readonly />
+              </div>
+            </div>
+            <div class="col-sm-12 mb-3">
+              <div class="form-group form-group-default">
+                <label>Email</label>
+                <input id="vu-email" type="text" class="form-control" readonly />
+              </div>
+            </div>
+            <div class="col-sm-12 mb-3">
+              <div class="form-group form-group-default">
+                <label>University</label>
+                <input id="vu-university" type="text" class="form-control" readonly />
+              </div>
+            </div>
+            <div class="col-sm-12 mb-3">
+              <div class="form-group form-group-default">
+                <label for="vu-photo">Profile</label>
+                <br>
+                <img id="vu-photo" class="rounded mb-2" style="height:35vh;object-fit:cover;" alt="Preview">
+              </div>
+            </div>
+          </div>
+          <div style="width: 50%;">
+            <div class="col-sm-12 mb-3">
+              <div class="form-group form-group-default">
+                <label>Reference Number</label>
+                <input id="vu-reference" type="text" class="form-control" readonly />
+              </div>
+            </div>
+            <div class="col-sm-12 mb-3">
+              <div class="form-group form-group-default">
+                <label>Payment Type</label>
+                <input id="vu-paytype" type="text" class="form-control" readonly />
+              </div>
+            </div>
+            <div class="col-sm-12 mb-3">
+              <div class="form-group form-group-default d-flex" style="gap: 10px;">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="vu-fWave">
+                  <label class="form-check-label" for="vu-fWave">
+                    1st Payment
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="vu-sWave">
+                  <label class="form-check-label" for="vu-sWave">
+                    2nd Payment
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="vu-tWave">
+                  <label class="form-check-label" for="vu-tWave">
+                    3rd Payment
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12 mb-3">
+              <div class="form-group form-group-default">
+                <label for="vu-receipt">Receipt Photo</label>
+                <br>
+                <img id="vu-receipt" class="rounded mb-2" style="height:60vh;object-fit:cover;" alt="Preview">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer border-0">
+          <button type="button" onclick="changePayment()" class="btn btn-primary">
+            Save
+          </button>
+          <button type="button" id="vu-close" class="btn btn-danger">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Bootstrap + Logic -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.datatables.net/2.3.3/js/dataTables.js"></script>
+  <script>
+    var table = $("#myTable").DataTable();
+
+    $("#universitySelect").on("change", function () {
+      loadData()
+    });
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+      loadData()
+      // render("announcement")
+    });
+
+    function loadData() {
+      var univ = document.getElementById("universitySelect").value;
+      $.ajax({
+        url: "assets/ajax.php?action=getUsers",
+        type: "POST",
+        data: { university: univ },
+        dataType: 'json',
+        success: function (response) {
+          var data = response.users;
+          // console.log(data)
+          table.clear().draw();
+          $.each(data, function (index, value) {
+            let stat = "";
+            if (value.status == "1") {
+              stat = "Pre-Registered"
+            }
+            else if (value.status == "0") {
+              stat = "Denied"
+            }
+            else if (value.status == "2") {
+              stat = "Registered"
+            }
+            table.row.add([
+              value.id,
+              value.first,
+              value.last,
+              value.email,
+              value.univ,
+              value.nickname,
+              stat,
+              `<div style="display: flex; gap:5px"><button type="button" class="btn btn-success" data-bs-toggle="modal" onclick="viewUserData(${value.id})" data-bs-target="#vu-modal">View</button>
+              <button type="button" class="btn btn-primary" onclick="changeAnnouncementStatus(${value.id}, 1)">Register</button>
+              <button type="button" class="btn btn-warning" onclick="changeAnnouncementStatus(${value.id}, 1)">Deny</button></div>`
+
+            ]).draw(false);
+
+
+
+          });
+        },
+        error: function (xhr, status, error) {
+          console.error("AJAX error: " + status + " - " + error);
+          console.log("Response text: " + xhr.responseText);
+        }
+      });
+
+    }
+
+    function changePayment() {
+      let id = document.getElementById("vu-id").value;
+      let firstWave = +document.getElementById("vu-fWave").checked;
+      let secondWave = +document.getElementById("vu-sWave").checked;
+      let thirdWave = +document.getElementById("vu-tWave").checked;
+      $.ajax({
+        url: "assets/ajax.php?action=changePayment",
+        type: "POST",
+        data: { 
+          id: id,
+          first: firstWave,
+          second: secondWave,
+          third: thirdWave 
+        },
+        dataType: 'json',
+        success: function (response) {
+          $("#vu-modal").modal('hide');
+          document.getElementById("vu-id").value = "";
+        },
+        error: function (xhr, status, error) {
+          console.error("AJAX error: " + status + " - " + error);
+          console.log("Response text: " + xhr.responseText);
+        }
+      });
+    }
+
+    function viewUserData(id) {
+      $.ajax({
+        url: "assets/ajax.php?action=getUserData",
+        type: "POST",
+        data: { id: id },
+        dataType: 'json',
+        success: function (response) {
+          document.getElementById("vu-id").value = id
+          let payType = "Installment";
+          if (response.paymentType == "onetime") {
+            payType = "One Time";
+          }
+          // console.log(response)
+          document.getElementById("vu-first").value = response.first;
+          document.getElementById("vu-last").value = response.last;
+          document.getElementById("vu-nickname").value = response.nickname;
+          document.getElementById("vu-email").value = response.email;
+          document.getElementById("vu-reference").value = response.transactionNum;
+          document.getElementById("vu-receipt").src = "../../photos/pre_reg_transaction/" + response.receipt;
+          document.getElementById("vu-university").value = response.university;
+          document.getElementById("vu-photo").src = "../../photos/user/" + response.photo;
+          document.getElementById("vu-paytype").value = payType;
+          document.getElementById("vu-fWave").checked = response.fWave == "1";
+          document.getElementById("vu-sWave").checked = response.sWave == "1";
+          document.getElementById("vu-tWave").checked = response.tWave == "1";
+        },
+        error: function (xhr, status, error) {
+          console.error("AJAX error: " + status + " - " + error);
+          console.log("Response text: " + xhr.responseText);
+        }
+      });
+    }
+
+
+    $("#vu-exit").click(function (e) {
+      $("#vu-modal").modal('hide');
+      document.getElementById("vu-id").value = "";
+    });
+    $("#vu-close").click(function (e) {
+      $("#vu-modal").modal('hide');
+      document.getElementById("vu-id").value = "";
+    });
+
+
+  </script>
+
+</body>
+
+</html>

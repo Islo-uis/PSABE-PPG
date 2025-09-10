@@ -142,7 +142,10 @@ if (! mysqli_query($conn, $user)) {
 $transactions = "CREATE table if not exists preregtransaction (
     transactionID INT PRIMARY KEY AUTO_INCREMENT,
     userID INT NOT NULL,
-    wave TEXT NOT NULL,
+    transactionType TEXT NOT NULL,
+    firstWave INT NOT NULL,
+    secondWave INT NOT NULL,
+    thirdWave INT NOT NULL,
     transactionNum TEXT NOT NULL,
     picture TEXT NOT NULL,
     FOREIGN KEY (userID) REFERENCES user(userID))

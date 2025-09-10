@@ -19,12 +19,12 @@ if (isset($_GET["action"])) {
             }
 
             $university = $_POST['university'];
-            $wave = $_POST['wave'];
             $email = $_POST['email'];
             $first_name = $_POST['first_name'];
             $last_name = $_POST['last_name'];
             $nickname = $_POST['nickname'];
             $password = $_POST['password'];
+            $paymentMode = $_POST['paymentMode'];
             $transaction_num = $_POST['transaction-num'];
 
             $pimageName = $_FILES['profile-input']['name'];
@@ -117,11 +117,11 @@ if (isset($_GET["action"])) {
             }
 
             // Prepare statement for announcements
-            if ($stmt = $conn->prepare("INSERT INTO preregtransaction values (NULL, ?, ?, ?, ?)")) {
+            if ($stmt = $conn->prepare("INSERT INTO preregtransaction values (NULL, ?, ?, 0, 0, 0, ?, ?)")) {
                 $stmt->bind_param(
                     "ssss",
                     $id,
-                    $wave,
+                    $paymentMode,
                     $transaction_num,
                     $rfileNameNew
                 );
