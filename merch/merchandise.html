@@ -8,7 +8,8 @@
     <title>ABECON2025 | Shop Merch</title>
 
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
     <!-- Tailwind -->
@@ -29,7 +30,7 @@
 <body class="bg-[url('/images/background.jpg')] bg-cover bg-no-repeat font-sans">
 
     <!-- Navbar -->
-    <header class="fixed top-0 w-full z-50 bg-white border-b border-gray-200">
+    <header class="fixed top-0 w-full z-49 bg-white border-b border-gray-200">
         <nav class="max-w-6xl mx-auto flex justify-between items-center p-4">
             <div class="actions" style="display: none;">
                 <span id="hamburger-btn" class="material-symbols-outlined">menu</span>
@@ -55,7 +56,7 @@
                     <span id="cart-count"
                         class="absolute -top-2 -right-2 bg-black text-white text-xs px-2 rounded-full">0</span>
                 </button>
-                <span class="material-symbols-outlined">account_circle</span>
+                <a href="login.php"> <span class="material-symbols-outlined">account_circle</span></a>
             </div>
         </nav>
     </header>
@@ -164,46 +165,7 @@
         <section class="max-w-6xl mx-auto py-12 text-center">
             <h1 class="text-2xl font-bold mb-12">Shop Our Exclusive Merch</h1>
 
-            <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                <!-- Product Card -->
-                <!-- Product Card 1 -->
-                <div data-modal-target="product-modal" data-modal-toggle="product-modal" data-title="Jersey Sublimation"
-                    data-price="₱249.00" data-qty="40" data-img="/images/product-images/image 5.png"
-                    data-desc="High-quality jersey sublimation design, breathable and durable."
-                    class="bg-white border rounded-xl p-4 flex flex-col justify-between shadow-sm cursor-pointer hover:shadow-md transition">
-
-                    <img src="/images/product-images/image 5.png" class="rounded-md mb-3">
-                    <h3 class="font-semibold text-base mb-1 text-left">Jersey Sublimation</h3>
-                    <div class="flex justify-between text-sm text-gray-600 mb-4">
-                        <span class="font-bold text-black">₱249.00</span>
-                        <span>Qty: 40</span>
-                    </div>
-                    <button
-                        class="flex items-center justify-center gap-1 border px-3 py-2 rounded-md hover:bg-gray-100">
-                        <span class="material-symbols-outlined text-sm">add_shopping_cart</span>
-                        Add to cart
-                    </button>
-                </div>
-
-                <!-- Product Card 2 -->
-                <div data-modal-target="product-modal" data-modal-toggle="product-modal"
-                    data-title="Acrylic Button Pins" data-price="₱189.00" data-qty="13"
-                    data-img="/images/product-images/image 5.png"
-                    data-desc="Custom acrylic button pins perfect for events and giveaways."
-                    class="bg-white border rounded-xl p-4 flex flex-col justify-between shadow-sm cursor-pointer hover:shadow-md transition">
-
-                    <img src="/images/product-images/image 5.png" class="rounded-md mb-3">
-                    <h3 class="font-semibold text-base mb-1 text-left">Acrylic Button Pins</h3>
-                    <div class="flex justify-between text-sm text-gray-600 mb-4">
-                        <span class="font-bold text-black">₱189.00</span>
-                        <span>Qty: 13</span>
-                    </div>
-                    <button
-                        class="flex items-center justify-center gap-1 border px-3 py-2 rounded-md hover:bg-gray-100">
-                        <span class="material-symbols-outlined text-sm">add_shopping_cart</span>
-                        Add to cart
-                    </button>
-                </div>
+            <div id="product-cards" class="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
 
             </div>
         </section>
@@ -239,17 +201,51 @@
 
         <div class="relative w-full max-w-4xl">
             <div class="relative bg-white rounded-xl shadow-lg p-6 md:p-10">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 overflow-hidden">
 
                     <!-- Left: Images -->
-                    <div class="flex flex-row space-x-4">
-                        <img id="modal-thumb" src="" alt="Product Thumbnail"
-                            class="w-32 h-40 object-cover rounded-lg border mx-auto md:mx-0">
-                        <img id="modal-img" src="" alt="Product Image" class="w-full rounded-lg border shadow">
+                    <div class="flex flex-col space-y-4 h-auto ">
+
+                        <div class="relative overflow-hidden rounded-lg border shadow">
+                            <img id="modal-img" src="" alt="Product Image" class="w-full object-cover aspect-[3/4]">
+                        </div>
+
+                        <div class="flex space-x-2 overflow-x-auto">
+                            <div class=" overflow-hidden  rounded-lg">
+                                <img id="modal-thumb1" src="" alt="Product Thumbnail"
+                                    class="w-full object-cover border cursor-pointer aspect-[3/4]">
+                            </div>
+                            <div class=" overflow-hidden  rounded-lg">
+                                <img id="modal-thumb2" src="" alt="Product Thumbnail"
+                                    class="w-full  object-cover border cursor-pointer aspect-[3/4]">
+                            </div>
+                            <div class=" overflow-hidden  rounded-lg">
+                                <img id="modal-thumb3" src="" alt="Product Thumbnail"
+                                    class="w-full object-cover border cursor-pointer aspect-[3/4]">
+                            </div>
+                        </div>
                     </div>
 
+                    <!-- <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
+
+        <div class="flex flex-row md:flex-col space-x-2 md:space-x-0 md:space-y-2 justify-center">
+            <img id="modal-thumb-1" src="" alt="Product Thumbnail 1"
+                class="w-20 h-24 md:w-32 md:h-40 object-cover rounded-lg border cursor-pointer aspect-[3/4]">
+            <img id="modal-thumb-2" src="" alt="Product Thumbnail 2"
+                class="w-20 h-24 md:w-32 md:h-40 object-cover rounded-lg border cursor-pointer aspect-[3/4]">
+            <img id="modal-thumb-3" src="" alt="Product Thumbnail 3"
+                class="w-20 h-24 md:w-32 md:h-40 object-cover rounded-lg border cursor-pointer aspect-[3/4]">
+        </div>
+
+        <div class="flex-grow">
+            <img id="modal-img" src="" alt="Product Image"
+                class="w-full rounded-lg border shadow object-cover aspect-[3/4] ">
+        </div>
+    </div> -->
+
+
                     <!-- Right: Details -->
-                    <div class="flex flex-col justify-between space-y-6">
+                    <div class="flex flex-col  space-y-6">
                         <div>
                             <h2 id="modal-title" class="text-2xl font-bold mb-2"></h2>
                             <p id="modal-desc" class="text-gray-600 text-sm"></p>
@@ -291,46 +287,133 @@
         </div>
     </div>
 
+<!-- Toast container -->
+<div id="toast-container" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 space-y-2"></div>
+
+<script>
+    function showToast(message) {
+            const container = document.getElementById("toast-container");
+            const toast = document.createElement("div");
+
+            toast.className = "bg-white text-gray-800 font-medium text-sm px-6 py-3 rounded-lg shadow-lg transition-opacity duration-500 opacity-0";
+            toast.innerText = message;
+
+            container.appendChild(toast);
+
+            // Fade in
+            setTimeout(() => toast.classList.remove("opacity-0"), 50);
+
+            // Fade out after 2s
+            setTimeout(() => {
+                toast.classList.add("opacity-0");
+                setTimeout(() => toast.remove(), 500);
+            }, 2000);
+        }
+</script>
+
+    <!-- for products table popuate -->
     <script>
-        const productCards = document.querySelectorAll('[data-modal-target="product-modal"]');
         let selectedQty = 1;
-        let maxQty = document.getElementById("modal-qty").innerText;
-
-
-        productCards.forEach(card => {
-            card.addEventListener('click', () => {
-                document.getElementById('modal-title').innerText = card.dataset.title;
-                document.getElementById('modal-desc').innerText = card.dataset.desc;
-                document.getElementById('modal-price').innerText = card.dataset.price;
-                document.getElementById('modal-qty').innerText = "Qty: " + card.dataset.qty;
-                document.getElementById('modal-thumb').src = card.dataset.img;
-                document.getElementById('modal-img').src = card.dataset.img;
-                maxQty = parseInt(card.dataset.qty, 10);
-                selectedQty = 1;
-                qtyValue.textContent = selectedQty;
-            });
-        });
-
-
-        const qtyValue = document.getElementById("qty-value");
-        const btnDecrease = document.getElementById("qty-decrease");
-        const btnIncrease = document.getElementById("qty-increase");
-
-        btnDecrease.addEventListener("click", () => {
-            if (selectedQty > 1) {
-                selectedQty--;
-                qtyValue.textContent = selectedQty;
-            }
-        });
-
-        btnIncrease.addEventListener("click", () => {
-            if (selectedQty < maxQty) {
-                selectedQty++;
-                qtyValue.textContent = selectedQty;
-            }
-        });
+        let maxQty = 0;
 
         let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+            fetch("get_productsmerch.php")
+                .then(res => res.json())
+                .then(data => {
+
+                    const parent = document.getElementById("product-cards");
+                    parent.innerHTML = '';
+
+
+                    if (data.length === 0) {
+                        // If the data array is empty, display a "No products yet" message
+                        parent.innerHTML = `
+                                //no products yet
+                                <div class="col-span-4 text-center text-gray-500">
+                                    <p>No products yet.</p>
+                                </div>
+                            `;
+                    } else {
+
+                        data.forEach(prod => {
+                            const cardHTML = `
+                                <div data-modal-target="product-modal" data-modal-toggle="product-modal" data-title="${prod.prod_name}"
+                                    data-price="₱${prod.prod_price.toFixed(2)}" data-qty="${prod.prod_qty}" data-img="admin/product-images/${prod.img1}"
+                                    data-desc="${prod.prod_description}"
+                                    class="bg-white border rounded-xl p-4 flex flex-col justify-between shadow-sm cursor-pointer hover:shadow-md transition">
+
+                                    <img src="admin/product-images/${prod.img1}" class="rounded-md mb-3 object-cover aspect-[3/4]  w-auto">
+                                    <h3 class="font-semibold text-base mb-1 text-left">${prod.prod_name}</h3>
+                                    <div class="flex justify-between text-sm text-gray-600 mb-4">
+                                        <span class="font-bold text-black">₱${prod.prod_price.toFixed(2)}</span>
+                                        <span>Qty: ${prod.prod_qty}</span>
+                                    </div>
+                                    <button class="flex items-center justify-center gap-1 border px-3 py-2 rounded-md hover:bg-gray-100">
+                                        <span class="material-symbols-outlined text-sm">add_shopping_cart</span>Add to cart
+                                    </button>
+                                </div>
+                            `;
+                            parent.innerHTML += cardHTML;
+
+                        });
+                        if (typeof Flowbite !== 'undefined') {
+                            //initialize drawer
+                            initFlowbite();
+                        }
+
+                        // --- The FIX: Add event listeners here after cards are created ---
+                        const productCards = document.querySelectorAll('[data-modal-target="product-modal"]');
+
+
+                        productCards.forEach(card => {
+                            card.addEventListener('click', () => {
+                                document.getElementById('modal-title').innerText = card.dataset.title;
+                                document.getElementById('modal-desc').innerText = card.dataset.desc;
+                                document.getElementById('modal-price').innerText = card.dataset.price;
+                                document.getElementById('modal-qty').innerText = "Qty: " + card.dataset.qty;
+                                document.getElementById('modal-thumb1').src = card.dataset.img;
+                                document.getElementById('modal-thumb2').src = card.dataset.img;
+                                document.getElementById('modal-thumb3').src = card.dataset.img;
+                                document.getElementById('modal-img').src = card.dataset.img;
+
+                                // Important: Reset quantity and max value
+                                maxQty = parseInt(card.dataset.qty, 10);
+                                selectedQty = 1;
+
+
+                                document.getElementById('qty-value').textContent = selectedQty;
+
+                                // The `maxQty` variable was not used in your original logic, but it's important for later checks.
+                                // You can now use `maxQty` to prevent the user from increasing the quantity beyond the available stock.
+                                const qtyIncreaseBtn = document.getElementById('qty-increase');
+                                const qtyDecreaseBtn = document.getElementById('qty-decrease');
+                                const qtyValueSpan = document.getElementById('qty-value');
+
+                                qtyIncreaseBtn.onclick = () => {
+                                    if (selectedQty < maxQty) {
+                                        selectedQty++;
+                                        qtyValueSpan.textContent = selectedQty;
+                                    }
+                                };
+                                qtyDecreaseBtn.onclick = () => {
+                                    if (selectedQty > 1) {
+                                        selectedQty--;
+                                        qtyValueSpan.textContent = selectedQty;
+                                    }
+                                };
+                            });
+                        });
+                    }
+                })
+                .catch(err => console.error("Error loading products:", err));
+        });
+
+
+
+
 
         // Update cart count on page load
         updateCartCount();
@@ -366,6 +449,7 @@
             updateCartCount();
             renderCartItems();
             updateCartTotal();
+            showToast(`Added ${selectedQty} x ${title} to cart`);
 
 
             // Reset qty in modal
@@ -480,7 +564,6 @@
         });
 
     </script>
-
 
 </body>
 

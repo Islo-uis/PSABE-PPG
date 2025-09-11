@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ABECON2025 | Manage Merchandise</title>
-    <link rel="icon" href="logo.png">
+    <link rel="icon" href="./logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
     <!-- <link rel="stylesheet" href="style.css"> -->
@@ -24,7 +24,6 @@
     <script src="/assets/node_modules/@preline/file-upload/index.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Preline UI File Upload CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/@preline/file-upload@3.2.3/dist/index.css" rel="stylesheet">
 
     <script>
         tailwind.config = {
@@ -92,152 +91,9 @@
                                         <th scope="col" class="p-4">Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr class="border-b  hover:bg-gray-100 ">
-
-                                        <th scope="row" class="px-4 py-3  font-medium text-gray-900 whitespace-nowrap ">
-                                            <div class="flex items-center mr-3">
-                                                <img src="https://flowbite.s3.amazonaws.com/blocks/application-ui/products/imac-front-image.png"
-                                                    alt="iMac Front Image" class="h-8 w-auto mr-3">
-                                                Apple iMac 27"
-                                            </div>
-                                        </th>
-                                        <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap ">
-                                            <div class="flex items-center">
-                                                <div class="h-4 w-4 rounded-full inline-block mr-2 bg-red-400"></div>
-                                                <span><span>0 </span> pcs</span>
-                                            </div>
-                                        </td>
-                                        <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap ">
-                                            ₱1.47</td>
+                                <tbody id="product-table-body">
 
 
-                                        <td>
-                                            <div
-                                                class="bg-red-300 text-red-600 px-3 py-1 rounded-md text-xs text-center font-semibold">
-                                                Sold Out
-                                            </div>
-                                        </td>
-                                        <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap ">
-                                            <div class="flex items-center">
-                                                <span
-                                                    class="material-icons text-base text-gray-400 mr-2">shopping_cart</span>
-                                                1.6M
-                                            </div>
-                                        </td>
-                                        <td class="px-4 py-3">₱12,300.00</td>
-                                        <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap ">
-                                            <div class="flex items-center space-x-4">
-                                                <button type="button" data-drawer-target="drawer-update-product"
-                                                    data-drawer-show="drawer-update-product"
-                                                    aria-controls="drawer-update-product"
-                                                    class="py-1 px-3 flex items-center text-sm  font-medium text-center text-white bg-blue-500 rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 ">
-                                                    <span
-                                                        class="material-symbols-outlined text-base mr-2 -ml-0.5">edit_square</span>
-                                                    Edit
-                                                </button>
-
-
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="border-b  hover:bg-gray-100 ">
-
-                                        <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap ">
-                                            <div class="flex items-center mr-3">
-                                                <img src="https://flowbite.s3.amazonaws.com/blocks/application-ui/products/imac-front-image.png"
-                                                    alt="iMac Front Image" class="h-8 w-auto mr-3">
-                                                Apple iMac 27"
-                                            </div>
-                                        </th>
-                                        <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap ">
-                                            <div class="flex items-center">
-                                                <div class="h-4 w-4 rounded-full inline-block mr-2 bg-yellow-300"></div>
-                                                <span><span>95 </span> pcs</span>
-                                            </div>
-                                        </td>
-                                        <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap ">
-                                            ₱1.47</td>
-
-
-                                        <td>
-                                            <div
-                                                class="bg-green-100 text-green-600 px-3 py-1 rounded-md text-xs text-center font-semibold">
-                                                Active
-                                            </div>
-                                        </td>
-                                        <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap ">
-                                            <div class="flex items-center">
-                                                <span
-                                                    class="material-icons text-base text-gray-400 mr-2">shopping_cart</span>
-
-                                                1.6M
-                                            </div>
-                                        </td>
-                                        <td class="px-4 py-3">₱12,300.00</td>
-                                        <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap ">
-                                            <div class="flex items-center space-x-4">
-                                                <button type="button" data-drawer-target="drawer-update-product"
-                                                    data-drawer-show="drawer-update-product"
-                                                    aria-controls="drawer-update-product"
-                                                    class="py-1 px-3 flex items-center text-sm font-medium text-center text-white bg-blue-500 rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 ">
-                                                    <span
-                                                        class="material-symbols-outlined text-base mr-2 -ml-0.5">edit_square</span>
-                                                    Edit
-                                                </button>
-
-
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="border-b  hover:bg-gray-100 ">
-
-                                        <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap ">
-                                            <div class="flex items-center mr-3">
-                                                <img src="https://flowbite.s3.amazonaws.com/blocks/application-ui/products/imac-front-image.png"
-                                                    alt="iMac Front Image" class="h-8 w-auto mr-3">
-                                                Apple iMac 27"
-                                            </div>
-                                        </th>
-                                        <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap ">
-                                            <div class="flex items-center">
-                                                <div class="h-4 w-4 rounded-full inline-block mr-2 bg-green-400"></div>
-                                                <span><span>95 </span> pcs</span>
-                                            </div>
-                                        </td>
-                                        <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap ">
-                                            ₱1.47</td>
-
-
-                                        <td>
-                                            <div
-                                                class="bg-green-100 text-green-600 px-3 py-1 rounded-md text-xs text-center font-semibold">
-                                                Active
-                                            </div>
-                                        </td>
-                                        <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap ">
-                                            <div class="flex items-center">
-                                                <span
-                                                    class="material-icons text-base text-gray-400 mr-2">shopping_cart</span>
-                                                1.6M
-                                            </div>
-                                        </td>
-                                        <td class="px-4 py-3">₱12,300.00</td>
-                                        <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap ">
-                                            <div class="flex items-center space-x-4">
-                                                <button type="button" data-drawer-target="drawer-update-product"
-                                                    data-drawer-show="drawer-update-product"
-                                                    aria-controls="drawer-update-product"
-                                                    class="py-1 px-3 flex items-center text-sm font-medium text-center text-white bg-blue-500 rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 ">
-                                                    <span
-                                                        class="material-symbols-outlined text-base mr-2 -ml-0.5">edit_square</span>
-                                                    Edit
-                                                </button>
-
-
-                                            </div>
-                                        </td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -479,11 +335,10 @@
                         </div>
 
                         <div class="mb-4">
-                            <span class="block mb-2 text-sm font-medium text-gray-900 ">Product
-                                Images (Maximum 3 photos only)</span>
+                            <span class="block mb-2 text-sm font-medium text-gray-900 ">Product Images (Maximum 3 photos
+                                only)</span>
 
-                            <div 
-                                class="flex justify-center items-center w-full">
+                            <div class="flex justify-center items-center w-full">
 
                                 <div class="w-full" data-hs-file-upload='{
                                     "url": "upload.php",
@@ -496,7 +351,8 @@
                                     "uploadMultiple": true
                                     }'>
 
-                                    <input type="file" id="hiddenImages" name="images[]" multiple style="display:none;" />
+                                    <input type="file" id="hiddenImages" name="images[]" multiple
+                                        style="display:none;" />
 
                                     <template data-hs-file-upload-preview="">
                                         <div
@@ -578,58 +434,142 @@
             </div>
         </div>
     </main>
-    
-<!-- WORKING FILE UPLOAD SCRIPT -->
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    const form = document.getElementById("addProductForm");
-    const hiddenInput = document.getElementById("hiddenImages");
-    const previewsContainer = form.querySelector("[data-hs-file-upload-previews]");
 
-    let fileList = [];
+    <!-- WORKING FILE UPLOAD SCRIPT -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById("addProductForm");
+            const hiddenInput = document.getElementById("hiddenImages");
+            const previewsContainer = form.querySelector("[data-hs-file-upload-previews]");
 
-    // Watch when the user selects files from the Preline trigger
-    form.querySelector("[data-hs-file-upload-trigger]").addEventListener("click", function () {
-        // open native file dialog
-        hiddenInput.click();
-    });
+            let fileList = [];
 
-    hiddenInput.addEventListener("change", function (e) {
-        // add chosen files to our list
-        [...e.target.files].forEach(file => {
-            fileList.push(file);
-            // attach to preview so Preline can render
-            // Preline doesn’t keep the File object by default, we do
-        });
-        updateHiddenInput();
-    });
+            // Watch when the user selects files from the Preline trigger
+            form.querySelector("[data-hs-file-upload-trigger]").addEventListener("click", function () {
+                // open native file dialog
+                hiddenInput.click();
+            });
 
-    // Remove file when delete button pressed
-    previewsContainer.addEventListener("click", function (e) {
-        if (e.target.closest("[data-hs-file-upload-remove]")) {
-            const preview = e.target.closest("[data-hs-file-upload-preview]");
-            const img = preview.querySelector("img[data-dz-thumbnail]");
-            const file = img?._file;
+            hiddenInput.addEventListener("change", function (e) {
+                // add chosen files to our list
+                [...e.target.files].forEach(file => {
+                    fileList.push(file);
 
-            if (file) {
-                fileList = fileList.filter(f => f !== file);
+                });
                 updateHiddenInput();
+            });
+
+            // Remove file when delete button pressed
+            previewsContainer.addEventListener("click", function (e) {
+                if (e.target.closest("[data-hs-file-upload-remove]")) {
+                    const preview = e.target.closest("[data-hs-file-upload-preview]");
+                    const img = preview.querySelector("img[data-dz-thumbnail]");
+                    const file = img?._file;
+
+                    if (file) {
+                        fileList = fileList.filter(f => f !== file);
+                        updateHiddenInput();
+                    }
+                }
+            });
+
+            function updateHiddenInput() {
+                const dt = new DataTransfer();
+                fileList.forEach(f => dt.items.add(f));
+                hiddenInput.files = dt.files;
             }
-        }
-    });
 
-    function updateHiddenInput() {
-        const dt = new DataTransfer();
-        fileList.forEach(f => dt.items.add(f));
-        hiddenInput.files = dt.files;
-    }
+            form.addEventListener("submit", function () {
+                updateHiddenInput(); // final sync
+            });
+        });
+    </script>
 
-    form.addEventListener("submit", function () {
-        updateHiddenInput(); // final sync
-    });
-});
-</script>
 
+    <!-- for products table popuate -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            fetch("get_products.php")
+                .then(res => res.json())
+                .then(data => {
+
+                    const tbody = document.getElementById("product-table-body");
+                    tbody.innerHTML = ''; // Clear existing rows
+
+
+                    if (data.length === 0) {
+                        // If the data array is empty, display a "No products yet" message
+                        tbody.innerHTML = `
+                                <tr class="border-b dark:border-gray-700">
+                                    <td colspan="7" class="px-4 py-6 text-center text-gray-500 dark:text-gray-400">
+                                        No products yet.
+                                    </td>
+                                </tr>
+                            `;
+                    } else {
+
+                        data.forEach(prod => {
+
+                            // Determine stock status and color classes based on prod_qty
+                            const stockColor = prod.prod_qty === 0 ? 'bg-red-400' : prod.prod_qty < 50 ? 'bg-yellow-300' : 'bg-green-400';
+                            const stockStatusText = prod.prod_status === 'Sold Out' ? 'Sold Out' : 'Active';
+                            const stockStatusBg = prod.prod_status === 'Sold Out' ? 'bg-red-300 text-red-600' : 'bg-green-100 text-green-600';
+
+                            const rowHTML = `
+                            <tr class="border-b hover:bg-gray-100">
+                                <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">
+                                    <div class="flex items-center mr-3">
+                                        <img src="product-images/${prod.img}" alt="${prod.prod_name} Image" class="h-8 w-auto mr-3 object-cover aspect-[3/4]">
+                                        ${prod.prod_name}
+                                    </div>
+                                </th>
+                                <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="h-4 w-4 rounded-full inline-block mr-2 ${stockColor}"></div>
+                                        <span><span>${prod.prod_qty}</span> pcs</span>
+                                    </div>
+                                </td>
+                                <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">
+                                    ₱${prod.prod_price.toFixed(2)}
+                                </td>
+                                <td>
+                                    <div class="px-3 py-1 rounded-md text-xs text-center font-semibold ${stockStatusBg}">
+                                        ${stockStatusText}
+                                    </div>
+                                </td>
+                                <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <span class="material-icons text-base text-gray-400 mr-2">shopping_cart</span>
+                                        ${prod.total_sold}
+                                    </div>
+                                </td>
+                                <td class="px-4 py-3">₱${prod.total_sales.toFixed(2)}</td>
+                                <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">
+                                    <div class="flex items-center space-x-4">
+                                        <button type="button" data-drawer-target="drawer-update-product"
+                                            data-drawer-show="drawer-update-product" aria-controls="drawer-update-product"
+                                            class="py-1 px-3 flex items-center text-sm font-medium text-center text-white bg-blue-500 rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300">
+                                            <span class="material-symbols-outlined text-base mr-2 -ml-0.5">edit_square</span>
+                                            Edit
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        `;
+                            tbody.innerHTML += rowHTML;
+                            
+
+                        });
+                        if (typeof Flowbite !== 'undefined') {
+                            //initialize drawer
+                            initFlowbite();
+                        }
+                    }
+                })
+                .catch(err => console.error("Error loading products:", err));
+        });
+    </script>
 
 
 </body>
