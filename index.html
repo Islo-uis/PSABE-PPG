@@ -19,7 +19,8 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #fcfaf8; /* Softer background color */
+            background-color: #fcfaf8;
+            /* Softer background color */
         }
 
         .page-background {
@@ -110,11 +111,14 @@
         .nav-link.scrolled,
         #openProfile.scrolled,
         #menu-toggle.scrolled {
-            color: #4b5563; /* Dark gray text color */
+            color: #4b5563;
+            /* Dark gray text color */
         }
+
         .nav-link.scrolled:hover,
         #openProfile.scrolled:hover {
-            color: #16650F; /* Green hover color */
+            color: #16650F;
+            /* Green hover color */
         }
     </style>
 </head>
@@ -130,89 +134,123 @@
             </div>
 
             <div class="hidden md:flex flex-1 justify-center items-center gap-8">
-                <a href="#" class="font-medium text-white hover:text-green-300 transition-colors duration-300 nav-link">Home</a>
-                <a href="#leaderboard" class="font-medium text-white hover:text-green-300 transition-colors duration-300 nav-link">Leaderboard</a>
-                <a href="#events" class="font-medium text-white hover:text-green-300 transition-colors duration-300 nav-link">Events</a>
-                <a href="#seminars" class="font-medium text-white hover:text-green-300 transition-colors duration-300 nav-link">Seminars</a>
-                <a href="#schedule" class="font-medium text-white hover:text-green-300 transition-colors duration-300 nav-link">Schedule</a>
-                <a href="merch/merch.html" class="font-medium text-white hover:text-green-300 transition-colors duration-300 nav-link">Merch</a>
+                <a href="#"
+                    class="font-medium text-white hover:text-green-300 transition-colors duration-300 nav-link">Home</a>
+                <a href="#leaderboard"
+                    class="font-medium text-white hover:text-green-300 transition-colors duration-300 nav-link">Leaderboard</a>
+                <a href="#events"
+                    class="font-medium text-white hover:text-green-300 transition-colors duration-300 nav-link">Events</a>
+                <a href="#seminars"
+                    class="font-medium text-white hover:text-green-300 transition-colors duration-300 nav-link">Seminars</a>
+                <a href="#schedule"
+                    class="font-medium text-white hover:text-green-300 transition-colors duration-300 nav-link">Schedule</a>
+                <a href="merch/merch.html"
+                    class="font-medium text-white hover:text-green-300 transition-colors duration-300 nav-link">Merch</a>
             </div>
 
             <div class="flex items-center gap-4">
-                <a href="login.html" id="openProfile" class="text-white hover:text-green-300 transition-colors duration-300 z-50" aria-label="View Profile">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                <a href="login.html" id="openProfile"
+                    class="text-white hover:text-green-300 transition-colors duration-300 z-50"
+                    aria-label="View Profile">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                 </a>
-                
-                <button id="menu-toggle" class="md:hidden text-white hover:text-green-300 transition-colors duration-300 z-50" aria-label="Toggle navigation menu" aria-expanded="false">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+
+                <button id="menu-toggle"
+                    class="md:hidden text-white hover:text-green-300 transition-colors duration-300 z-50"
+                    aria-label="Toggle navigation menu" aria-expanded="false">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16m-7 6h7" />
                     </svg>
                 </button>
             </div>
         </nav>
     </header>
 
-    <div id="mobile-menu" class="fixed top-0 right-0 h-full w-64 bg-white/90 backdrop-blur-lg shadow-xl z-40 transform translate-x-full transition-transform duration-300 ease-in-out md:hidden">
+    <div id="mobile-menu"
+        class="fixed top-0 right-0 h-full w-64 bg-white/90 backdrop-blur-lg shadow-xl z-40 transform translate-x-full transition-transform duration-300 ease-in-out md:hidden">
         <ul class="flex flex-col items-start gap-4 p-8 mt-16">
             <li><a href="#" class="font-semibold text-lg text-gray-700 hover:text-green-600 nav-link">Home</a></li>
-            <li><a href="#leaderboard" class="font-semibold text-lg text-gray-700 hover:text-green-600 nav-link">About</a></li>
-            <li><a href="#events" class="font-semibold text-lg text-gray-700 hover:text-green-600 nav-link">Events</a></li>
-            <li><a href="#seminars" class="font-semibold text-lg text-gray-700 hover:text-green-600 nav-link">Seminars</a></li>
-            <li><a href="#schedule" class="font-semibold text-lg text-gray-700 hover:text-green-600 nav-link">Schedule</a></li>
-            <li><a href="merch/merch.html" class="font-semibold text-lg text-gray-700 hover:text-green-600 nav-link">Merch</a></li>
-            <li class="w-full pt-4 mt-4 border-t border-gray-200">
-                <a href="registration/pre-register.html" class="green-gradient-bg text-white font-bold py-3 px-8 rounded-full text-lg hover:brightness-110 
-           transition-all hover:scale-105 duration-300 shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 
-           focus:ring-offset-2 focus:ring-green-500">
-              Pre-Register Now!
-            </a>
+            <li><a href="#leaderboard"
+                    class="font-semibold text-lg text-gray-700 hover:text-green-600 nav-link">About</a></li>
+            <li><a href="#events" class="font-semibold text-lg text-gray-700 hover:text-green-600 nav-link">Events</a>
+            </li>
+            <li><a href="#seminars"
+                    class="font-semibold text-lg text-gray-700 hover:text-green-600 nav-link">Seminars</a></li>
+            <li><a href="#schedule"
+                    class="font-semibold text-lg text-gray-700 hover:text-green-600 nav-link">Schedule</a></li>
+            <li><a href="merch/merch.html"
+                    class="font-semibold text-lg text-gray-700 hover:text-green-600 nav-link">Merch</a></li>
+           
+            <li class="w-full pt-4 mt-4 border-t border-gray-200 **flex justify-center**">
+                <a href="registration/pre-register.html" class="block w-full max-w-xs mx-auto text-center 
+          green-gradient-bg text-white font-bold 
+          py-3 px-6 text-base
+          sm:px-8 sm:text-lg
+          rounded-full 
+          hover:brightness-110 hover:scale-105 
+          transition-transform duration-300 
+          shadow-lg hover:shadow-xl
+          focus:outline-none focus:ring-2 
+          focus:ring-offset-2 focus:ring-green-500">
+                    Pre-Register Now!
+                </a>
             </li>
         </ul>
     </div>
 
 
     <main>
-        <section id="hero" class="min-h-screen flex flex-col items-center justify-center text-center p-4" style="background-color: #F7C469;">
+        <section id="hero" class="min-h-screen flex flex-col items-center justify-center text-center p-4"
+            style="background-color: #F7C469;">
             <img src="icons/abecon logo3.svg" alt="ABECON 2025 Conference Logo"
-              class="w-2/3 sm:w-1/2 lg:w-1/3 max-w-md h-auto mb-16">
-      
+                class="w-2/3 sm:w-1/2 lg:w-1/3 max-w-md h-auto mb-16">
+
             <a href="registration/pre-register.html" class="green-gradient-bg text-white font-bold py-3 px-8 rounded-full text-lg hover:brightness-110 
            transition-all hover:scale-105 duration-300 shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 
            focus:ring-offset-2 focus:ring-green-500">
-              Pre-Register Now!
+                Pre-Register Now!
             </a>
-      
+
             <div
-              class="mt-12 flex flex-col md:flex-row flex-wrap justify-center items-center gap-4 md:gap-8 text-gray-700 font-medium">
-              <span class="flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-                November 4–8, 2025
-              </span>
-      
-              <a href="#"
-                target="_blank" class="flex items-center gap-2 hover:text-green-600 transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-                University of Southeastern Philippines, Tagum-Mabini
-              </a>
-      
-              <a href="https://facebook.com" target="_blank" role="button" tabindex="0"
-                class="flex items-center gap-2 hover:text-blue-600 transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path
-                    d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v2.385z" />
-                </svg>
-                Facebook
-              </a>
+                class="mt-12 flex flex-col md:flex-row flex-wrap justify-center items-center gap-4 md:gap-8 text-gray-700 font-medium">
+                <span class="flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    November 4–8, 2025
+                </span>
+
+                <a href="#" target="_blank"
+                    class="flex items-start gap-2 hover:text-green-600 transition-colors text-gray-700 text-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 flex-shrink-0" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    <span class="font-regular text-base">
+                        University of Southeastern Philippines, Tagum-Mabini
+                    </span>
+                </a>
+
+
+                <a href="https://facebook.com" target="_blank" role="button" tabindex="0"
+                    class="flex items-center gap-2 hover:text-blue-600 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v2.385z" />
+                    </svg>
+                    Facebook
+                </a>
             </div>
         </section>
 
@@ -223,12 +261,14 @@
                     <div class="lg:w-1/2 text-center lg:text-left">
                         <h2 class="text-4xl font-extrabold tracking-wide mb-4 text-yellow-gradient">ABOUT</h2>
                         <p class="text-base md:text-lg text-gray-600 leading-relaxed mb-8">
-                            An event for the Philippine Society of Agricultural and Biosystems Engineers (PSABE) - Pre-Professional
-                            Group (PPG). Our initiatives foster community and professional development among aspiring Agricultural and
+                            An event for the Philippine Society of Agricultural and Biosystems Engineers (PSABE) -
+                            Pre-Professional
+                            Group (PPG). Our initiatives foster community and professional development among aspiring
+                            Agricultural and
                             Biosystems Engineers in the Philippines through conventions, competitions, and orientations.
                         </p>
-                        <img src="https://placehold.co/250x150/ffffff/333333?text=Tractor+Art" alt="Tractor illustration"
-                            class="mx-auto lg:mx-0 w-64 h-auto">
+                        <img src="https://placehold.co/250x150/ffffff/333333?text=Tractor+Art"
+                            alt="Tractor illustration" class="mx-auto lg:mx-0 w-64 h-auto">
                     </div>
                     <div class="lg:w-1/2 w-full grid grid-cols-6 grid-rows-3 gap-3 h-96">
                         <div class="col-span-4 row-span-3 rounded-2xl overflow-hidden shadow-lg">
@@ -255,8 +295,9 @@
             <div class="container mx-auto px-4 py-12">
                 <section id="events" class="fade-in-hidden">
                     <div class="flex items-center gap-4 mb-8">
-                        <div class="flex-shrink-0 w-10 h-10 yellow-gradient-bg rounded-lg p-1 grid place-content-center">
-                             <i class="fa-solid fa-calendar-star text-white text-xl"></i>
+                        <div
+                            class="flex-shrink-0 w-10 h-10 yellow-gradient-bg rounded-lg p-1 grid place-content-center">
+                            <i class="fa-solid fa-calendar-star text-white text-xl"></i>
                         </div>
                         <h2 class="text-3xl md:text-4xl font-bold text-gray-700 tracking-wider">EVENTS</h2>
                     </div>
@@ -264,10 +305,13 @@
                     <div class="relative">
                         <div id="carousel-container" class="w-full overflow-hidden">
                             <div id="carousel-track" class="flex transition-transform duration-500 ease-in-out">
-                                </div>
+                            </div>
                         </div>
-                        <button id="next-btn" class="absolute top-1/2 -translate-y-1/2 -right-4 md:right-0 text-gray-600 hover:text-orange-500 transition-colors duration-300 z-10 bg-white/80 rounded-full p-2 shadow-md backdrop-blur-sm hover:scale-110">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <button id="next-btn"
+                            class="absolute top-1/2 -translate-y-1/2 -right-4 md:right-0 text-gray-600 hover:text-orange-500 transition-colors duration-300 z-10 bg-white/80 rounded-full p-2 shadow-md backdrop-blur-sm hover:scale-110">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
                                 <path d="m9 18 6-6-6-6" />
                             </svg>
                         </button>
@@ -276,8 +320,9 @@
 
                 <section id="seminars" class="mt-20 fade-in-hidden">
                     <div class="flex items-center gap-4 mb-8">
-                         <div class="flex-shrink-0 w-10 h-10 yellow-gradient-bg rounded-lg p-1 grid place-content-center">
-                             <i class="fa-solid fa-person-chalkboard text-white text-xl"></i>
+                        <div
+                            class="flex-shrink-0 w-10 h-10 yellow-gradient-bg rounded-lg p-1 grid place-content-center">
+                            <i class="fa-solid fa-person-chalkboard text-white text-xl"></i>
                         </div>
                         <h2 class="text-3xl md:text-4xl font-bold text-gray-700 tracking-wider">BREAKOUT SESSIONS</h2>
                     </div>
@@ -287,33 +332,43 @@
                             <div class="seminar-card p-4">
                                 <div class="bg-white rounded-xl shadow-lg p-6 h-full flex flex-col">
                                     <h3 class="text-xl font-bold text-gray-800 mb-2">AI in Agriculture</h3>
-                                    <p class="text-gray-600 mb-4 flex-grow">Innovations in smart farming and crop management.</p>
-                                    <img src="https://placehold.co/600x400/4d5a6e/ffffff?text=AI" alt="AI in Agriculture" class="w-full h-40 object-cover rounded-lg mb-4">
-                                    
+                                    <p class="text-gray-600 mb-4 flex-grow">Innovations in smart farming and crop
+                                        management.</p>
+                                    <img src="https://placehold.co/600x400/4d5a6e/ffffff?text=AI"
+                                        alt="AI in Agriculture" class="w-full h-40 object-cover rounded-lg mb-4">
+
                                 </div>
                             </div>
                             <div class="seminar-card p-4">
                                 <div class="bg-white rounded-xl shadow-lg p-6 h-full flex flex-col">
                                     <h3 class="text-xl font-bold text-gray-800 mb-2">Sustainable Farming</h3>
-                                    <p class="text-gray-600 mb-4 flex-grow">Eco-friendly practices for a greener future.</p>
-                                    <img src="https://placehold.co/600x400/e29b6a/ffffff?text=Sustainable" alt="Sustainable Farming" class="w-full h-40 object-cover rounded-lg mb-4">
-                                    
+                                    <p class="text-gray-600 mb-4 flex-grow">Eco-friendly practices for a greener future.
+                                    </p>
+                                    <img src="https://placehold.co/600x400/e29b6a/ffffff?text=Sustainable"
+                                        alt="Sustainable Farming" class="w-full h-40 object-cover rounded-lg mb-4">
+
                                 </div>
                             </div>
                             <div class="seminar-card p-4">
                                 <div class="bg-white rounded-xl shadow-lg p-6 h-full flex flex-col">
                                     <h3 class="text-xl font-bold text-gray-800 mb-2">Biosystems Engineering</h3>
-                                    <p class="text-gray-600 mb-4 flex-grow">The role of bio-design in modern systems.</p>
-                                    <img src="https://placehold.co/600x400/d1d1d1/5e5e5e?text=Bio" alt="Biosystems Engineering" class="w-full h-40 object-cover rounded-lg mb-4">
-                                   
+                                    <p class="text-gray-600 mb-4 flex-grow">The role of bio-design in modern systems.
+                                    </p>
+                                    <img src="https://placehold.co/600x400/d1d1d1/5e5e5e?text=Bio"
+                                        alt="Biosystems Engineering" class="w-full h-40 object-cover rounded-lg mb-4">
+
                                 </div>
                             </div>
                             <div class="seminar-card p-4">
                                 <div class="bg-white rounded-xl shadow-lg p-6 h-full flex flex-col">
                                     <h3 class="text-xl font-bold text-gray-800 mb-2">Water Management</h3>
-                                    <p class="text-gray-600 mb-4 flex-grow">Efficient irrigation and conservation techniques.</p>
-                                    <img src="https://placehold.co/600x400/2d7a8d/ffffff?text=Water" alt="Water Management" class="w-full h-40 object-cover rounded-lg mb-4">
-                                    <button class="register-button green-gradient-bg text-white font-bold py-2 px-4 rounded-full w-full hover:brightness-110 transition-colors" data-seminar="water">
+                                    <p class="text-gray-600 mb-4 flex-grow">Efficient irrigation and conservation
+                                        techniques.</p>
+                                    <img src="https://placehold.co/600x400/2d7a8d/ffffff?text=Water"
+                                        alt="Water Management" class="w-full h-40 object-cover rounded-lg mb-4">
+                                    <button
+                                        class="register-button green-gradient-bg text-white font-bold py-2 px-4 rounded-full w-full hover:brightness-110 transition-colors"
+                                        data-seminar="water">
                                         Register
                                     </button>
                                 </div>
@@ -322,8 +377,11 @@
                                 <div class="bg-white rounded-xl shadow-lg p-6 h-full flex flex-col">
                                     <h3 class="text-xl font-bold text-gray-800 mb-2">Crop Yield Optimization</h3>
                                     <p class="text-gray-600 mb-4 flex-grow">Maximizing output with data analytics.</p>
-                                    <img src="https://placehold.co/600x400/f5c96b/ffffff?text=Crops" alt="Crop Yield Optimization" class="w-full h-40 object-cover rounded-lg mb-4">
-                                    <button class="register-button green-gradient-bg text-white font-bold py-2 px-4 rounded-full w-full hover:brightness-110 transition-colors" data-seminar="crop-yield">
+                                    <img src="https://placehold.co/600x400/f5c96b/ffffff?text=Crops"
+                                        alt="Crop Yield Optimization" class="w-full h-40 object-cover rounded-lg mb-4">
+                                    <button
+                                        class="register-button green-gradient-bg text-white font-bold py-2 px-4 rounded-full w-full hover:brightness-110 transition-colors"
+                                        data-seminar="crop-yield">
                                         Register
                                     </button>
                                 </div>
@@ -331,9 +389,13 @@
                             <div class="seminar-card p-4">
                                 <div class="bg-white rounded-xl shadow-lg p-6 h-full flex flex-col">
                                     <h3 class="text-xl font-bold text-gray-800 mb-2">Post-Harvest Tech</h3>
-                                    <p class="text-gray-600 mb-4 flex-grow">Reducing waste and improving food quality.</p>
-                                    <img src="https://placehold.co/600x400/8d2d5a/ffffff?text=Harvest" alt="Post-Harvest Technology" class="w-full h-40 object-cover rounded-lg mb-4">
-                                    <button class="register-button green-gradient-bg text-white font-bold py-2 px-4 rounded-full w-full hover:brightness-110 transition-colors" data-seminar="post-harvest">
+                                    <p class="text-gray-600 mb-4 flex-grow">Reducing waste and improving food quality.
+                                    </p>
+                                    <img src="https://placehold.co/600x400/8d2d5a/ffffff?text=Harvest"
+                                        alt="Post-Harvest Technology" class="w-full h-40 object-cover rounded-lg mb-4">
+                                    <button
+                                        class="register-button green-gradient-bg text-white font-bold py-2 px-4 rounded-full w-full hover:brightness-110 transition-colors"
+                                        data-seminar="post-harvest">
                                         Register
                                     </button>
                                 </div>
@@ -341,28 +403,44 @@
                         </div>
                     </div>
 
-                    <div id="registration-modal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center p-4 hidden z-50">
+                    <div id="registration-modal"
+                        class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center p-4 hidden z-50">
                         <div class="bg-white rounded-xl shadow-2xl p-6 w-full max-w-md relative">
-                            <button class="close-modal-button absolute top-4 right-4 text-gray-500 hover:text-gray-800 transition-colors">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                            <button
+                                class="close-modal-button absolute top-4 right-4 text-gray-500 hover:text-gray-800 transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M6 18L18 6M6 6l12 12" />
                                 </svg>
                             </button>
                             <h3 id="modal-title" class="text-2xl font-bold text-gray-800 mb-4">Register for Seminar</h3>
                             <div class="space-y-4 text-gray-600">
-                                <div><p class="font-semibold text-gray-500">Venue:</p><p id="modal-venue" class="text-lg text-gray-800"></p></div>
-                                <div><p class="font-semibold text-gray-500">Time:</p><p id="modal-time" class="text-lg text-gray-800"></p></div>
-                                <div><p class="font-semibold text-gray-500">Available Slots:</p><p id="modal-slots" class="text-lg text-gray-800"></p></div>
+                                <div>
+                                    <p class="font-semibold text-gray-500">Venue:</p>
+                                    <p id="modal-venue" class="text-lg text-gray-800"></p>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-500">Time:</p>
+                                    <p id="modal-time" class="text-lg text-gray-800"></p>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-500">Available Slots:</p>
+                                    <p id="modal-slots" class="text-lg text-gray-800"></p>
+                                </div>
                             </div>
-                            <button class="green-gradient-bg text-white font-bold py-3 px-6 rounded-full mt-6 w-full hover:brightness-110 transition-colors">Confirm Registration</button>
+                            <button
+                                class="green-gradient-bg text-white font-bold py-3 px-6 rounded-full mt-6 w-full hover:brightness-110 transition-colors">Confirm
+                                Registration</button>
                         </div>
                     </div>
                 </section>
 
                 <section id="schedule" class="mt-20 fade-in-hidden">
                     <div class="flex items-center gap-4 mb-8">
-                         <div class="flex-shrink-0 w-10 h-10 yellow-gradient-bg rounded-lg p-1 grid place-content-center">
-                             <i class="fa-solid fa-clock text-white text-xl"></i>
+                        <div
+                            class="flex-shrink-0 w-10 h-10 yellow-gradient-bg rounded-lg p-1 grid place-content-center">
+                            <i class="fa-solid fa-clock text-white text-xl"></i>
                         </div>
                         <h2 class="text-2xl md:text-3xl font-bold text-gray-700 tracking-wider">SCHEDULE</h2>
                     </div>
@@ -370,8 +448,10 @@
                         <table class="w-full text-left">
                             <thead class="bg-gray-50 border-b-2 border-gray-200">
                                 <tr>
-                                    <th class="p-4 text-sm font-semibold tracking-wider text-gray-600 uppercase">Day</th>
-                                    <th class="p-4 text-sm font-semibold tracking-wider text-gray-600 uppercase">Event Name</th>
+                                    <th class="p-4 text-sm font-semibold tracking-wider text-gray-600 uppercase">Day
+                                    </th>
+                                    <th class="p-4 text-sm font-semibold tracking-wider text-gray-600 uppercase">Event
+                                        Name</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-100">
@@ -406,42 +486,59 @@
 
                 <section id="merchandise" class="mt-20 fade-in-hidden">
                     <div class="flex items-center gap-4 mb-8">
-                        <div class="flex-shrink-0 w-10 h-10 yellow-gradient-bg rounded-lg p-1 grid place-content-center">
-                             <i class="fa-solid fa-shirt text-white text-xl"></i>
+                        <div
+                            class="flex-shrink-0 w-10 h-10 yellow-gradient-bg rounded-lg p-1 grid place-content-center">
+                            <i class="fa-solid fa-shirt text-white text-xl"></i>
                         </div>
                         <h2 class="text-2xl md:text-3xl font-bold text-gray-700 tracking-wider">CONVENTION KIT</h2>
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                        <div class="bg-white rounded-xl shadow-md overflow-hidden group transform hover:-translate-y-2 transition-transform duration-300">
-                            <div class="h-64 overflow-hidden"><img src="https://placehold.co/400x400/e29b6a/ffffff?text=Item+1" alt="Branded T-Shirt" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy"></div>
+                        <div
+                            class="bg-white rounded-xl shadow-md overflow-hidden group transform hover:-translate-y-2 transition-transform duration-300">
+                            <div class="h-64 overflow-hidden"><img
+                                    src="https://placehold.co/400x400/e29b6a/ffffff?text=Item+1" alt="Branded T-Shirt"
+                                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                    loading="lazy"></div>
                             <div class="p-4">
                                 <h3 class="text-lg font-bold text-gray-800">Branded T-Shirt</h3>
-                      
+
                             </div>
                         </div>
-                        <div class="bg-white rounded-xl shadow-md overflow-hidden group transform hover:-translate-y-2 transition-transform duration-300">
-                            <div class="h-64 overflow-hidden"><img src="https://placehold.co/400x400/4d5a6e/ffffff?text=Item+2" alt="Custom Mug" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy"></div>
+                        <div
+                            class="bg-white rounded-xl shadow-md overflow-hidden group transform hover:-translate-y-2 transition-transform duration-300">
+                            <div class="h-64 overflow-hidden"><img
+                                    src="https://placehold.co/400x400/4d5a6e/ffffff?text=Item+2" alt="Custom Mug"
+                                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                    loading="lazy"></div>
                             <div class="p-4">
                                 <h3 class="text-lg font-bold text-gray-800">Custom Mug</h3>
-                         
+
                             </div>
                         </div>
-                        <div class="bg-white rounded-xl shadow-md overflow-hidden group transform hover:-translate-y-2 transition-transform duration-300">
-                            <div class="h-64 overflow-hidden"><img src="https://placehold.co/400x400/d1d1d1/5e5e5e?text=Item+3" alt="Logo Cap" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy"></div>
+                        <div
+                            class="bg-white rounded-xl shadow-md overflow-hidden group transform hover:-translate-y-2 transition-transform duration-300">
+                            <div class="h-64 overflow-hidden"><img
+                                    src="https://placehold.co/400x400/d1d1d1/5e5e5e?text=Item+3" alt="Logo Cap"
+                                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                    loading="lazy"></div>
                             <div class="p-4">
                                 <h3 class="text-lg font-bold text-gray-800">Logo Cap</h3>
-                          
+
                             </div>
                         </div>
-                        <div class="bg-white rounded-xl shadow-md overflow-hidden group transform hover:-translate-y-2 transition-transform duration-300">
-                            <div class="h-64 overflow-hidden"><img src="https://placehold.co/400x400/2d7a8d/ffffff?text=Item+4" alt="Tote Bag" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy"></div>
+                        <div
+                            class="bg-white rounded-xl shadow-md overflow-hidden group transform hover:-translate-y-2 transition-transform duration-300">
+                            <div class="h-64 overflow-hidden"><img
+                                    src="https://placehold.co/400x400/2d7a8d/ffffff?text=Item+4" alt="Tote Bag"
+                                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                    loading="lazy"></div>
                             <div class="p-4">
                                 <h3 class="text-lg font-bold text-gray-800">Tote Bag</h3>
-                 
+
                             </div>
                         </div>
                     </div>
-                    
+
                 </section>
             </div>
         </div>
@@ -449,7 +546,8 @@
 
     <footer class="relative bg-gray-900 text-white py-12 px-4 overflow-hidden">
         <div class="absolute inset-0 z-0">
-            <img src="footer-background.jpg" alt="ABECON Footer Background" class="w-full h-full object-cover object-center opacity-30">
+            <img src="footer-background.jpg" alt="ABECON Footer Background"
+                class="w-full h-full object-cover object-center opacity-30">
             <div class="absolute inset-0 bg-gray-900 opacity-60"></div>
         </div>
         <div class="container mx-auto relative z-10">
@@ -457,38 +555,68 @@
                 <div class="mb-6 md:mb-0">
                     <h3 class="text-xl font-bold mb-4 text-green-400">ABECON 2025</h3>
                     <p class="text-gray-300 text-sm leading-relaxed">
-                        Fostering community and professional development among aspiring Agricultural and Biosystems Engineers in the Philippines.
+                        Fostering community and professional development among aspiring Agricultural and Biosystems
+                        Engineers in the Philippines.
                     </p>
                     <img src="icons/abecon_small_logo.png" alt="ABECON Logo" class="h-10 w-auto mt-4 opacity-80">
                 </div>
                 <div class="mb-6 md:mb-0">
                     <h3 class="text-xl font-bold mb-4 text-green-400">Quick Links</h3>
                     <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-300 hover:text-green-300 transition-colors duration-300 nav-link">Home</a></li>
-                        <li><a href="#leaderboard" class="text-gray-300 hover:text-green-300 transition-colors duration-300 nav-link">Leaderboard</a></li>
-                        <li><a href="#events" class="text-gray-300 hover:text-green-300 transition-colors duration-300 nav-link">Events</a></li>
-                        <li><a href="#seminars" class="text-gray-300 hover:text-green-300 transition-colors duration-300 nav-link">Seminars</a></li>
-                        <li><a href="#schedule" class="text-gray-300 hover:text-green-300 transition-colors duration-300 nav-link">Schedule</a></li>
-                        <li><a href="#merchandise" class="text-gray-300 hover:text-green-300 transition-colors duration-300 nav-link">Merchandise</a></li>
+                        <li><a href="#"
+                                class="text-gray-300 hover:text-green-300 transition-colors duration-300 nav-link">Home</a>
+                        </li>
+                        <li><a href="#leaderboard"
+                                class="text-gray-300 hover:text-green-300 transition-colors duration-300 nav-link">Leaderboard</a>
+                        </li>
+                        <li><a href="#events"
+                                class="text-gray-300 hover:text-green-300 transition-colors duration-300 nav-link">Events</a>
+                        </li>
+                        <li><a href="#seminars"
+                                class="text-gray-300 hover:text-green-300 transition-colors duration-300 nav-link">Seminars</a>
+                        </li>
+                        <li><a href="#schedule"
+                                class="text-gray-300 hover:text-green-300 transition-colors duration-300 nav-link">Schedule</a>
+                        </li>
+                        <li><a href="#merchandise"
+                                class="text-gray-300 hover:text-green-300 transition-colors duration-300 nav-link">Merchandise</a>
+                        </li>
                     </ul>
                 </div>
                 <div class="mb-6 md:mb-0">
                     <h3 class="text-xl font-bold mb-4 text-green-400">Contact Us</h3>
-                    <p class="text-gray-300 text-sm">Email: <a href="mailto:info@abecon.org" class="hover:text-green-300">info@abecon.org</a></p>
+                    <p class="text-gray-300 text-sm">Email: <a href="mailto:info@abecon.org"
+                            class="hover:text-green-300">info@abecon.org</a></p>
                     <p class="text-gray-300 text-sm mt-1">Phone: +63 9XX XXX XXXX</p>
-                    <p class="text-gray-300 text-sm mt-1">Address: University of Southeastern Philippines, Tagum-Mabini</p>
+                    <p class="text-gray-300 text-sm mt-1">Address: University of Southeastern Philippines, Tagum-Mabini
+                    </p>
                 </div>
                 <div>
                     <h3 class="text-xl font-bold mb-4 text-green-400">Follow Us</h3>
                     <div class="flex space-x-4">
-                        <a href="https://facebook.com/yourpage" target="_blank" aria-label="Facebook" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="currentColor" viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v2.385z" /></svg>
+                        <a href="https://facebook.com/yourpage" target="_blank" aria-label="Facebook"
+                            class="text-gray-300 hover:text-blue-500 transition-colors duration-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="currentColor"
+                                viewBox="0 0 24 24">
+                                <path
+                                    d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v2.385z" />
+                            </svg>
                         </a>
-                        <a href="https://twitter.com/yourpage" target="_blank" aria-label="Twitter" class="text-gray-300 hover:text-blue-400 transition-colors duration-300">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.592 0-6.495 2.902-6.495 6.495 0 .509.055 1.009.135 1.49-.038-.002-.075-.002-.113-.002-5.42 0-10.233-2.859-13.483-6.811-.563.978-.881 2.112-.881 3.327 0 2.275 1.157 4.28 2.915 5.462-.857-.024-1.67-.262-2.378-.654v.08c0 3.163 2.253 5.795 5.235 6.42-.58.158-1.192.217-1.82.083.844 2.624 3.25 4.54 6.133 4.54-2.247 1.76-5.076 2.812-8.151 2.812-.53 0-1.055-.031-1.573-.092 3.064 1.956 6.757 3.102 10.707 3.102 12.862 0 19.894-10.648 19.894-19.894 0-.301-.006-.602-.019-.901.913-.659 1.708-1.49 2.332-2.427z" /></svg>
+                        <a href="https://twitter.com/yourpage" target="_blank" aria-label="Twitter"
+                            class="text-gray-300 hover:text-blue-400 transition-colors duration-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="currentColor"
+                                viewBox="0 0 24 24">
+                                <path
+                                    d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.592 0-6.495 2.902-6.495 6.495 0 .509.055 1.009.135 1.49-.038-.002-.075-.002-.113-.002-5.42 0-10.233-2.859-13.483-6.811-.563.978-.881 2.112-.881 3.327 0 2.275 1.157 4.28 2.915 5.462-.857-.024-1.67-.262-2.378-.654v.08c0 3.163 2.253 5.795 5.235 6.42-.58.158-1.192.217-1.82.083.844 2.624 3.25 4.54 6.133 4.54-2.247 1.76-5.076 2.812-8.151 2.812-.53 0-1.055-.031-1.573-.092 3.064 1.956 6.757 3.102 10.707 3.102 12.862 0 19.894-10.648 19.894-19.894 0-.301-.006-.602-.019-.901.913-.659 1.708-1.49 2.332-2.427z" />
+                            </svg>
                         </a>
-                        <a href="https://instagram.com/yourpage" target="_blank" aria-label="Instagram" class="text-gray-300 hover:text-pink-500 transition-colors duration-300">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.145 5.247 1.958 5.48 5.239.145 3.279.145 4.363 0 7.641-.233 3.273-2.229 5.145-5.48 5.239-1.265.058-1.644.07-4.85.07s-3.584-.012-4.85-.07c-3.264-.145-5.247-1.958-5.48-5.239-.145-3.279-.145-4.363 0 7.641.233-3.273 2.229-5.145 5.48-5.239 1.265-.058 1.644.07 4.85-.07zM12 0c-3.259 0-3.668.014-4.944.072-4.358.216-7.229 3.08-7.448 7.448-.058 1.275-.072 1.684-.072 4.944s.014 3.668.072 4.944c.216 4.358 3.08 7.229 7.448 7.448 1.275.058 1.684.072 4.944.072s3.668-.014 4.944-.072c4.354-.216 7.22-3.09 7.448-7.448.058-1.275.072-1.684.072-4.944s-.014-3.668-.072-4.944c-.228-4.358-3.09-7.229-7.448-7.448-1.275-.058-1.684-.072-4.944-.072zM12 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.791-4-4s1.791-4 4-4 4 1.791 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" /></svg>
+                        <a href="https://instagram.com/yourpage" target="_blank" aria-label="Instagram"
+                            class="text-gray-300 hover:text-pink-500 transition-colors duration-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="currentColor"
+                                viewBox="0 0 24 24">
+                                <path
+                                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.145 5.247 1.958 5.48 5.239.145 3.279.145 4.363 0 7.641-.233 3.273-2.229 5.145-5.48 5.239-1.265.058-1.644.07-4.85.07s-3.584-.012-4.85-.07c-3.264-.145-5.247-1.958-5.48-5.239-.145-3.279-.145-4.363 0 7.641.233-3.273 2.229-5.145 5.48-5.239 1.265-.058 1.644.07 4.85-.07zM12 0c-3.259 0-3.668.014-4.944.072-4.358.216-7.229 3.08-7.448 7.448-.058 1.275-.072 1.684-.072 4.944s.014 3.668.072 4.944c.216 4.358 3.08 7.229 7.448 7.448 1.275.058 1.684.072 4.944.072s3.668-.014 4.944-.072c4.354-.216 7.22-3.09 7.448-7.448.058-1.275.072-1.684.072-4.944s-.014-3.668-.072-4.944c-.228-4.358-3.09-7.229-7.448-7.448-1.275-.058-1.684-.072-4.944-.072zM12 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.791-4-4s1.791-4 4-4 4 1.791 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                            </svg>
                         </a>
                     </div>
                 </div>
@@ -499,107 +627,107 @@
         </div>
     </footer>
 
-   <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
 
-        // --- NAVIGATION BAR SCROLL EFFECT SCRIPT ---
-        const mainHeader = document.getElementById('main-header');
-        const logoImg = document.getElementById('logo-img');
-        const navLinks = document.querySelectorAll('.nav-link');
-        const openProfileButton = document.getElementById('openProfile');
-        const menuToggleButton = document.getElementById('menu-toggle');
-        const heroSection = document.getElementById('hero');
+            // --- NAVIGATION BAR SCROLL EFFECT SCRIPT ---
+            const mainHeader = document.getElementById('main-header');
+            const logoImg = document.getElementById('logo-img');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const openProfileButton = document.getElementById('openProfile');
+            const menuToggleButton = document.getElementById('menu-toggle');
+            const heroSection = document.getElementById('hero');
 
-        function handleScroll() {
-            if (!heroSection) return;
-            const scrollPosition = window.scrollY;
-            const heroHeight = heroSection.offsetHeight;
+            function handleScroll() {
+                if (!heroSection) return;
+                const scrollPosition = window.scrollY;
+                const heroHeight = heroSection.offsetHeight;
 
-            if (scrollPosition > heroHeight - 100) {
-                mainHeader.classList.remove('nav-transparent');
-                mainHeader.classList.add('nav-scrolled');
-                logoImg.classList.add('logo-scrolled');
-                navLinks.forEach(link => link.classList.add('scrolled'));
-                openProfileButton.classList.add('scrolled');
-                menuToggleButton.classList.add('scrolled');
-            } else {
-                mainHeader.classList.remove('nav-scrolled');
-                mainHeader.classList.add('nav-transparent');
-                logoImg.classList.remove('logo-scrolled');
-                navLinks.forEach(link => link.classList.remove('scrolled'));
-                openProfileButton.classList.remove('scrolled');
-                menuToggleButton.classList.remove('scrolled');
-            }
-        }
-        window.addEventListener('scroll', handleScroll);
-        handleScroll();
-
-        // --- MOBILE MENU SCRIPT ---
-        const menuToggle = document.getElementById('menu-toggle');
-        const mobileMenu = document.getElementById('mobile-menu');
-
-        if (menuToggle && mobileMenu) {
-            const toggleMenu = (open) => {
-                 mobileMenu.classList.toggle('translate-x-full', !open);
-                 menuToggle.setAttribute('aria-expanded', open);
-                 menuToggle.innerHTML = open 
-                     ? `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>`
-                     : `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>`;
-            };
-            
-            menuToggle.addEventListener('click', () => {
-                const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
-                toggleMenu(!isExpanded);
-            });
-            
-            mobileMenu.querySelectorAll('a').forEach(link => {
-                link.addEventListener('click', () => toggleMenu(false));
-            });
-        }
-
-
-        // --- NATIVE SMOOTH SCROLLING SCRIPT ---
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                const targetId = this.getAttribute('href');
-                if (targetId.length > 1) { // Ensure it's not just "#"
-                    e.preventDefault();
-                    const target = document.querySelector(targetId);
-                    if (target) {
-                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
+                if (scrollPosition > heroHeight - 100) {
+                    mainHeader.classList.remove('nav-transparent');
+                    mainHeader.classList.add('nav-scrolled');
+                    logoImg.classList.add('logo-scrolled');
+                    navLinks.forEach(link => link.classList.add('scrolled'));
+                    openProfileButton.classList.add('scrolled');
+                    menuToggleButton.classList.add('scrolled');
+                } else {
+                    mainHeader.classList.remove('nav-scrolled');
+                    mainHeader.classList.add('nav-transparent');
+                    logoImg.classList.remove('logo-scrolled');
+                    navLinks.forEach(link => link.classList.remove('scrolled'));
+                    openProfileButton.classList.remove('scrolled');
+                    menuToggleButton.classList.remove('scrolled');
                 }
+            }
+            window.addEventListener('scroll', handleScroll);
+            handleScroll();
+
+            // --- MOBILE MENU SCRIPT ---
+            const menuToggle = document.getElementById('menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            if (menuToggle && mobileMenu) {
+                const toggleMenu = (open) => {
+                    mobileMenu.classList.toggle('translate-x-full', !open);
+                    menuToggle.setAttribute('aria-expanded', open);
+                    menuToggle.innerHTML = open
+                        ? `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>`
+                        : `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>`;
+                };
+
+                menuToggle.addEventListener('click', () => {
+                    const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+                    toggleMenu(!isExpanded);
+                });
+
+                mobileMenu.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => toggleMenu(false));
+                });
+            }
+
+
+            // --- NATIVE SMOOTH SCROLLING SCRIPT ---
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    const targetId = this.getAttribute('href');
+                    if (targetId.length > 1) { // Ensure it's not just "#"
+                        e.preventDefault();
+                        const target = document.querySelector(targetId);
+                        if (target) {
+                            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                    }
+                });
             });
-        });
 
-        // --- HERO CAROUSEL SCRIPT ---
-        const heroTrack = document.getElementById('hero-carousel-track');
-        if (heroTrack) {
-            let heroSlideInterval = setInterval(() => advanceHeroCarousel(), 4000);
-            const heroSlides = Array.from(heroTrack.children);
-            const totalHeroSlides = heroSlides.length;
-            let currentHeroIndex = 0;
+            // --- HERO CAROUSEL SCRIPT ---
+            const heroTrack = document.getElementById('hero-carousel-track');
+            if (heroTrack) {
+                let heroSlideInterval = setInterval(() => advanceHeroCarousel(), 4000);
+                const heroSlides = Array.from(heroTrack.children);
+                const totalHeroSlides = heroSlides.length;
+                let currentHeroIndex = 0;
 
-            function advanceHeroCarousel() {
-                currentHeroIndex = (currentHeroIndex + 1) % totalHeroSlides;
-                heroTrack.style.transform = `translateX(-${currentHeroIndex * 100}%)`;
-            };
-        }
+                function advanceHeroCarousel() {
+                    currentHeroIndex = (currentHeroIndex + 1) % totalHeroSlides;
+                    heroTrack.style.transform = `translateX(-${currentHeroIndex * 100}%)`;
+                };
+            }
 
-        // --- EVENTS CAROUSEL SCRIPT ---
-        const eventsTrack = document.getElementById('carousel-track');
-        const eventsNextButton = document.getElementById('next-btn');
-        if (eventsTrack && eventsNextButton) {
-            const eventData = [
-                { name: 'Gala Dinner', description: 'An evening of elegance and fine dining.', img: 'https://placehold.co/600x800/e29b6a/ffffff?text=Gala' },
-                { name: 'Wine Tasting', description: 'Explore exquisite wines from around the world.', img: 'https://placehold.co/600x800/4d5a6e/ffffff?text=Wine' },
-                { name: 'Corporate Mixer', description: 'Network with industry leaders.', img: 'https://placehold.co/600x800/d1d1d1/5e5e5e?text=Mixer' },
-                { name: 'New Year Party', description: 'Celebrate the new year with a grand party.', img: 'https://placehold.co/600x800/2d7a8d/ffffff?text=Party' },
-                { name: 'Summer Fest', description: 'Enjoy the sun with music and fun.', img: 'https://placehold.co/600x800/f5c96b/ffffff?text=Summer' },
-                { name: 'Charity Ball', description: 'A night of giving back to the community.', img: 'https://placehold.co/600x800/8d2d5a/ffffff?text=Charity' }
-            ];
+            // --- EVENTS CAROUSEL SCRIPT ---
+            const eventsTrack = document.getElementById('carousel-track');
+            const eventsNextButton = document.getElementById('next-btn');
+            if (eventsTrack && eventsNextButton) {
+                const eventData = [
+                    { name: 'Gala Dinner', description: 'An evening of elegance and fine dining.', img: 'https://placehold.co/600x800/e29b6a/ffffff?text=Gala' },
+                    { name: 'Wine Tasting', description: 'Explore exquisite wines from around the world.', img: 'https://placehold.co/600x800/4d5a6e/ffffff?text=Wine' },
+                    { name: 'Corporate Mixer', description: 'Network with industry leaders.', img: 'https://placehold.co/600x800/d1d1d1/5e5e5e?text=Mixer' },
+                    { name: 'New Year Party', description: 'Celebrate the new year with a grand party.', img: 'https://placehold.co/600x800/2d7a8d/ffffff?text=Party' },
+                    { name: 'Summer Fest', description: 'Enjoy the sun with music and fun.', img: 'https://placehold.co/600x800/f5c96b/ffffff?text=Summer' },
+                    { name: 'Charity Ball', description: 'A night of giving back to the community.', img: 'https://placehold.co/600x800/8d2d5a/ffffff?text=Charity' }
+                ];
 
-            const createCard = (event) => `
+                const createCard = (event) => `
                 <div class="event-card flex-shrink-0 w-64 md:w-72 p-2">
                     <div class="w-full h-[400px] rounded-2xl overflow-hidden shadow-lg relative group cursor-pointer">
                         <img src="${event.img}" alt="${event.name}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
@@ -610,147 +738,147 @@
                     </div>
                 </div>`;
 
-            const allCardsData = [...eventData, ...eventData];
-            eventsTrack.innerHTML = allCardsData.map(createCard).join('');
+                const allCardsData = [...eventData, ...eventData];
+                eventsTrack.innerHTML = allCardsData.map(createCard).join('');
 
-            let cardWidth = eventsTrack.children[0].offsetWidth;
-            let currentIndex = 0;
-            let slideInterval = setInterval(advanceCarousel, 3000);
+                let cardWidth = eventsTrack.children[0].offsetWidth;
+                let currentIndex = 0;
+                let slideInterval = setInterval(advanceCarousel, 3000);
 
-            function advanceCarousel() {
-                currentIndex++;
-                eventsTrack.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
-                eventsTrack.style.transform = `translateX(${-currentIndex * cardWidth}px)`;
-
-                if (currentIndex >= eventData.length) {
-                    setTimeout(() => {
-                        eventsTrack.style.transition = 'none';
-                        currentIndex = 0;
-                        eventsTrack.style.transform = `translateX(0px)`;
-                    }, 500);
-                }
-            };
-
-            eventsNextButton.addEventListener('click', advanceCarousel);
-            window.addEventListener('resize', () => {
-                if (eventsTrack.children.length > 0) {
-                    cardWidth = eventsTrack.children[0].offsetWidth;
-                    eventsTrack.style.transition = 'none';
+                function advanceCarousel() {
+                    currentIndex++;
+                    eventsTrack.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
                     eventsTrack.style.transform = `translateX(${-currentIndex * cardWidth}px)`;
-                }
-            });
-        }
-        
-        // --- FADE-IN ON SCROLL SCRIPT ---
-        const fadeInElements = document.querySelectorAll('.fade-in-hidden');
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('fade-in-visible');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1 });
-        fadeInElements.forEach(element => observer.observe(element));
 
-        // --- SEMINAR MODAL SCRIPT ---
-        const registerButtons = document.querySelectorAll('.register-button');
-        const modal = document.getElementById('registration-modal');
-        const closeModalButton = document.querySelector('.close-modal-button');
-        if (modal && closeModalButton) {
-            const seminarDetails = {
-                'ai': { venue: 'Main Auditorium', time: '10:00 AM - 12:00 PM', slots: 50 },
-                'sustainable': { venue: 'Seminar Room A', time: '02:00 PM - 04:00 PM', slots: 35 },
-                'biosystems': { venue: 'Bio-Lab Hall', time: '09:00 AM - 11:00 AM', slots: 40 },
-                'water': { venue: 'Lecture Hall B', time: '01:00 PM - 03:00 PM', slots: 60 },
-                'crop-yield': { venue: 'Main Auditorium', time: '11:00 AM - 01:00 PM', slots: 45 },
-                'post-harvest': { venue: 'Seminar Room A', time: '03:00 PM - 05:00 PM', slots: 30 },
-            };
+                    if (currentIndex >= eventData.length) {
+                        setTimeout(() => {
+                            eventsTrack.style.transition = 'none';
+                            currentIndex = 0;
+                            eventsTrack.style.transform = `translateX(0px)`;
+                        }, 500);
+                    }
+                };
 
-            registerButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const seminarKey = button.dataset.seminar;
-                    const details = seminarDetails[seminarKey];
-                    if (details) {
-                        document.getElementById('modal-title').textContent = `Register for ${button.closest('.bg-white').querySelector('h3').textContent}`;
-                        document.getElementById('modal-venue').textContent = details.venue;
-                        document.getElementById('modal-time').textContent = details.time;
-                        document.getElementById('modal-slots').textContent = `${details.slots} available`;
-                        modal.classList.remove('hidden');
+                eventsNextButton.addEventListener('click', advanceCarousel);
+                window.addEventListener('resize', () => {
+                    if (eventsTrack.children.length > 0) {
+                        cardWidth = eventsTrack.children[0].offsetWidth;
+                        eventsTrack.style.transition = 'none';
+                        eventsTrack.style.transform = `translateX(${-currentIndex * cardWidth}px)`;
                     }
                 });
-            });
-
-            closeModalButton.addEventListener('click', () => modal.classList.add('hidden'));
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) modal.classList.add('hidden');
-            });
-        }
-        
-
-        // --- LEADERBOARD SCRIPT ---
-        const leaderboardData = {
-            'hackathon': [
-                { rank: 1, team: 'Innovators', score: 980 }, { rank: 2, team: 'Tech Titans', score: 955 },
-                { rank: 3, team: 'Code Crushers', score: 920 }, { rank: 4, team: 'Team Synergy', score: 885 },
-                { rank: 5, team: 'Binary Brawlers', score: 850 }
-            ],
-            'robotics': [
-                { rank: 1, team: 'Robo Masters', score: 995 }, { rank: 2, team: 'Circuit Breakers', score: 970 },
-                { rank: 3, team: 'Gear Heads', score: 940 }, { rank: 4, team: 'Quantum Bots', score: 900 },
-                { rank: 5, team: 'Automaton', score: 875 }
-            ],
-            'data-analytics': [
-                { rank: 1, team: 'Data Diviners', score: 960 }, { rank: 2, team: 'Stat Squad', score: 935 },
-                { rank: 3, team: 'Insight Inc.', score: 910 }, { rank: 4, team: 'Pixel Pioneers', score: 880 },
-                { rank: 5, team: 'Number Nerds', score: 845 }
-            ]
-        };
-
-        const eventSelect = document.getElementById('event-select');
-        const leaderboardTableBody = document.getElementById('leaderboard-table-body');
-
-        function populateEventDropdown() {
-            if (!eventSelect) return;
-            const events = {
-                'hackathon': 'Hackathon', 'robotics': 'Robotics Competition', 'data-analytics': 'Data Analytics Challenge'
-            };
-            for (const key in events) {
-                const option = document.createElement('option');
-                option.value = key; option.textContent = events[key];
-                eventSelect.appendChild(option);
             }
-        };
 
-        function updateLeaderboard(eventId) {
-            if (!leaderboardTableBody) return;
-            leaderboardTableBody.innerHTML = ''; // Clear existing rows
-            const rankings = leaderboardData[eventId];
-            if (rankings) {
-                rankings.forEach(entry => {
-                    const row = document.createElement('tr');
-                    const rankIcon = entry.rank === 1 ? '🥇' : entry.rank === 2 ? '🥈' : entry.rank === 3 ? '🥉' : '';
-                    row.className = 'hover:bg-gray-50';
-                    row.innerHTML = `
+            // --- FADE-IN ON SCROLL SCRIPT ---
+            const fadeInElements = document.querySelectorAll('.fade-in-hidden');
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            fadeInElements.forEach(element => observer.observe(element));
+
+            // --- SEMINAR MODAL SCRIPT ---
+            const registerButtons = document.querySelectorAll('.register-button');
+            const modal = document.getElementById('registration-modal');
+            const closeModalButton = document.querySelector('.close-modal-button');
+            if (modal && closeModalButton) {
+                const seminarDetails = {
+                    'ai': { venue: 'Main Auditorium', time: '10:00 AM - 12:00 PM', slots: 50 },
+                    'sustainable': { venue: 'Seminar Room A', time: '02:00 PM - 04:00 PM', slots: 35 },
+                    'biosystems': { venue: 'Bio-Lab Hall', time: '09:00 AM - 11:00 AM', slots: 40 },
+                    'water': { venue: 'Lecture Hall B', time: '01:00 PM - 03:00 PM', slots: 60 },
+                    'crop-yield': { venue: 'Main Auditorium', time: '11:00 AM - 01:00 PM', slots: 45 },
+                    'post-harvest': { venue: 'Seminar Room A', time: '03:00 PM - 05:00 PM', slots: 30 },
+                };
+
+                registerButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        const seminarKey = button.dataset.seminar;
+                        const details = seminarDetails[seminarKey];
+                        if (details) {
+                            document.getElementById('modal-title').textContent = `Register for ${button.closest('.bg-white').querySelector('h3').textContent}`;
+                            document.getElementById('modal-venue').textContent = details.venue;
+                            document.getElementById('modal-time').textContent = details.time;
+                            document.getElementById('modal-slots').textContent = `${details.slots} available`;
+                            modal.classList.remove('hidden');
+                        }
+                    });
+                });
+
+                closeModalButton.addEventListener('click', () => modal.classList.add('hidden'));
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) modal.classList.add('hidden');
+                });
+            }
+
+
+            // --- LEADERBOARD SCRIPT ---
+            const leaderboardData = {
+                'hackathon': [
+                    { rank: 1, team: 'Innovators', score: 980 }, { rank: 2, team: 'Tech Titans', score: 955 },
+                    { rank: 3, team: 'Code Crushers', score: 920 }, { rank: 4, team: 'Team Synergy', score: 885 },
+                    { rank: 5, team: 'Binary Brawlers', score: 850 }
+                ],
+                'robotics': [
+                    { rank: 1, team: 'Robo Masters', score: 995 }, { rank: 2, team: 'Circuit Breakers', score: 970 },
+                    { rank: 3, team: 'Gear Heads', score: 940 }, { rank: 4, team: 'Quantum Bots', score: 900 },
+                    { rank: 5, team: 'Automaton', score: 875 }
+                ],
+                'data-analytics': [
+                    { rank: 1, team: 'Data Diviners', score: 960 }, { rank: 2, team: 'Stat Squad', score: 935 },
+                    { rank: 3, team: 'Insight Inc.', score: 910 }, { rank: 4, team: 'Pixel Pioneers', score: 880 },
+                    { rank: 5, team: 'Number Nerds', score: 845 }
+                ]
+            };
+
+            const eventSelect = document.getElementById('event-select');
+            const leaderboardTableBody = document.getElementById('leaderboard-table-body');
+
+            function populateEventDropdown() {
+                if (!eventSelect) return;
+                const events = {
+                    'hackathon': 'Hackathon', 'robotics': 'Robotics Competition', 'data-analytics': 'Data Analytics Challenge'
+                };
+                for (const key in events) {
+                    const option = document.createElement('option');
+                    option.value = key; option.textContent = events[key];
+                    eventSelect.appendChild(option);
+                }
+            };
+
+            function updateLeaderboard(eventId) {
+                if (!leaderboardTableBody) return;
+                leaderboardTableBody.innerHTML = ''; // Clear existing rows
+                const rankings = leaderboardData[eventId];
+                if (rankings) {
+                    rankings.forEach(entry => {
+                        const row = document.createElement('tr');
+                        const rankIcon = entry.rank === 1 ? '🥇' : entry.rank === 2 ? '🥈' : entry.rank === 3 ? '🥉' : '';
+                        row.className = 'hover:bg-gray-50';
+                        row.innerHTML = `
                         <td class="p-4 whitespace-nowrap text-gray-700">
                             <span class="inline-block w-6 text-center mr-2">${rankIcon}</span>${entry.rank}
                         </td>
                         <td class="p-4 whitespace-nowrap font-medium text-gray-800">${entry.team}</td>
                         <td class="p-4 text-right whitespace-nowrap font-semibold text-green-700">${entry.score}</td>
                     `;
-                    leaderboardTableBody.appendChild(row);
-                });
+                        leaderboardTableBody.appendChild(row);
+                    });
+                }
             }
-        }
-        
-        if (eventSelect && leaderboardTableBody) {
-            populateEventDropdown();
-            updateLeaderboard(eventSelect.value); 
-            eventSelect.addEventListener('change', (e) => updateLeaderboard(e.target.value));
-        }
-        
-    });
-</script>
+
+            if (eventSelect && leaderboardTableBody) {
+                populateEventDropdown();
+                updateLeaderboard(eventSelect.value);
+                eventSelect.addEventListener('change', (e) => updateLeaderboard(e.target.value));
+            }
+
+        });
+    </script>
 </body>
 
 </html>
