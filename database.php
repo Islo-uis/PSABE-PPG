@@ -10,7 +10,7 @@ try {
 }
 
 //db creeattioonnn    
-$dbName = "CREATE DATABASE IF NOT EXISTS abecon CHARACTER SET utf8 COLLATE utf8_general_ci";
+$dbName = "CREATE DATABASE IF NOT EXISTS abecon";
 if (mysqli_query($conn, $dbName)) {
     $conn = mysqli_connect($db_server, $db_user, $db_pass, $db_name);
 } else {
@@ -41,8 +41,7 @@ if (mysqli_query($conn, $admin)) {
 // }
 
 // 7. Users table
-$users = "
-  CREATE TABLE IF NOT EXISTS users (
+$users = "CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(255)      NOT NULL UNIQUE,
     first_name VARCHAR(255) NOT NULL,
@@ -87,7 +86,7 @@ $merch = "CREATE table if not exists products (
     prod_description TEXT NULL,
     prod_qty SMALLINT UNSIGNED NOT NULL,
     prod_price DECIMAL(10,2) NOT NULL,
-    prod_status ENUM('in_stock','sold_out’))
+    prod_status ENUM('in_stock','sold_out'))
 ";
 if (! mysqli_query($conn, $merch)) {
     die("Error creating merch table: " . mysqli_error($conn));
@@ -95,7 +94,7 @@ if (! mysqli_query($conn, $merch)) {
 
 
 
-$prodimg = "CREATE TABLE product_images (
+$prodimg = "CREATE TABLE if not exists product_images (
   img_id SMALLINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
   prod_id SMALLINT UNSIGNED ,
   img_url VARCHAR(255) NOT NULL,
