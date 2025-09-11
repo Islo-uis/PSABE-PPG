@@ -84,27 +84,16 @@
             </div>
 
             <!-- Empty State -->
-            <div class="flex-1 flex items-center justify-center text-gray-400 text-sm hidden">
+            <div id="empty-cart-display" class="flex-1 flex items-center justify-center text-gray-400 text-sm hidden">
                 <p>You have no items in your cart.</p>
             </div>
 
             <!-- Cart Items -->
-            <div class="flex-1 overflow-y-auto p-4 space-y-4">
-                <!-- Example Cart Item -->
-                <div class="flex items-center gap-3">
-                    <img src="/images/product-images/image 5.png" alt="White Shirt Small"
-                        class="w-14 h-14 object-cover rounded border">
-                    <div class="flex-1">
-                        <p class="font-medium">White Shirt Small</p>
-                        <p class="font-semibold text-sm">₱190.00</p>
-                        <div class="flex items-center gap-2">
-                            <button class="w-6 h-6 border rounded">-</button>
-                            <span>1</span>
-                            <button class="w-6 h-6 border rounded">+</button>
-                        </div>
-                    </div>
-                    <button class="text-gray-400 hover:text-gray-600">×</button>
-                </div>
+            <div id="cart-items" class="flex-1 overflow-y-auto p-4 space-y-4">
+
+
+
+
             </div>
             <!-- Footer -->
             <div class="p-4 border-t">
@@ -172,28 +161,7 @@
     </main>
 
 
-    <!-- Cart Drawer JS -->
-    <script>
-        const cartDrawer = document.getElementById("cartDrawer");
-        const overlay = document.getElementById("overlay");
-        const openCart = document.getElementById("openCart");
-        const closeCart = document.getElementById("closeCart");
 
-        openCart.addEventListener("click", () => {
-            cartDrawer.classList.add("translate-x-0", "opacity-100");
-            overlay.classList.add("opacity-100", "pointer-events-auto");
-            document.body.classList.add("overflow-hidden");
-        });
-
-        function closeCartDrawer() {
-            cartDrawer.classList.remove("translate-x-0", "opacity-100");
-            overlay.classList.remove("opacity-100", "pointer-events-auto");
-            document.body.classList.remove("overflow-hidden");
-        }
-
-        closeCart.addEventListener("click", closeCartDrawer);
-        overlay.addEventListener("click", closeCartDrawer);
-    </script>
 
     <!-- Modal Product -->
     <div id="product-modal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
@@ -287,11 +255,10 @@
         </div>
     </div>
 
-<!-- Toast container -->
-<div id="toast-container" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 space-y-2"></div>
-
-<script>
-    function showToast(message) {
+    <!-- Toast container -->
+    <div id="toast-container" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 space-y-2"></div>
+    <script>
+        function showToast(message) {
             const container = document.getElementById("toast-container");
             const toast = document.createElement("div");
 
@@ -309,12 +276,13 @@
                 setTimeout(() => toast.remove(), 500);
             }, 2000);
         }
-</script>
+    </script>
 
     <!-- for products table popuate -->
     <script>
         let selectedQty = 1;
         let maxQty = 0;
+        let qtyValueSpan;
 
         let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
@@ -340,7 +308,7 @@
 
                         data.forEach(prod => {
                             const cardHTML = `
-                                <div data-modal-target="product-modal" data-modal-toggle="product-modal" data-title="${prod.prod_name}"
+                                <div id="product-cart" data-modal-target="product-modal" data-id="${prod.prod_id}" data-modal-toggle="product-modal" data-title="${prod.prod_name}"
                                     data-price="₱${prod.prod_price.toFixed(2)}" data-qty="${prod.prod_qty}" data-img="admin/product-images/${prod.img1}"
                                     data-desc="${prod.prod_description}"
                                     class="bg-white border rounded-xl p-4 flex flex-col justify-between shadow-sm cursor-pointer hover:shadow-md transition">
@@ -390,7 +358,7 @@
                                 // You can now use `maxQty` to prevent the user from increasing the quantity beyond the available stock.
                                 const qtyIncreaseBtn = document.getElementById('qty-increase');
                                 const qtyDecreaseBtn = document.getElementById('qty-decrease');
-                                const qtyValueSpan = document.getElementById('qty-value');
+                                qtyValueSpan = document.getElementById('qty-value');
 
                                 qtyIncreaseBtn.onclick = () => {
                                     if (selectedQty < maxQty) {
@@ -412,20 +380,40 @@
         });
 
 
+        const cartDrawer = document.getElementById("cartDrawer");
+        const overlay = document.getElementById("overlay");
+        const openCart = document.getElementById("openCart");
+        const closeCart = document.getElementById("closeCart");
 
+        openCart.addEventListener("click", () => {
+            cartDrawer.classList.add("translate-x-0", "opacity-100");
+            overlay.classList.add("opacity-100", "pointer-events-auto");
+            document.body.classList.add("overflow-hidden");
+        });
 
+        function closeCartDrawer() {
+            cartDrawer.classList.remove("translate-x-0", "opacity-100");
+            overlay.classList.remove("opacity-100", "pointer-events-auto");
+            document.body.classList.remove("overflow-hidden");
+        }
 
+        closeCart.addEventListener("click", closeCartDrawer);
+        overlay.addEventListener("click", closeCartDrawer);
         // Update cart count on page load
         updateCartCount();
 
         document.getElementById("add-to-cart").addEventListener("click", () => {
+
+            
+            // --- UPDATED: Grab product ID from the active card
+            const productId = document.getElementById("product-cart").dataset.id;
             // Grab modal product info
             const title = document.getElementById("modal-title").innerText;
             const price = document.getElementById("modal-price").innerText;
             const img = document.getElementById("modal-img").src;
 
             // Check if already in cart
-            const existing = cart.find(item => item.title === title);
+            const existing = cart.find(item =>  item.id === productId);
 
             if (existing) {
                 // prevent exceeding maxQty
@@ -439,7 +427,7 @@
                     alert(`You can only add up to ${maxQty} of this product.`);
                     return;
                 }
-                cart.push({ title, price, img, qty: selectedQty, maxQty });
+                cart.push({ id: productId, title, price, img, qty: selectedQty, maxQty });
             }
 
             // Save cart
@@ -450,11 +438,12 @@
             renderCartItems();
             updateCartTotal();
             showToast(`Added ${selectedQty} x ${title} to cart`);
+            openCart.click(); // Open cart drawer
 
 
             // Reset qty in modal
             selectedQty = 1;
-            qtyValue.textContent = 1;
+            qtyValueSpan.textContent = 1;
         });
 
         function toggleCheckoutButton() {
@@ -468,8 +457,6 @@
                 checkoutBtn.classList.remove('opacity-50', 'cursor-not-allowed');
             }
         }
-
-
 
 
         function updateCartTotal() {
@@ -489,33 +476,41 @@
 
         }
 
+
+
         function renderCartItems() {
-            const cartContainer = document.querySelector("#cartDrawer .flex-1.overflow-y-auto");
-            cartContainer.innerHTML = "";
 
-            cart.forEach((item, index) => {
-                const div = document.createElement("div");
-                div.className = "flex items-center gap-3";
+            const emptyCartDisplay = document.getElementById("empty-cart-display");
+            const cartContainer = document.querySelector("#cart-items");
+            cartContainer.innerHTML = '';
 
-                div.innerHTML = `
-      <img src="${item.img}" alt="${item.title}" class="w-14 h-14 object-cover rounded border">
-      <div class="flex-1">
-        <p class="font-medium">${item.title}</p>
-        <p class="font-semibold text-sm">${item.price}</p>
-        <div class="flex items-center gap-2">
-        <button class="w-6 h-6 border rounded" 
-            onclick="changeQty(${index}, -1)">-</button>
-        <span>${item.qty}</span>
-        <button class="w-6 h-6 border rounded" 
-            onclick="changeQty(${index}, 1)" 
-            ${item.qty >= item.maxQty ? 'disabled class="opacity-50 cursor-not-allowed"' : ''}>+</button>
-        </div>
-      </div>
-      <button class="text-gray-400 hover:text-gray-600" onclick="removeItem(${index})">×</button>
-    `;
 
-                cartContainer.appendChild(div);
-            });
+            if (cart.length === 0) {
+                emptyCartDisplay.classList.remove("hidden");   // show empty cart message
+            } else {
+                emptyCartDisplay.classList.add("hidden");
+                cart.forEach((item, index) => {
+
+                    const cartItemHTML = `
+                <div class="flex items-center gap-3">
+                    <img src="${item.img}" alt="${item.title}" class="w-14 aspect-[3/4] object-cover rounded border">
+                    <div class="flex-1">
+                        <p class="font-medium">${item.title}</p>
+                        <p class="font-semibold text-sm">${item.price}</p>
+                        <div class="flex items-center gap-2">
+                            <button class="w-6 h-6 border rounded" onclick="changeQty(${index}, -1)">-</button>
+                            <span>${item.qty}</span>
+                            <button class="w-6 h-6 border rounded" onclick="changeQty(${index}, 1)">+</button>
+                        </div>
+                    </div>
+                     <button class="text-gray-400 hover:text-gray-600" onclick="removeItem(${index})">×</button>
+                 </div>
+                
+        `;
+
+                    cartContainer.innerHTML += cartItemHTML;
+                });
+            }
             updateCartTotal();
 
         }

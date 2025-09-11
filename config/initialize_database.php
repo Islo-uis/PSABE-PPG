@@ -61,6 +61,35 @@ else{
 }
 
 
+
+$orders = "CREATE table if not exists orders (
+    order_id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    buyer_id INT NOT NULL,
+    order_status ENUM('pending','paid','fulfilled','cancelled','refunded') NOT NULL DEFAULT 'pending',
+    total_amount DECIMAL(10,2) DEFAULT 0.00,
+    placed_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    payment_refno VARCHAR(100) NULL,
+    payment_photo VARCHAR(255) NULL,
+    FOREIGN KEY (buyer_id) REFERENCES user(userID)
+)";
+if (! mysqli_query($conn, $orders)) {
+    die("Error creating orders table: " . mysqli_error($conn));
+}
+
+$orderdetails = "CREATE table if not exists orderdetails (
+    order_id INT UNSIGNED NOT NULL,
+    prod_id  SMALLINT UNSIGNED NOT NULL,
+    item_qty SMALLINT UNSIGNED NOT NULL CHECK (item_qty > 0),
+    unit_price DECIMAL(10,2) NOT NULL AS (SELECT prod_price FROM products WHERE prod_id = prod_id),
+    line_total DECIMAL(10,2) AS (item_qty * unit_price) STORED,
+    PRIMARY KEY (order_id, prod_id),
+    FOREIGN KEY (order_id) REFERENCES orders(order_id),
+    FOREIGN KEY (prod_id) REFERENCES products(prod_id)
+)";
+if (! mysqli_query($conn, $orderdetails)) {
+    die("Error creating orderdetails table: " . mysqli_error($conn));
+}   
+
 $merch = "CREATE table if not exists products (
     prod_id SMALLINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     prod_name VARCHAR(160) NOT NULL,

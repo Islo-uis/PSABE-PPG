@@ -44,6 +44,8 @@ class Database
             }
         }
 
+        mysqli_query($this->conn, "SET time_zone = '+08:00'");
+
         // Select the database
         $this->conn->select_db($this->dbname);
     }
