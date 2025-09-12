@@ -222,42 +222,16 @@
 
                         <tbody>
                             <tr class="hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer">
-                                <td class="font-medium text-gray-900 whitespace-nowrap dark:text-white">React</td>
-                                <td>2013/24/05</td>
-                                <td>4500000</td>
-                                <td>24%</td>
-                                <td>24%</td>
-                                <td>4500000</td>
-                                <td>24%</td>
-                                <td>24%</td>
+                                <td class="font-medium text-gray-900 whitespace-nowrap dark:text-white"></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                                 <td class="flex">
-                                    <button type="button" data-drawer-target="drawer-update-product"
-                                        data-drawer-show="drawer-update-product" aria-controls="drawer-update-product"
-                                        class="edit-btn py-1 px-3 flex items-center text-sm font-medium text-center text-white bg-blue-500 rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300"
-                                        data-id="${prod.prod_id}" data-name="${prod.prod_name}"
-                                        data-price="${prod.prod_price}" data-qty="${prod.prod_qty}"
-                                        data-desc="${prod.prod_description}">
-                                        <span class="material-symbols-outlined text-base mr-2">edit_square</span>
-                                        Edit
-                                    </button>
-                                    <button type="button" data-drawer-target="drawer-update-product"
-                                        data-drawer-show="drawer-update-product" aria-controls="drawer-update-product"
-                                        class="edit-btn py-1 px-3 flex items-center text-sm font-medium text-center text-white bg-blue-500 rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300"
-                                        data-id="${prod.prod_id}" data-name="${prod.prod_name}"
-                                        data-price="${prod.prod_price}" data-qty="${prod.prod_qty}"
-                                        data-desc="${prod.prod_description}">
-                                        <span class="material-symbols-outlined text-base mr-2">edit_square</span>
-                                        Edit
-                                    </button>
-                                    <button type="button" data-drawer-target="drawer-update-product"
-                                        data-drawer-show="drawer-update-product" aria-controls="drawer-update-product"
-                                        class="edit-btn py-1 px-3 flex items-center text-sm font-medium text-center text-white bg-blue-500 rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300"
-                                        data-id="${prod.prod_id}" data-name="${prod.prod_name}"
-                                        data-price="${prod.prod_price}" data-qty="${prod.prod_qty}"
-                                        data-desc="${prod.prod_description}">
-                                        <span class="material-symbols-outlined text-base mr-2">edit_square</span>
-                                        Edit
-                                    </button>
+                                    
                                 </td>
                             </tr>
                         </tbody>
@@ -429,7 +403,32 @@
             }
         </script>
 
+<script>
+ document.addEventListener("change", function (e) {
+  if (e.target.matches("select[name='status']")) {
+    const orderId = e.target.getAttribute("data-order-id");
+    const newStatus = e.target.value;
 
+    fetch("updateorderstatus.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: `order_id=${encodeURIComponent(orderId)}&status=${encodeURIComponent(newStatus)}`
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        console.log(data.message);
+        // optional: show toast/alert
+      } else {
+        alert("Error: " + data.error);
+      }
+    })
+    .catch(err => console.error("AJAX error:", err));
+  }
+});
+
+
+</script>
 
 </body>
 
