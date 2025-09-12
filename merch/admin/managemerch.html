@@ -143,8 +143,8 @@
         <form action="#" id="drawer-update-product"
             class="fixed top-0 left-0 z-40 w-full h-screen max-w-3xl p-4 overflow-y-auto transition-transform -translate-x-full bg-white "
             tabindex="-1" aria-labelledby="drawer-update-product-label" aria-hidden="true">
-            <h5 id="drawer-label" class="inline-flex items-center mb-6 text-sm font-semibold text-gray-500 uppercase ">
-                Update Product</h5>
+            <h5 id="drawer-label" class="inline-flex items-center mb-6 text-sm font-semibold text-gray-500 ">
+                Update Product Details</h5>
             <button type="button" data-drawer-dismiss="drawer-update-product" aria-controls="drawer-update-product"
                 class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 absolute top-2.5 right-2.5 inline-flex items-center ">
                 <span class="material-icons text-base">close</span>
@@ -152,38 +152,43 @@
 
 
             <div class="grid gap-4 sm:grid-cols-3 sm:gap-6 ">
+
                 <!-- div for product ID in databse -->
                 <div class="sm:col-span-1">
                     <label for="product-id" class="block mb-2 text-sm font-medium text-gray-900 ">Product ID</label>
                     <input type="text" name="product-id" id="product-id"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
-                        value=" " placeholder=" " required disabled>
+                        value="" required disabled>
                 </div>
 
                 <div class="space-y-4 sm:col-span-2 sm:space-y-6">
                     <div>
-                        <label for="name" class="block mb-2 text-sm font-medium text-gray-900 ">Product
-                            Name</label>
+                        <label for="name" class="block mb-2 text-sm font-medium text-gray-900 ">Product Name</label>
                         <input type="text" maxlength="30" name="name" id="name"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
-                            value="" placeholder="Type product name" required>
+                            value="" required>
                     </div>
                 </div>
                 <div class=" sm:col-span-2">
                     <label for="description" class="block mb-2 text-sm font-medium text-gray-900 ">Description</label>
                     <div class="w-full border border-gray-200 rounded-lg bg-gray-50  ">
-                        <div class="flex items-center justify-between px-3 py-5 border-b ">
-
-                        </div>
+                        <div class="flex items-center justify-between px-3 py-5 border-b "></div>
                         <div class="px-4 py-3 bg-white rounded-b-lg ">
                             <textarea id="description" rows="8"
-                                class="block w-full px-0 text-sm text-gray-800 bg-white border-0  focus:ring-0  "
-                                placeholder="Write product description here" required>
+                                class="block w-full px-0 text-sm text-gray-800 bg-white border-0  focus:ring-0  ">
                             </textarea>
                         </div>
                     </div>
                 </div>
                 <div class="space-y-4 sm:space-y-6">
+                    <div>
+                        <label for="prod_price_update" class="block mb-2 text-sm font-medium text-gray-900">Unit
+                            Price</label>
+                        <input type="number" step="1" name="prod_price_update" id="prod_price_update"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
+                            required>
+                    </div>
+
                     <div>
                         <label for="item-quantity" class="block mb-2 text-sm font-medium text-gray-900 ">Quantity
                             (PCS)</label>
@@ -279,7 +284,7 @@
         <!-- End block -->
         <div id="createProductModal" tabindex="-1" aria-hidden="true"
             class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] md:h-full">
-            
+
             <div class="relative p-4 w-full max-w-3xl h-full md:h-auto">
                 <!-- Modal content -->
                 <div class="relative p-4 bg-white rounded-lg shadow  sm:p-5">
@@ -521,7 +526,7 @@
                             <tr class="border-b hover:bg-gray-100">
                                 <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">
                                     <div class="flex items-center mr-3">
-                                        <img src="product-images/${prod.img}" alt="${prod.prod_name} Image" class="h-8 w-auto mr-3 object-cover aspect-[3/4]">
+                                        <img src="product-images/${prod.img}" alt="${prod.prod_name} Image" class="h-8 rounded w-auto mr-3 object-cover aspect-[3/4]">
                                         ${prod.prod_name}
                                     </div>
                                 </th>
@@ -548,10 +553,18 @@
                                 <td class="px-4 py-3">₱${prod.total_sales.toFixed(2)}</td>
                                 <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">
                                     <div class="flex items-center space-x-4">
-                                        <button type="button" data-drawer-target="drawer-update-product"
-                                            data-drawer-show="drawer-update-product" aria-controls="drawer-update-product"
-                                            class="py-1 px-3 flex items-center text-sm font-medium text-center text-white bg-blue-500 rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300">
-                                            <span class="material-symbols-outlined text-base mr-2 -ml-0.5">edit_square</span>
+
+                                        <button type="button"
+                                            data-drawer-target="drawer-update-product"
+                                            data-drawer-show="drawer-update-product"
+                                            aria-controls="drawer-update-product"
+                                            class="edit-btn py-1 px-3 flex items-center text-sm font-medium text-center text-white bg-blue-500 rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300"
+                                            data-id="${prod.prod_id}"
+                                            data-name="${prod.prod_name}"
+                                            data-price="${prod.prod_price}"
+                                            data-qty="${prod.prod_qty}"
+                                            data-desc="${prod.prod_description}">
+                                            <span class="material-symbols-outlined text-base mr-2">edit_square</span>
                                             Edit
                                         </button>
                                     </div>
@@ -559,9 +572,37 @@
                             </tr>
                         `;
                             tbody.innerHTML += rowHTML;
-                            
+
 
                         });
+
+                        document.querySelectorAll(".edit-btn").forEach(btn => {
+                            btn.addEventListener("click", () => {
+                                // Get data from button
+                                const id = btn.dataset.id;
+                                const name = btn.dataset.name;
+                                const price = btn.dataset.price;
+                                const qty = btn.dataset.qty;
+                                const desc = btn.dataset.desc;
+
+                                // Fill modal form fields
+                                document.getElementById("product-id").value = id;
+                                document.getElementById("name").value = name;
+                                document.getElementById("item-quantity").value = qty;
+                                document.getElementById("description").value = desc;
+
+                                // If you have a price field in modal:
+                                const priceInput = document.getElementById("prod_price_update");
+                                if (priceInput) priceInput.value = price;
+
+                                // Status dropdown
+                                const statusSelect = document.getElementById("status");
+                                if (statusSelect) {
+                                    statusSelect.value = (qty == 0 ? "Sold Out" : "In Stock");
+                                }
+                            });
+                        });
+
                         if (typeof Flowbite !== 'undefined') {
                             //initialize drawer
                             initFlowbite();
@@ -571,7 +612,6 @@
                 .catch(err => console.error("Error loading products:", err));
         });
     </script>
-
 
 </body>
 
