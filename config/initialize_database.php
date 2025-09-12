@@ -20,6 +20,21 @@ if (mysqli_query($conn, $admin)) {
     echo "Error creating table: " . mysqli_error($conn);
 }
 
+$user = "CREATE table if not exists user (
+    userID INT PRIMARY KEY AUTO_INCREMENT,
+    firstName TEXT NOT NULL,
+    lastName TEXT NOT NULL,
+    email TEXT NOT NULL,
+    university TEXT NOT NULL,
+    nickname TEXT NOT NULL,
+    password TEXT NOT NULL,
+    idPic TEXT NOT NULL,
+    status INT NOT NULL)
+";
+if (! mysqli_query($conn, $user)) {
+    die("Error creating users table: " . mysqli_error($conn));
+}
+
 
 $users = "
   CREATE TABLE IF NOT EXISTS users (
@@ -55,76 +70,12 @@ $schedule = "CREATE table if not exists schedule (
 ";
 if (! mysqli_query($conn, $schedule)) {
     die("Error creating users table: " . mysqli_error($conn));
-}
-else{
+} else {
     sched();
 }
 
 
 
-$orders = "CREATE table if not exists orders (
-    order_id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    buyer_id INT NOT NULL,
-    order_status ENUM('pending','paid','fulfilled','cancelled','refunded') NOT NULL DEFAULT 'pending',
-    total_amount DECIMAL(10,2) DEFAULT 0.00,
-    placed_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    payment_refno VARCHAR(100) NULL,
-    payment_photo VARCHAR(255) NULL,
-    FOREIGN KEY (buyer_id) REFERENCES user(userID)
-)";
-if (! mysqli_query($conn, $orders)) {
-    die("Error creating orders table: " . mysqli_error($conn));
-}
-
-$orderdetails = "CREATE table if not exists orderdetails (
-    order_id INT UNSIGNED NOT NULL,
-    prod_id  SMALLINT UNSIGNED NOT NULL,
-    item_qty SMALLINT UNSIGNED NOT NULL CHECK (item_qty > 0),
-    unit_price DECIMAL(10,2) NOT NULL ,
-    line_total DECIMAL(10,2) AS (item_qty * unit_price) STORED,
-    PRIMARY KEY (order_id, prod_id),
-    FOREIGN KEY (order_id) REFERENCES orders(order_id),
-    FOREIGN KEY (prod_id) REFERENCES products(prod_id)
-)";
-if (! mysqli_query($conn, $orderdetails)) {
-    die("Error creating orderdetails table: " . mysqli_error($conn));
-}   
-
-
-//create triggger
-// CREATE TRIGGER before_orderdetails_insert
-// BEFORE INSERT ON orderdetails
-// FOR EACH ROW
-// BEGIN
-//   DECLARE prodPrice DECIMAL(10,2);
-//   SELECT prod_price INTO prodPrice FROM products WHERE prod_id = NEW.prod_id;
-//   SET NEW.unit_price = prodPrice;
-// END$$
-
-$trigger = "
-CREATE TRIGGER before_orderdetails_insert
-BEFORE INSERT ON orderdetails
-FOR EACH ROW
-BEGIN
-  DECLARE prodPrice DECIMAL(10,2);
-
-  -- get current product price
-  SELECT prod_price INTO prodPrice 
-  FROM products 
-  WHERE prod_id = NEW.prod_id;
-
-  -- set unit price for this order detail
-  SET NEW.unit_price = prodPrice;
-
-  -- update the total in orders table
-  UPDATE orders
-  SET total_amount = total_amount + (NEW.item_qty * prodPrice)
-  WHERE order_id = NEW.order_id;
-END
-";
-if (! mysqli_query($conn, $trigger)) {
-     die("Error creating trigger: " . mysqli_error($conn));
-}
 
 $merch = "CREATE table if not exists products (
     prod_id SMALLINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
@@ -158,6 +109,60 @@ if (! mysqli_query($conn, $prodimg)) {
     die("Error creating prodimg table: " . mysqli_error($conn));
 }
 
+$orders = "CREATE table if not exists orders (
+    order_id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    buyer_id INT NOT NULL,
+    order_status ENUM('pending','paid','fulfilled','cancelled','refunded') NOT NULL DEFAULT 'pending',
+    total_amount DECIMAL(10,2) DEFAULT 0.00,
+    placed_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    payment_refno VARCHAR(100) NULL,
+    payment_photo VARCHAR(255) NULL,
+    FOREIGN KEY (buyer_id) REFERENCES user(userID)
+)";
+if (! mysqli_query($conn, $orders)) {
+    die("Error creating orders table: " . mysqli_error($conn));
+}
+
+$orderdetails = "CREATE table if not exists orderdetails (
+    order_id INT UNSIGNED NOT NULL,
+    prod_id  SMALLINT UNSIGNED NOT NULL,
+    item_qty SMALLINT UNSIGNED NOT NULL CHECK (item_qty > 0),
+    unit_price DECIMAL(10,2) NOT NULL ,
+    line_total DECIMAL(10,2) AS (item_qty * unit_price) STORED,
+    PRIMARY KEY (order_id, prod_id),
+    FOREIGN KEY (order_id) REFERENCES orders(order_id),
+    FOREIGN KEY (prod_id) REFERENCES products(prod_id)
+)";
+if (! mysqli_query($conn, $orderdetails)) {
+    die("Error creating orderdetails table: " . mysqli_error($conn));
+}
+
+
+
+$trigger = "
+CREATE TRIGGER before_orderdetails_insert
+BEFORE INSERT ON orderdetails
+FOR EACH ROW
+BEGIN
+  DECLARE prodPrice DECIMAL(10,2);
+
+  -- get current product price
+  SELECT prod_price INTO prodPrice 
+  FROM products 
+  WHERE prod_id = NEW.prod_id;
+
+  -- set unit price for this order detail
+  SET NEW.unit_price = prodPrice;
+
+  -- update the total in orders table
+  UPDATE orders
+  SET total_amount = total_amount + (NEW.item_qty * prodPrice)
+  WHERE order_id = NEW.order_id;
+END
+";
+if (! mysqli_query($conn, $trigger)) {
+    die("Error creating trigger: " . mysqli_error($conn));
+}
 $event = "CREATE table if not exists events (
     eventID INT PRIMARY KEY AUTO_INCREMENT,
     eventName TEXT NOT NULL,
@@ -181,21 +186,6 @@ $eventSched = "CREATE table if not exists eventSched (
     FOREIGN KEY (eventID) REFERENCES events (eventID))
 ";
 if (! mysqli_query($conn, $eventSched)) {
-    die("Error creating users table: " . mysqli_error($conn));
-}
-
-$user = "CREATE table if not exists user (
-    userID INT PRIMARY KEY AUTO_INCREMENT,
-    firstName TEXT NOT NULL,
-    lastName TEXT NOT NULL,
-    email TEXT NOT NULL,
-    university TEXT NOT NULL,
-    nickname TEXT NOT NULL,
-    password TEXT NOT NULL,
-    idPic TEXT NOT NULL,
-    status INT NOT NULL)
-";
-if (! mysqli_query($conn, $user)) {
     die("Error creating users table: " . mysqli_error($conn));
 }
 
@@ -290,7 +280,7 @@ function sched()
 // BEGIN
 //     DECLARE new_prod_id INT;
 //     DECLARE p_prod_status ENUM('in_stock', 'sold_out');
-    
+
 //     -- Set product status based on quantity
 //     IF p_prod_qty = 0 THEN
 //         SET p_prod_status = 'sold_out';
@@ -301,10 +291,10 @@ function sched()
 //     -- Insert the product into the products table
 //     INSERT INTO products (prod_name, prod_description, prod_qty, prod_price, prod_status)
 //     VALUES (p_prod_name, p_prod_description, p_prod_qty, p_prod_price, p_prod_status);
-    
+
 //     -- Get the last inserted prod_id
 //     SET new_prod_id = LAST_INSERT_ID();
-    
+
 //     INSERT INTO product_images (prod_id, p_img_url1, p_img_url2, p_img_url3)
 //     VALUES (
 //         new_prod_id, 
@@ -318,7 +308,3 @@ function sched()
 // if (! mysqli_query($conn, $sp_addproducts)) {
 //     die("Error creating stored procedure: " . mysqli_error($conn));
 // }
-
-
-
-?>
