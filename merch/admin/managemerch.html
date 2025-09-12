@@ -157,9 +157,9 @@
 
                 <!-- div for product ID in databse -->
                 <div class="sm:col-span-1">
-                    <label for="product-id" class="block mb-2 text-sm font-medium text-gray-900 ">Product ID</label>
+                    <label for="product-id" class="block mb-2 text-sm font-medium text-gray-900">Product ID</label>
                     <input type="text" name="product-id" id="product-id"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm cursor-not-allowed rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                         value="" required disabled>
                 </div>
 
@@ -185,9 +185,9 @@
                 <div class="space-y-4 sm:space-y-6">
                     <div>
                         <label for="prod_price_update" class="block mb-2 text-sm font-medium text-gray-900">Unit
-                            Price</label>
-                        <input type="number" step="1" name="prod_price_update" id="prod_price_update"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
+                            Price (₱)</label>
+                        <input type="number" step="1" name="prod_price_update" id="prod_price_update" disabled
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 cursor-not-allowed"
                             required>
                     </div>
 
@@ -203,7 +203,7 @@
                     <div>
                         <label for="status" class="block mb-2 text-sm font-medium text-gray-900 ">Status</label>
                         <select id="status" disabled
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 ">
+                            class="bg-gray-50 border cursor-not-allowed border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 ">
                             <option>In Stock</option>
                             <option>Sold Out</option>
                         </select>
@@ -317,10 +317,10 @@
                             </div>
                             <div>
                                 <label for="prod_price"
-                                    class="block mb-2 text-sm font-medium text-gray-900 ">Price</label>
+                                    class="block mb-2 text-sm font-medium text-gray-900 ">Unit Price</label>
                                 <input type="number" step="1" name="prod_price" id="prod_price"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
-                                    placeholder="$2999" required
+                                    placeholder="₱2999" required
                                     onkeydown="if(['e','E','+','-'].includes(event.key)) event.preventDefault()">
                             </div>
 
@@ -521,8 +521,8 @@
 
                             // Determine stock status and color classes based on prod_qty
                             const stockColor = prod.prod_qty === 0 ? 'bg-red-400' : prod.prod_qty < 50 ? 'bg-yellow-300' : 'bg-green-400';
-                            const stockStatusText = prod.prod_status === 'Sold Out' ? 'Sold Out' : 'Active';
-                            const stockStatusBg = prod.prod_status === 'Sold Out' ? 'bg-red-300 text-red-600' : 'bg-green-100 text-green-600';
+                            const stockStatusText = prod.prod_status === 'sold_out' ? 'Sold Out' : 'In Stock';
+                            const stockStatusBg = prod.prod_status === 'sold_out' ? 'bg-red-300 text-red-600' : 'bg-green-100 text-green-600';
 
                             const rowHTML = `
                             <tr class="border-b hover:bg-gray-100">

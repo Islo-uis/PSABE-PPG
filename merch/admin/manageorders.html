@@ -33,6 +33,11 @@
 
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3"></script>
     <link rel="stylesheet" href="https://flowbite.com/docs/main.css?v=3.1.2a">
+    <link rel="stylesheet" href="table.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.datatables.net/fixedheader/3.x.x/css/fixedHeader.dataTables.min.css" />
+    <script type="text/javascript"
+        src="https://cdn.datatables.net/fixedheader/3.x.x/js/dataTables.fixedHeader.min.js"></script>
 
 
     <script>
@@ -64,10 +69,11 @@
 
 
 
-    <main class="pt-20">
+    <main class="">
         <main class="pt-20">
             <section class=" p-3 sm:p-5 antialiased">
-                <div class="mx-auto max-w-screen-2xl px-4 lg:px-12 bg-white">
+                <div
+                    class="mx-auto max-w-screen-2xl lg:px-12 bg-white border border-gray-200 rounded-xl shadow-2xs py-4 px-4 dark:bg-neutral-800 dark:border-neutral-700">
 
                     <table id="export-table">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
@@ -155,33 +161,13 @@
                                 <th>
                                     <span class="flex items-center">
                                         Payment Receipt
-                                        <svg class="size-3.5 ms-1 -me-0.5 text-gray-400 dark:text-neutral-500"
-                                            xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round">
-                                            <path
-                                                class="hs-datatable-ordering-desc:text-blue-600 dark:hs-datatable-ordering-desc:text-blue-500"
-                                                d="m7 15 5 5 5-5"></path>
-                                            <path
-                                                class="hs-datatable-ordering-asc:text-blue-600 dark:hs-datatable-ordering-asc:text-blue-500"
-                                                d="m7 9 5-5 5 5"></path>
-                                        </svg>
+
                                     </span>
                                 </th>
                                 <th>
                                     <span class="flex items-center">
                                         Order Status
-                                        <svg class="size-3.5 ms-1 -me-0.5 text-gray-400 dark:text-neutral-500"
-                                            xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round">
-                                            <path
-                                                class="hs-datatable-ordering-desc:text-blue-600 dark:hs-datatable-ordering-desc:text-blue-500"
-                                                d="m7 15 5 5 5-5"></path>
-                                            <path
-                                                class="hs-datatable-ordering-asc:text-blue-600 dark:hs-datatable-ordering-asc:text-blue-500"
-                                                d="m7 9 5-5 5 5"></path>
-                                        </svg>
+
                                     </span>
                                 </th>
                                 <th>
@@ -200,22 +186,7 @@
                                         </svg>
                                     </span>
                                 </th>
-                                <th>
-                                    <span class="flex items-center">
-                                        Actions
-                                        <svg class="size-3.5 ms-1 -me-0.5 text-gray-400 dark:text-neutral-500"
-                                            xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round">
-                                            <path
-                                                class="hs-datatable-ordering-desc:text-blue-600 dark:hs-datatable-ordering-desc:text-blue-500"
-                                                d="m7 15 5 5 5-5"></path>
-                                            <path
-                                                class="hs-datatable-ordering-asc:text-blue-600 dark:hs-datatable-ordering-asc:text-blue-500"
-                                                d="m7 9 5-5 5 5"></path>
-                                        </svg>
-                                    </span>
-                                </th>
+
 
                             </tr>
                         </thead>
@@ -230,9 +201,6 @@
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td class="flex">
-                                    
-                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -244,6 +212,35 @@
 
 
 
+
+
+        <!-- Main modal -->
+        <div id="receipt-modal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
+            class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <div class="relative p-4 w-full max-w-2xl max-h-full">
+                <!-- Modal content -->
+                <div class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
+                    <!-- Modal header -->
+                    <div
+                        class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                            Payment Receipt
+                        </h3>
+                        <h1 id="receipt-ref" class="ml-3"> Ref. No. </h1>
+                        <button type="button"
+                            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
+                            data-modal-hide="receipt-modal">
+                            <span class="material-icons">close</span>
+                        </button>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="p-4 md:p-5 space-y-4">
+                        <img id="receipt-img" src="" alt="" class="w-full">
+                    </div>
+
+                </div>
+            </div>
+        </div>
 
         <script>
 
@@ -299,17 +296,27 @@
 
 
                         const table = new simpleDatatables.DataTable("#export-table", {
-
+                            fixedHeader: true,
                             data: fetchedData,
                             columns: [
-                                { select: 1, render: (data) => data } // customer info
+                                {
+                                    select: 1, // customer info column
+                                    render: (data) => {
+                                        // Decode HTML entities so <br> works
+                                        return data;
+                                    }
+                                },
+                                {
+                                    select: 7,          // index of your status column
+                                    sortable: false
+                                }
                             ],
                             template: (options, dom) => "<div class='" + options.classes.top + "'>" +
                                 "<div class='flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-3 rtl:space-x-reverse w-full sm:w-auto'>" +
                                 (options.paging && options.perPageSelect ?
                                     "<div class='" + options.classes.dropdown + "'>" +
                                     "<label>" +
-                                    "<select class='" + options.classes.selector + "'></select> " + options.labels.perPage +
+                                    "<select class='" + options.classes.selector + " bg-gray-50 text-gray-900 text-gray-900 border border-gray-300 rounded-md min-w-16 mr-1 py-2 px-3 text-sm'></select> " + options.labels.perPage +
                                     "</label>" +
                                     "</div>" : ""
                                 ) + "<button id='exportDropdownButton' type='button' class='flex w-full items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700 sm:w-auto'>" +
@@ -356,7 +363,7 @@
                                 "</div>" + "</div>" +
                                 (options.searchable ?
                                     "<div class='relative max-w-xs w-full" + options.classes.search + "'>" +
-                                    "<input class='py-1.5 sm:py-2 px-3 ps-9 block w-full border-gray-200 shadow-2xs rounded-lg sm:text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 " + options.classes.input + "' placeholder='" + options.labels.placeholder + "' type='search' title='" + options.labels.searchTitle + "'" + (dom.id ? " aria-controls='" + dom.id + "'" : "") + ">" +
+                                    "<input class='" + options.classes.input + " py-1.5 sm:py-2 px-3 ps-9 block w-full border-gray-200 shadow-2xs rounded-lg sm:text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 text-gray-900 border border-gray-300 bg-gray-50 rounded-md min-w-64 text-sm'  placeholder='" + options.labels.placeholder + "' type='search' title='" + options.labels.searchTitle + "'" + (dom.id ? " aria-controls='" + dom.id + "'" : "") + ">" +
                                     "<div class='absolute inset-y-0 start-0 flex items-center pointer-events-none ps-3'><span class='material-icons text-base text-gray-400'>search</span></div></div>" : ""
                                 ) +
                                 "</div>" +
@@ -398,37 +405,64 @@
                                 space: 3
                             })
                         })
+
+                        initModals();
+
                     })
                     .catch(err => console.error("Error fetching orders:", err));
             }
+
+
+
+
         </script>
 
-<script>
- document.addEventListener("change", function (e) {
-  if (e.target.matches("select[name='status']")) {
-    const orderId = e.target.getAttribute("data-order-id");
-    const newStatus = e.target.value;
+        <script>
+            document.addEventListener("change", function (e) {
+                if (e.target.matches("select[name='status']")) {
+                    const orderId = e.target.getAttribute("data-order-id");
+                    const newStatus = e.target.value;
 
-    fetch("updateorderstatus.php", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: `order_id=${encodeURIComponent(orderId)}&status=${encodeURIComponent(newStatus)}`
-    })
-    .then(res => res.json())
-    .then(data => {
-      if (data.success) {
-        console.log(data.message);
-        // optional: show toast/alert
-      } else {
-        alert("Error: " + data.error);
-      }
-    })
-    .catch(err => console.error("AJAX error:", err));
-  }
-});
+                    fetch("updateorderstatus.php", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                        body: `order_id=${encodeURIComponent(orderId)}&status=${encodeURIComponent(newStatus)}`
+                    })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.success) {
+                                // console.log(data.message);
+                                // optional: show toast/alert
+                                location.reload(); // normal reload (can flash)
+
+                            } else {
+                                alert("Error: " + data.error);
+                            }
+                        })
+                        .catch(err => console.error("AJAX error:", err));
+                }
+            });
 
 
-</script>
+        </script>
+
+        <!-- JS libraries -->
+        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
+
+        <!-- FixedHeader Extension -->
+
+        <!-- Your script (the snippet) -->
+        <script>
+            document.addEventListener("click", (e) => {
+                const img = e.target.closest("img[data-modal-toggle='receipt-modal']");
+                if (!img) return;
+
+                // Update modal contents
+                document.getElementById("receipt-img").src = img.dataset.imgSrc || "";
+                document.getElementById("receipt-ref").innerText = "Ref. No: " + (img.dataset.refno || "N/A");
+            });
+        </script>
 
 </body>
 

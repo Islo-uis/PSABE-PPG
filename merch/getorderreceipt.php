@@ -18,8 +18,7 @@ if (!isset($_GET['orderid'])) {
 
 $orderId = intval($_GET['orderid']);
 
-$sql = "SELECT order_id, buyer_id, order_status, total_amount, placed_at, payment_refno, payment_photo 
-        FROM orders WHERE order_id = ?";
+$sql = "SELECT order_id, buyer_id, order_status, total_amount, DATE_FORMAT(placed_at, '%b %e, %Y %l:%i %p') AS placed_at, payment_refno, payment_photo FROM orders WHERE order_id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $orderId);
 $stmt->execute();

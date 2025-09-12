@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <link rel="icon" href="logo.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ABECON2025 | Shop Merch</title>
+    <title>ABECON2025 | Shop Marketplace</title>
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
@@ -30,7 +30,7 @@
 <body class="bg-[url('/images/background.jpg')] bg-cover bg-no-repeat font-sans">
 
     <!-- Navbar -->
-    <header class="fixed top-0 w-full z-49 bg-white border-b border-gray-200">
+    <header class="fixed top-0 w-full z-[10] bg-white border-b border-gray-200">
         <nav class="max-w-6xl mx-auto flex justify-between items-center p-4">
             <div class="actions" style="display: none;">
                 <span id="hamburger-btn" class="material-symbols-outlined">menu</span>
@@ -46,7 +46,7 @@
                 <a href="">About</a>
                 <a href="">Events</a>
                 <a href="">Schedule</a>
-                <a href="" class="font-bold">Merch</a>
+                <a href="" class="font-bold">Marketplace</a>
             </div>
 
             <!-- Right: Actions -->
@@ -63,8 +63,8 @@
 
     <main class="pt-20">
         <!-- Hero Banner -->
-        <section class="relative">
-            <img src="herobanner.jpg" alt="Merch Banner" class="w-full object-cover z-[-1] relative">
+        <section class="relative z-[-1]">
+            <img src="herobanner.jpg" alt="Merch Banner" class="w-full object-cover relative">
             <!-- <div class="absolute inset-0 bg-gradient-to-b from-transparent to-white"></div> -->
         </section>
 
@@ -153,7 +153,6 @@
         <!-- Merch Section -->
         <section class="max-w-6xl mx-auto py-12 text-center">
             <h1 class="text-2xl font-bold mb-12">Shop Our Exclusive Merch</h1>
-
             <div id="product-cards" class="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
 
             </div>
@@ -165,7 +164,7 @@
 
     <!-- Modal Product -->
     <div id="product-modal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
-        class="hidden fixed inset-0 z-50 flex items-center justify-center w-full p-4 overflow-x-hidden overflow-y-auto">
+        class="hidden fixed inset-0 z-[99999] flex items-center justify-center w-full p-4 overflow-x-hidden overflow-y-auto">
 
         <div class="relative w-full max-w-4xl">
             <div class="relative bg-white rounded-xl shadow-lg p-6 md:p-10">
@@ -179,37 +178,23 @@
                         </div>
 
                         <div class="flex space-x-2 overflow-x-auto">
-                            <div class=" overflow-hidden  rounded-lg">
+                            
+                            <div class="modaldiv m-1 flex-1 overflow-hidden  rounded-lg ">
                                 <img id="modal-thumb1" src="" alt="Product Thumbnail"
                                     class="w-full object-cover border cursor-pointer aspect-[3/4]">
                             </div>
-                            <div class=" overflow-hidden  rounded-lg">
+
+                            <div class="modaldiv m-1 flex-1 overflow-hidden rounded-lg">
                                 <img id="modal-thumb2" src="" alt="Product Thumbnail"
                                     class="w-full  object-cover border cursor-pointer aspect-[3/4]">
                             </div>
-                            <div class=" overflow-hidden  rounded-lg">
+                            <div class="modaldiv m-1 flex-1 overflow-hidden  rounded-lg">
                                 <img id="modal-thumb3" src="" alt="Product Thumbnail"
                                     class="w-full object-cover border cursor-pointer aspect-[3/4]">
                             </div>
                         </div>
                     </div>
 
-                    <!-- <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
-
-        <div class="flex flex-row md:flex-col space-x-2 md:space-x-0 md:space-y-2 justify-center">
-            <img id="modal-thumb-1" src="" alt="Product Thumbnail 1"
-                class="w-20 h-24 md:w-32 md:h-40 object-cover rounded-lg border cursor-pointer aspect-[3/4]">
-            <img id="modal-thumb-2" src="" alt="Product Thumbnail 2"
-                class="w-20 h-24 md:w-32 md:h-40 object-cover rounded-lg border cursor-pointer aspect-[3/4]">
-            <img id="modal-thumb-3" src="" alt="Product Thumbnail 3"
-                class="w-20 h-24 md:w-32 md:h-40 object-cover rounded-lg border cursor-pointer aspect-[3/4]">
-        </div>
-
-        <div class="flex-grow">
-            <img id="modal-img" src="" alt="Product Image"
-                class="w-full rounded-lg border shadow object-cover aspect-[3/4] ">
-        </div>
-    </div> -->
 
 
                     <!-- Right: Details -->
@@ -307,10 +292,49 @@
                     } else {
 
                         data.forEach(prod => {
-                            const cardHTML = `
-                                <div id="product-cart" data-modal-target="product-modal" data-id="${prod.prod_id}" data-modal-toggle="product-modal" data-title="${prod.prod_name}"
-                                    data-price="₱${prod.prod_price.toFixed(2)}" data-qty="${prod.prod_qty}" data-img="admin/product-images/${prod.img1}"
+
+                            if (prod.prod_qty === 0) {
+                                const cardHTML = `
+                                <div id="product-cart" 
+                                    data-id="${prod.prod_id}"  
+                                    data-title="${prod.prod_name}"
+                                    data-price="₱${prod.prod_price.toFixed(2)}" 
+                                    data-qty="${prod.prod_qty}" 
+                                    data-img1="admin/product-images/${prod.img1}"
+                                    ${prod.img2 ? `data-img2="admin/product-images/${prod.img2}"` : ""}
+                                    ${prod.img3 ? `data-img3="admin/product-images/${prod.img3}"` : ""}
                                     data-desc="${prod.prod_description}"
+
+                                    class="bg-white border rounded-xl p-4 flex flex-col justify-between shadow-sm hover:shadow-md transition relative
+                                    ${prod.prod_qty === 0 ? ' cursor-not-allowed' : 'cursor-pointer'}">
+
+                                    ${prod.prod_qty === 0 ? `
+                                        <div class="absolute inset-0 flex items-center justify-center bg-white rounded-xl">
+                                            <div class="text-2xl font-semibold text-black  z-[999] first-letter:uppercase tracking-wider ${prod.prod_qty === 0 ? ' cursor-not-allowed' : 'cursor-pointer'}">Sold <br> Out</div>
+                                        </div>
+                                    ` : ''}
+
+                                    <img src="admin/product-images/${prod.img1}" class="rounded-md mb-3 object-cover aspect-[3/4]  w-auto ${prod.prod_qty === 0 ? 'opacity-50' : ''}">
+                                    <h3 class="font-semibold text-base mb-1 text-left ${prod.prod_qty === 0 ? 'opacity-50' : ''}">${prod.prod_name}</h3>
+                                    <div class="flex justify-between text-sm text-gray-600 mb-4 ${prod.prod_qty === 0 ? 'opacity-50' : ''}">
+                                        <span class="font-bold text-black">₱${prod.prod_price.toFixed(2)}</span>
+                                        <span>Qty: ${prod.prod_qty}</span>
+                                    </div>
+                                    <button class="flex items-center justify-center gap-1 border px-3 py-2 rounded-md ${prod.prod_qty === 0 ? 'pointer-events-none opacity-50' : 'hover:bg-gray-100'}">
+                                        <span class="material-symbols-outlined text-sm">add_shopping_cart</span>Add to cart
+                                    </button>
+                                </div>`;
+
+                                parent.innerHTML += cardHTML;
+                            } else {
+                                const cardHTML = `
+                                <div id="product-cart" data-modal-target="product-modal" data-id="${prod.prod_id}" data-modal-toggle="product-modal" data-title="${prod.prod_name}"
+                                    data-price="₱${prod.prod_price.toFixed(2)}" data-qty="${prod.prod_qty}" data-img1="admin/product-images/${prod.img1}"
+                                    ${prod.img2 ? `data-img2="admin/product-images/${prod.img2}"` : ""}
+                                    ${prod.img3 ? `data-img3="admin/product-images/${prod.img3}"` : ""}
+                                    data-desc="${prod.prod_description}"
+                                    
+                                    
                                     class="bg-white border rounded-xl p-4 flex flex-col justify-between shadow-sm cursor-pointer hover:shadow-md transition">
 
                                     <img src="admin/product-images/${prod.img1}" class="rounded-md mb-3 object-cover aspect-[3/4]  w-auto">
@@ -324,7 +348,9 @@
                                     </button>
                                 </div>
                             `;
-                            parent.innerHTML += cardHTML;
+
+                                parent.innerHTML += cardHTML;
+                            }
 
                         });
                         if (typeof Flowbite !== 'undefined') {
@@ -345,10 +371,24 @@
                                 document.getElementById('modal-desc').innerText = card.dataset.desc;
                                 document.getElementById('modal-price').innerText = card.dataset.price;
                                 document.getElementById('modal-qty').innerText = "Qty: " + card.dataset.qty;
-                                document.getElementById('modal-thumb1').src = card.dataset.img;
-                                document.getElementById('modal-thumb2').src = card.dataset.img;
-                                document.getElementById('modal-thumb3').src = card.dataset.img;
-                                document.getElementById('modal-img').src = card.dataset.img;
+                                document.getElementById('modal-thumb1').src = card.dataset.img1;
+                                // Handle 2nd image
+                                if (card.dataset.img2 !== undefined) {
+                                    document.getElementById('modal-thumb2').src = card.dataset.img2;
+                                    document.getElementById('modal-thumb2').classList.remove('hidden');
+                                } else {
+                                    document.getElementById('modal-thumb2').classList.add('hidden');
+                                }
+
+                                // Handle 3rd image
+                                if (card.dataset.img3 !== undefined) {
+                                    document.getElementById('modal-thumb3').src = card.dataset.img3;
+                                    document.getElementById('modal-thumb3').classList.remove('hidden');
+                                } else {
+                                    document.getElementById('modal-thumb3').classList.add('hidden');
+                                }
+
+                                document.getElementById('modal-img').src = card.dataset.img1;
 
                                 // Important: Reset quantity and max value
                                 maxQty = parseInt(card.dataset.qty, 10);
@@ -565,6 +605,44 @@
         });
 
     </script>
+      
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const mainImg = document.getElementById("modal-img");
+    const thumbnailsDivs = document.querySelectorAll(".modaldiv"); // <-- fixed to class
+    const thumbnails = document.querySelectorAll("#product-modal [id^='modal-thumb']");
+
+    // Add Tailwind transition classes to main image
+    mainImg.classList.add("transition-opacity", "duration-300");
+
+
+    thumbnails.forEach((thumb, index) => {
+        thumb.addEventListener("click", () => {
+            if (!thumb.src) return; // skip empty thumbs
+
+                mainImg.classList.add("opacity-0");
+
+            // After fade-out, change image & fade in
+            setTimeout(() => {
+                mainImg.src = thumb.src;
+                mainImg.classList.remove("opacity-0");
+            }, 200);
+
+            // Remove highlight from all wrappers
+            thumbnailsDivs.forEach(div => div.classList.remove("ring-4", "ring-blue-500"));
+
+            // Add highlight to the clicked thumbnail's parent div
+            thumbnailsDivs[index].classList.add("ring-4", "ring-blue-500");
+        });
+    });
+     const firstThumb = Array.from(thumbnails).find(t => t.src);
+    if (firstThumb) {
+        mainImg.src = firstThumb.src;
+        const idx = Array.from(thumbnails).indexOf(firstThumb);
+        thumbnailsDivs[idx].classList.add("ring-4", "ring-blue-500");
+    }
+});
+</script>
 
 </body>
 

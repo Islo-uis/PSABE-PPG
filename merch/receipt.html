@@ -63,25 +63,16 @@
 
             <!-- Icon -->
             <div class="flex justify-center">
-                <span class="material-icons text-5xl text-[#ED9900] p-3">access_time_filled</span>
-                <span class="material-icons text-5xl text-[#16650F] p-3"
-                    style="display: none;">check_circle_filled</span>
+                <span id="status-icon" class="material-icons material-symbols-outlined text-5xl p-3"></span>
             </div>
 
             <!-- Title -->
-            <h2 class="text-xl font-bold">Order Submitted</h2>
-            <h2 class="text-xl font-bold" style="display: none;">You can now claim your order!</h2>
-            <h2 class="text-xl font-bold" style="display: none;">Order Completed</h2>
+            <h2 id="status-title" class="text-xl font-bold"></h2>
 
 
 
 
-            <p class="text-sm text-gray-600">You will receive an email or SMS on how to claim your merch once your
-                payment is verified.</p>
-            <p class="text-sm text-gray-600" style="display: none;">Please follow the instructions sent to your email
-                address on how to claim your order.</p>
-            <p class="text-sm text-gray-600" style="display: none;">Your order has been completed. Thank you for your
-                purchase!</p>
+            <p id="status-desc" class="text-sm text-gray-600"></p>
             <!-- Divider -->
             <hr>
 
@@ -105,8 +96,6 @@
                 <div class="flex justify-between">
                     <span class="font-medium">Order Status:</span>
                     <span id="order-status" class="text-yellow-600 font-semibold first-letter:uppercase"></span>
-                    <span class="text-green-600 font-semibold" style="display: none;"></span>
-                    <span class="text-green-600 font-semibold" style="display: none;"></span>
                 </div>
             </div>
 
@@ -146,6 +135,8 @@
 
 
     </main>
+
+
     <script>
         function showToast(message) {
             const container = document.getElementById("toast-container");
@@ -171,7 +162,7 @@
                 const target = el.getAttribute("data-copy");
                 const text = document.querySelector(target).innerText.trim();
                 navigator.clipboard.writeText(text).then(() => {
-                    showToast("Copied: " + text);
+                    showToast("Copied Order ID: " + text);
                 });
             });
         });
@@ -190,40 +181,111 @@
 
     </script>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const orderId = getQueryParam("orderid");
 
-            if (!orderId) {
-                showToast("No order ID provided in URL.");
-                return;
-            }
 
-            fetch("getorderreceipt.php?orderid=" + encodeURIComponent(orderId))
-                .then(res => res.json())
-                .then(data => {
-                    if (data.success) {
-                        // Populate receipt fields
-                        document.getElementById("order-id").innerText = data.order.order_id;
-                        document.querySelector("#order-id + .material-symbols-outlined")
-                            .setAttribute("data-copy", "#order-id");
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+  const orderId = getQueryParam("orderid");
+  if (!orderId) {
+    showToast("No order ID provided in URL.");
+    return;
+  }
 
-                        // Format date/time
-                        document.querySelector("#order-date").innerText = data.order.placed_at;
-                        document.querySelector("#order-status").innerText = data.order.order_status;
-                        document.querySelector("#payment-refno").innerText = data.order.payment_refno;
-                        document.querySelector("#total-amount").innerText = "₱" + parseFloat(data.order.total_amount).toFixed(2);
-                    } else {
-                        showToast("Error: " + data.message);
-                    }
-                })
-                .catch(err => {
-                    console.error("Fetch error:", err);
-                    showToast("Unable to fetch order details.");
-                });
-        });
+  fetch("getorderreceipt.php?orderid=" + encodeURIComponent(orderId))
+    .then(res => res.json())
+    .then(data => {
+      if (!data.success) {
+        showToast("Error: " + data.message);
+        return;
+      }
 
-    </script>
+      const order = data.order;
+
+      // Basic info
+            document.getElementById("order-id").innerText = order.order_id;
+            document.querySelector("#order-id + .material-symbols-outlined")
+                .setAttribute("data-copy", "#order-id");
+            document.querySelector("#order-date").innerText = order.placed_at;
+            document.querySelector("#payment-refno").innerText = order.payment_refno;
+            document.getElementById("total-amount").innerText =
+                "₱" + parseFloat(order.total_amount).toFixed(2);
+      const status = order.order_status.toLowerCase();
+
+      // Elements
+      const statusIcon = document.getElementById("status-icon");
+      const statusTitle = document.getElementById("status-title");
+      const statusDesc = document.getElementById("status-desc");
+      const statusEl = document.getElementById("order-status");
+
+      // Status config
+      const statusMap = {
+        "pending": {
+          icon: "hourglass_top",
+          color: "text-yellow-600",
+          title: "Order Submitted",
+          desc: "Your order has been placed and is awaiting payment verification."
+        },
+        "payment under review": {
+          icon: "search",
+          color: "text-yellow-600",
+          title: "Payment Under Review",
+          desc: "Your payment is currently under review. Please wait for confirmation."
+        },
+        "payment verified": {
+          icon: "check_circle",
+          color: "text-green-600",
+          title: "Payment Verified",
+          desc: "Your payment has been verified. You can now claim your order."
+        },
+        "claimable": {
+          icon: "shopping_bag",
+          color: "text-green-600",
+          title: "Ready to Claim",
+          desc: "Your order is ready to be claimed. Please follow the instructions sent to your email."
+        },
+        "completed": {
+          icon: "task_alt",
+          color: "text-green-600",
+          title: "Order Completed",
+          desc: "Your order has been completed. Thank you for your purchase!"
+        },
+        "fraudulent": {
+          icon: "report",
+          color: "text-red-600",
+          title: "Fraudulent Order",
+          desc: "This order has been flagged as fraudulent. Please contact support."
+        },
+        "cancelled": {
+          icon: "cancel",
+          color: "text-gray-500",
+          title: "Order Cancelled",
+          desc: "This order has been cancelled."
+        },
+        "refunded": {
+          icon: "payments",
+          color: "text-blue-600",
+          title: "Refunded",
+          desc: "Your order has been refunded. The amount will reflect in your account shortly."
+        }
+      };
+
+      const config = statusMap[status] || statusMap["pending"];
+
+      // Update UI
+      statusIcon.innerText = config.icon;
+      statusIcon.className = `material-symbols-outlined text-5xl p-3 ${config.color}`;
+      statusTitle.innerText = config.title;
+      statusDesc.innerText = config.desc;
+      statusEl.innerText = order.order_status;
+      statusEl.className = `font-semibold first-letter:uppercase ${config.color}`;
+    })
+    .catch(err => {
+      console.error("Fetch error:", err);
+      showToast("Unable to fetch order details.");
+    });
+});
+
+</script>
 </body>
 
 </html>

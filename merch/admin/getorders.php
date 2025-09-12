@@ -25,13 +25,13 @@ $sql = "SELECT
     CONCAT(u.firstName, ' ', u.lastName) AS full_name,
     u.email,
     u.nickname AS mobile_number,  -- replace if you have an actual mobile field
-    o.placed_at AS order_datetime,
+    DATE_FORMAT(o.placed_at, '%b %e, %Y %l:%i %p') AS order_datetime,
     o.total_amount,
     o.payment_refno,
     o.payment_photo,
     o.order_status,
     SUM(od.item_qty) AS total_items,  -- total quantity of all items
-    GROUP_CONCAT(CONCAT(p.prod_name, ' (x', od.item_qty, ')') SEPARATOR ', ') AS item_summary
+    GROUP_CONCAT(CONCAT('(x', od.item_qty, ') ', p.prod_name) SEPARATOR ' <br> ') AS item_summary
 FROM orders o
 JOIN user u 
     ON o.buyer_id = u.userID
@@ -59,21 +59,26 @@ $data = [];
 if ($result && $result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
 
-        // Build the status dropdown for THIS row
+        // Find current status index
+        $currentIndex = array_search($row['order_status'], $statuses);
+
         $statusOptions = "";
-        foreach ($statuses as $s) {
+        foreach ($statuses as $i => $s) {
             $selected = ($row['order_status'] === $s) ? "selected" : "";
-            $statusOptions .= "<option value='" . htmlspecialchars($s) . "' $selected>" . ucfirst($s) . "</option>";
+            // disable if status index is less than current
+            $disabled = ($i < $currentIndex) ? "disabled" : "";
+            $statusOptions .= "<option value='" . htmlspecialchars($s) . "' $selected $disabled>" . ucfirst($s) . "</option>";
         }
 
-        // ✅ inject current row’s order_id
         $orderStatusSelect = "
-            <select name='status' data-order-id='" . (int)$row['order_id'] . "'
-                class='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
-                       focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5'>
-                $statusOptions
-            </select>
-        ";
+    <select name='status' data-order-id='" . (int)$row['order_id'] . "'
+        class='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block  p-2.5'>
+        $statusOptions
+    </select>
+";
+
+
+
 
         $data[] = [
             "<a href='ordersummary.php?orderid=" . $row['order_id'] . "'>#" . $row['order_id'] . "</a>",
@@ -88,17 +93,20 @@ if ($result && $result->num_rows > 0) {
             '₱' . number_format($row['total_amount'], 2),
             $row['payment_refno'] ? 'Ref. No. ' . htmlspecialchars($row['payment_refno']) : '',
             $row['payment_photo']
-                ? "<img src='/uploads/receipts/" . htmlspecialchars($row['payment_photo']) . "' class='h-10'>"
-                : '',
-            $orderStatusSelect, // ✅ correct dropdown per row
+                ? "<img data-modal-target='receipt-modal'
+                    data-modal-toggle='receipt-modal'
+                    data-img-src='../uploads/receipts/" . htmlspecialchars($row['payment_photo']) . "' 
+                    data-refno='" . htmlspecialchars($row['payment_refno']). "'
+                    src='../uploads/receipts/" . htmlspecialchars($row['payment_photo']) . "' class='h-10 cursor-pointer' >"
+                                    : '',
+                
+            $orderStatusSelect,
             "<div>
                 <p class='font-medium'>" . htmlspecialchars($row['total_items']) . "</p>
-                <p class='text-gray-500 text-xs'>" . htmlspecialchars($row['item_summary']) . "</p>
-            </div>",
-            "<button class='px-2 py-1 bg-blue-500 text-white rounded'>Edit</button>"
+                <p class='text-gray-500 text-xs'>" . $row['item_summary'] . "</p>
+            </div>"
         ];
     }
 }
 
-header('Content-Type: application/json; charset=utf-8');
-echo json_encode(["data" => $data], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+echo json_encode(["data" => $data]);
