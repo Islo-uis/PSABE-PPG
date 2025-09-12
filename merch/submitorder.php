@@ -1,6 +1,6 @@
 <?php
 header("Content-Type: application/json");
-
+session_start(); //for trial purposes only, replace with actual session management
 
 
 error_reporting(E_ALL);
@@ -20,36 +20,90 @@ try {
 }
 
 
-
-// Check if the form was submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-    // Retrieve form data and sanitize it
-    $buyer_id = htmlspecialchars($_POST['buyer_id']);
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    if (!isset($_POST['products'], $_POST['payment_refno'])) {
+        echo json_encode([
+            "success" => false,
+            "message" => "Missing required fields"
+        ]);
+        exit;
+    }
+    // Sanitize buyer/payment info
+    $buyer_id = $_SESSION['user_id'] ?? 1; // null; //replace with actual session user id
     $payment_refno = htmlspecialchars($_POST['payment_refno']);
-    $payment_photo = htmlspecialchars($_POST['payment_photo']);
-//array of products
-    $products = json_decode($_POST['products'], true);
-    
-    // Insert into orders table
-//    CREATE table if not exists orders (
-//     order_id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-//     buyer_id INT NOT NULL,
-//     order_status ENUM('pending','paid','fulfilled','cancelled','refunded') NOT NULL DEFAULT 'pending',
-//     total_amount DECIMAL(10,2) DEFAULT 0.00,
-//     placed_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-//     payment_refno VARCHAR(100) NULL,
-//     payment_photo VARCHAR(255) NULL,
-//     FOREIGN KEY (buyer_id) REFERENCES user(userID)
-    
-    //Insert into orderdetails table for each product
+    $payment_photo = null; // will be updated if file upload is used
+    // $products = []; // will hold decoded product list
 
-    //CREATE table if not exists orderdetails (
-    // order_id INT UNSIGNED NOT NULL,
-    // prod_id  SMALLINT UNSIGNED NOT NULL,
-    // item_qty SMALLINT UNSIGNED NOT NULL CHECK (item_qty > 0),
-    // unit_price DECIMAL(10,2) NOT NULL AS (SELECT prod_price FROM products WHERE prod_id = prod_id),
-    // line_total DECIMAL(10,2) AS (item_qty * unit_price) STORED,
-    // PRIMARY KEY (order_id, prod_id),
-    // FOREIGN KEY (order_id) REFERENCES orders(order_id),
-    // FOREIGN KEY (prod_id) REFERENCES products(prod_id)
+    $payment_photo = null;
+
+    if (isset($_FILES['receipt-file']) && $_FILES['receipt-file']['error'] === UPLOAD_ERR_OK) {
+        $uploadDir = __DIR__ . "/uploads/receipts/";
+        if (!is_dir($uploadDir)) mkdir($uploadDir, 0777, true);
+
+        // Get extension
+        $ext = pathinfo($_FILES['receipt-file']['name'], PATHINFO_EXTENSION);
+
+        // TEMP name before we know order_id
+        $tempName = time() . "_" . basename($_FILES['receipt-file']['name']);
+        $tempTarget = $uploadDir . $tempName;
+    } elseif (!empty($_POST['payment_photo'])) {
+        $payment_photo = htmlspecialchars($_POST['payment_photo']);
+    }
+
+    // Decode product list
+    $products = json_decode($_POST['products'], true);
+    if (!$products || !is_array($products)) {
+        die("Invalid products data.");
+    }
+
+
+
+    // --- Insert into orders table ---
+    $stmt = $conn->prepare("
+        INSERT INTO orders (buyer_id, payment_refno, payment_photo)
+        VALUES (?, ?, ?)
+    ");
+    $stmt->bind_param("iss", $buyer_id, $payment_refno, $payment_photo);
+
+    if (!$stmt->execute()) {
+        die("Error inserting order: " . $stmt->error);
+    }
+    $order_id = $stmt->insert_id;
+    $stmt->close();
+
+    //rename file to orderid-receipt.ext
+    $newFileName = $order_id . "-receipt." . strtolower($ext);
+    $finalPath = $uploadDir . $newFileName;
+
+    if (move_uploaded_file($_FILES['receipt-file']['tmp_name'], $finalPath)) {
+        $payment_photo = "uploads/receipts/" . $newFileName;
+
+        $stmt = $conn->prepare("UPDATE orders SET payment_photo=? WHERE order_id=?");
+        $stmt->bind_param("si", $payment_photo, $order_id);
+
+
+        $stmt->execute();
+    }
+
+    // --- Insert order details ---
+    $stmtDetail = $conn->prepare(" INSERT INTO orderdetails (order_id, prod_id, item_qty) VALUES (?, ?, ?) ");
+    foreach ($products as $prod) {
+        $prod_id = intval($prod['id']);
+        $qty = intval($prod['qty']);
+
+        $stmtDetail->bind_param("iii", $order_id, $prod_id, $qty);
+
+        if (!$stmtDetail->execute()) {
+            die("Error inserting order: " . $stmtDetail->error);
+            echo json_encode(["success" => false, "message" => "Error inserting order detail: " . $stmtDetail->error]);
+            exit;
+        }
+    }
+
+
+    echo json_encode([
+        "success" => true,
+        "order_id" => $order_id,
+        "message" => "Order submitted successfully."
+    ]);
+}

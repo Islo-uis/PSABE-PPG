@@ -26,15 +26,15 @@
             }
         }
     </script>
-<style>
-  @layer utilities {
-    .receipt-mask {
-      --mask: conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) 50%/30px 100%;
-      -webkit-mask: var(--mask);
-              mask: var(--mask);
-    }
-  }
-</style>
+    <style>
+        @layer utilities {
+            .receipt-mask {
+                --mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50%/30px 100%;
+                -webkit-mask: var(--mask);
+                mask: var(--mask);
+            }
+        }
+    </style>
 
 </head>
 
@@ -51,7 +51,7 @@
     </nav>
 
 
-    
+
     <main class="w-full max-w-md mx-auto  p-6 md:p-8 mt-32 relative">
 
         <!-- Receipt Background Vector (like the subtract layer) -->
@@ -64,7 +64,8 @@
             <!-- Icon -->
             <div class="flex justify-center">
                 <span class="material-icons text-5xl text-[#ED9900] p-3">access_time_filled</span>
-                <span class="material-icons text-5xl text-[#16650F] p-3" style="display: none;">check_circle_filled</span>
+                <span class="material-icons text-5xl text-[#16650F] p-3"
+                    style="display: none;">check_circle_filled</span>
             </div>
 
             <!-- Title -->
@@ -72,12 +73,15 @@
             <h2 class="text-xl font-bold" style="display: none;">You can now claim your order!</h2>
             <h2 class="text-xl font-bold" style="display: none;">Order Completed</h2>
 
-            
 
-            
-            <p class="text-sm text-gray-600">You will receive an email or SMS on how to claim your merch once your payment is verified.</p>
-            <p class="text-sm text-gray-600" style="display: none;">Please follow the instructions sent to your email address on how to claim your order.</p>
-            <p class="text-sm text-gray-600" style="display: none;">Your order has been completed. Thank you for your purchase!</p>
+
+
+            <p class="text-sm text-gray-600">You will receive an email or SMS on how to claim your merch once your
+                payment is verified.</p>
+            <p class="text-sm text-gray-600" style="display: none;">Please follow the instructions sent to your email
+                address on how to claim your order.</p>
+            <p class="text-sm text-gray-600" style="display: none;">Your order has been completed. Thank you for your
+                purchase!</p>
             <!-- Divider -->
             <hr>
 
@@ -86,7 +90,7 @@
                 <div class="flex justify-between">
                     <span class="font-medium">Order ID:</span>
                     <span class="flex items-center gap-1">
-                        <span id="order-id">1000123</span>
+                        <span id="order-id"></span>
                         <span class="material-symbols-outlined text-gray-500 text-sm cursor-pointer"
                             data-copy="#order-id">content_copy</span>
                     </span>
@@ -96,13 +100,13 @@
 
                 <div class="flex justify-between">
                     <span class="font-medium">Date and Time:</span>
-                    <span  class="text-right">Aug 23, 2025 11:90PM</span>
+                    <span id="order-date" class="text-right"></span>
                 </div>
                 <div class="flex justify-between">
                     <span class="font-medium">Order Status:</span>
-                    <span class="text-yellow-600 font-semibold">Pending</span>
-                    <span class="text-green-600 font-semibold" style="display: none;">Claimable</span>
-                    <span class="text-green-600 font-semibold" style="display: none;">Completed</span>
+                    <span id="order-status" class="text-yellow-600 font-semibold first-letter:uppercase"></span>
+                    <span class="text-green-600 font-semibold" style="display: none;"></span>
+                    <span class="text-green-600 font-semibold" style="display: none;"></span>
                 </div>
             </div>
 
@@ -114,19 +118,19 @@
 
 
                 <!-- Payment Ref No -->
-<div class="flex justify-between">
-  <span class="font-medium">Payment Ref No.:</span>
-  <span class="text-right">3992123 232 438</span>
-</div>
+                <div class="flex justify-between">
+                    <span class="font-medium">Payment Ref No.:</span>
+                    <span id="payment-refno" class="text-right"></span>
+                </div>
 
-<!-- Total amount -->
-<div class="flex justify-between">
-  <span class="font-medium">Total amount:</span>
-  <span class="font-semibold text-right">₱567.00</span>
-</div>
+                <!-- Total amount -->
+                <div class="flex justify-between">
+                    <span class="font-medium">Total amount:</span>
+                    <span id="total-amount" class="font-semibold text-right"></span>
+                </div>
             </div>
 
-            
+
 
             <!-- Button -->
             <div class="pt-4">
@@ -140,7 +144,7 @@
         </div>
 
 
-        
+
     </main>
     <script>
         function showToast(message) {
@@ -175,9 +179,51 @@
 
 
 
-<!-- Toast container -->
-<div id="toast-container" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 space-y-2"></div>
+    <!-- Toast container -->
+    <div id="toast-container" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 space-y-2"></div>
 
+    <script>
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const orderId = getQueryParam("orderid");
+
+            if (!orderId) {
+                showToast("No order ID provided in URL.");
+                return;
+            }
+
+            fetch("getorderreceipt.php?orderid=" + encodeURIComponent(orderId))
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        // Populate receipt fields
+                        document.getElementById("order-id").innerText = data.order.order_id;
+                        document.querySelector("#order-id + .material-symbols-outlined")
+                            .setAttribute("data-copy", "#order-id");
+
+                        // Format date/time
+                        document.querySelector("#order-date").innerText = data.order.placed_at;
+                        document.querySelector("#order-status").innerText = data.order.order_status;
+                        document.querySelector("#payment-refno").innerText = data.order.payment_refno;
+                        document.querySelector("#total-amount").innerText = "₱" + parseFloat(data.order.total_amount).toFixed(2);
+                    } else {
+                        showToast("Error: " + data.message);
+                    }
+                })
+                .catch(err => {
+                    console.error("Fetch error:", err);
+                    showToast("Unable to fetch order details.");
+                });
+        });
+
+    </script>
 </body>
 
 </html>

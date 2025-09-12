@@ -338,6 +338,9 @@
 
                         productCards.forEach(card => {
                             card.addEventListener('click', () => {
+
+                                activeProductId = card.dataset.id;
+
                                 document.getElementById('modal-title').innerText = card.dataset.title;
                                 document.getElementById('modal-desc').innerText = card.dataset.desc;
                                 document.getElementById('modal-price').innerText = card.dataset.price;
@@ -403,17 +406,20 @@
         updateCartCount();
 
         document.getElementById("add-to-cart").addEventListener("click", () => {
+            if (!activeProductId) {
+                alert("No product selected.");
+                return;
+            }
 
-            
             // --- UPDATED: Grab product ID from the active card
-            const productId = document.getElementById("product-cart").dataset.id;
+            const productId = activeProductId;
             // Grab modal product info
             const title = document.getElementById("modal-title").innerText;
             const price = document.getElementById("modal-price").innerText;
             const img = document.getElementById("modal-img").src;
 
             // Check if already in cart
-            const existing = cart.find(item =>  item.id === productId);
+            const existing = cart.find(item => item.id === productId);
 
             if (existing) {
                 // prevent exceeding maxQty

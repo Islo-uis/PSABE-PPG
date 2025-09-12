@@ -112,40 +112,7 @@
         <aside id="checkout-items" class="order-1 space-y-4 md:order-2">
             <h3 class="font-semibold">Order Items</h3>
 
-            <!-- Item -->
-            <div class="flex items-center justify-between p-2 border rounded-lg shadow-sm">
-                <div class="flex items-center gap-3">
-                    <img src="/images/product-images/image 5.png" alt="White Shirt" class="h-16 rounded-md">
-                    <div>
-                        <p class="font-semibold">White Shirt Small</p>
-                        <p class="text-sm text-gray-600">Quantity: 1</p>
-                    </div>
-                </div>
-                <span class="font-semibold">₱189.00</span>
-            </div>
-
-            <!-- Repeat Items -->
-            <div class="flex items-center justify-between p-2 border rounded-lg shadow-sm">
-                <div class="flex items-center gap-3">
-                    <img src="/images/product-images/image 5.png" alt="White Shirt" class="h-16 rounded-md">
-                    <div>
-                        <p class="font-semibold">White Shirt Small</p>
-                        <p class="text-sm text-gray-600">Quantity: 1</p>
-                    </div>
-                </div>
-                <span class="font-semibold">₱189.00</span>
-            </div>
-
-            <div class="flex items-center justify-between p-2 border rounded-lg shadow-sm">
-                <div class="flex items-center gap-3">
-                    <img src="/images/product-images/image 5.png" alt="White Shirt" class="h-16 rounded-md">
-                    <div>
-                        <p class="font-semibold">White Shirt Small</p>
-                        <p class="text-sm text-gray-600">Quantity: 1</p>
-                    </div>
-                </div>
-                <span class="font-semibold">₱189.00</span>
-            </div>
+            
 
         </aside>
     </main>
@@ -313,6 +280,61 @@
         });
 
     </script>
+
+
+<script>
+document.getElementById("payment-form").addEventListener("submit", function(e) {
+    e.preventDefault(); // stop normal form
+
+    const refno = document.getElementById("refno").value.trim();
+    const receiptFile = document.getElementById("receipt-file").files[0];
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    if (!refno || !receiptFile || cart.length === 0) {
+        alert("Please enter Ref No., upload receipt, and have items in cart.");
+        return;
+    }
+
+    // Build FormData
+    const formData = new FormData();
+     formData.append("payment_refno", refno);          
+    formData.append("receipt-file", receiptFile);     
+    formData.append("products", JSON.stringify(cart));
+
+    // Send cart items
+    cart.forEach((item, index) => {
+        formData.append(`items[${index}][id]`, item.id);
+        formData.append(`items[${index}][qty]`, item.qty);
+        formData.append(`items[${index}][price]`, item.price.replace(/[₱,]/g, ""));
+    });
+
+    // Optionally total
+    const total = cart.reduce((sum, i) => sum + (parseFloat(i.price.replace(/[₱,]/g,"")) * i.qty), 0);
+    formData.append("total_amount", total);
+
+    // AJAX call
+    fetch("submitorder.php", {
+        method: "POST",
+        body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+        console.log("Server response:", data);
+        alert("Order submitted successfully!");
+
+        // clear cart
+        localStorage.removeItem("cart");
+        window.location.href = "receipt.html?orderid=" + data.order_id;
+    })
+    .catch(err => {
+        console.error("Error submitting order:", err);
+        alert("Error submitting order. Please try again.");
+    });
+});
+</script>
+
+
+
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {

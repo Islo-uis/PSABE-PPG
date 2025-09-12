@@ -80,7 +80,7 @@ $orderdetails = "CREATE table if not exists orderdetails (
     order_id INT UNSIGNED NOT NULL,
     prod_id  SMALLINT UNSIGNED NOT NULL,
     item_qty SMALLINT UNSIGNED NOT NULL CHECK (item_qty > 0),
-    unit_price DECIMAL(10,2) NOT NULL AS (SELECT prod_price FROM products WHERE prod_id = prod_id),
+    unit_price DECIMAL(10,2) NOT NULL ,
     line_total DECIMAL(10,2) AS (item_qty * unit_price) STORED,
     PRIMARY KEY (order_id, prod_id),
     FOREIGN KEY (order_id) REFERENCES orders(order_id),
@@ -89,6 +89,42 @@ $orderdetails = "CREATE table if not exists orderdetails (
 if (! mysqli_query($conn, $orderdetails)) {
     die("Error creating orderdetails table: " . mysqli_error($conn));
 }   
+
+
+//create triggger
+// CREATE TRIGGER before_orderdetails_insert
+// BEFORE INSERT ON orderdetails
+// FOR EACH ROW
+// BEGIN
+//   DECLARE prodPrice DECIMAL(10,2);
+//   SELECT prod_price INTO prodPrice FROM products WHERE prod_id = NEW.prod_id;
+//   SET NEW.unit_price = prodPrice;
+// END$$
+
+$trigger = "
+CREATE TRIGGER before_orderdetails_insert
+BEFORE INSERT ON orderdetails
+FOR EACH ROW
+BEGIN
+  DECLARE prodPrice DECIMAL(10,2);
+
+  -- get current product price
+  SELECT prod_price INTO prodPrice 
+  FROM products 
+  WHERE prod_id = NEW.prod_id;
+
+  -- set unit price for this order detail
+  SET NEW.unit_price = prodPrice;
+
+  -- update the total in orders table
+  UPDATE orders
+  SET total_amount = total_amount + (NEW.item_qty * prodPrice)
+  WHERE order_id = NEW.order_id;
+END
+";
+if (! mysqli_query($conn, $trigger)) {
+     die("Error creating trigger: " . mysqli_error($conn));
+}
 
 $merch = "CREATE table if not exists products (
     prod_id SMALLINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
