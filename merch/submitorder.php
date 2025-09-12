@@ -79,7 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $payment_photo = "uploads/receipts/" . $newFileName;
 
         $stmt = $conn->prepare("UPDATE orders SET payment_photo=? WHERE order_id=?");
-        $stmt->bind_param("si", $payment_photo, $order_id);
+        $stmt->bind_param("si", $newFileName, $order_id);
 
 
         $stmt->execute();

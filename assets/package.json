@@ -1,7 +1,10 @@
 {
   "dependencies": {
     "@preline/file-upload": "^3.2.3",
+    "datatables.net-buttons": "^3.2.5",
+    "datatables.net-dt": "^2.3.4",
     "dropzone": "^6.0.0-beta.2",
+    "jquery": "^3.7.1",
     "lodash": "^4.17.21"
   }
 }

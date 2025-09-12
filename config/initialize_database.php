@@ -112,11 +112,12 @@ if (! mysqli_query($conn, $prodimg)) {
 $orders = "CREATE table if not exists orders (
     order_id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     buyer_id INT NOT NULL,
-    order_status ENUM('pending','paid','fulfilled','cancelled','refunded') NOT NULL DEFAULT 'pending',
+    order_status ENUM('pending','payment under review','payment verified','fraudulent','claimable','completed', 'cancelled','refunded') NOT NULL DEFAULT 'pending',
     total_amount DECIMAL(10,2) DEFAULT 0.00,
     placed_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     payment_refno VARCHAR(100) NULL,
     payment_photo VARCHAR(255) NULL,
+    note TEXT NULL,
     FOREIGN KEY (buyer_id) REFERENCES user(userID)
 )";
 if (! mysqli_query($conn, $orders)) {
