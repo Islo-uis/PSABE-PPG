@@ -64,7 +64,7 @@ if ($result && $result->num_rows > 0) {
                 : '',
 
             $row['payment_photo']
-                ? "<img src='/uploads/receipts/" . htmlspecialchars($row['payment_photo']) . "' class='h-10'>"
+                ? "<img src='../uploads/receipts/" . htmlspecialchars($row['payment_photo']) . "' class='h-10'>"
                 : '',
             $row['order_status'],
             "<div>
