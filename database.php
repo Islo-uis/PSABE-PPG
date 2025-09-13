@@ -248,4 +248,92 @@ function sched()
 }
 
 
+
+//CHRISLYN
+$merch = "CREATE table if not exists products (
+    prod_id SMALLINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    prod_name VARCHAR(160) NOT NULL,
+    prod_description TEXT NULL,
+    prod_qty SMALLINT UNSIGNED NOT NULL,
+    prod_price DECIMAL(10,2) NOT NULL,
+    prod_status ENUM('in_stock','sold_out') 
+    GENERATED ALWAYS AS (
+      CASE 
+        WHEN prod_qty > 0 THEN 'in_stock'
+        ELSE 'sold_out'
+      END
+    ) STORED
+)
+";
+if (! mysqli_query($conn, $merch)) {
+    die("Error creating merch table: " . mysqli_error($conn));
+}
+
+$prodimg = "CREATE TABLE IF NOT EXISTS product_images (
+    prod_id SMALLINT UNSIGNED,
+    img_url1 VARCHAR(255),
+    img_url2 VARCHAR(255),
+    img_url3 VARCHAR(255),
+    PRIMARY KEY (prod_id),
+    FOREIGN KEY (prod_id) REFERENCES products(prod_id) ON DELETE CASCADE
+)";
+if (! mysqli_query($conn, $prodimg)) {
+    die("Error creating prodimg table: " . mysqli_error($conn));
+}
+
+$orders = "CREATE table if not exists orders (
+    order_id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    buyer_id INT NOT NULL,
+    order_status ENUM('pending','payment under review','payment verified','fraudulent','claimable','completed', 'cancelled','refunded') NOT NULL DEFAULT 'pending',
+    total_amount DECIMAL(10,2) DEFAULT 0.00,
+    placed_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    payment_refno VARCHAR(100) NULL,
+    payment_photo VARCHAR(255) NULL,
+    note TEXT NULL,
+    FOREIGN KEY (buyer_id) REFERENCES user(userID)
+)";
+if (! mysqli_query($conn, $orders)) {
+    die("Error creating orders table: " . mysqli_error($conn));
+}
+
+$orderdetails = "CREATE table if not exists orderdetails (
+    order_id INT UNSIGNED NOT NULL,
+    prod_id  SMALLINT UNSIGNED NOT NULL,
+    item_qty SMALLINT UNSIGNED NOT NULL CHECK (item_qty > 0),
+    unit_price DECIMAL(10,2) NOT NULL ,
+    line_total DECIMAL(10,2) AS (item_qty * unit_price) STORED,
+    PRIMARY KEY (order_id, prod_id),
+    FOREIGN KEY (order_id) REFERENCES orders(order_id),
+    FOREIGN KEY (prod_id) REFERENCES products(prod_id)
+)";
+if (! mysqli_query($conn, $orderdetails)) {
+    die("Error creating orderdetails table: " . mysqli_error($conn));
+}
+
+$trigger = "
+    CREATE TRIGGER before_orderdetails_insert
+    BEFORE INSERT ON orderdetails
+    FOR EACH ROW
+    BEGIN
+    DECLARE prodPrice DECIMAL(10,2);
+
+    -- get current product price
+    SELECT prod_price INTO prodPrice 
+    FROM products 
+    WHERE prod_id = NEW.prod_id;
+
+    -- set unit price for this order detail
+    SET NEW.unit_price = prodPrice;
+
+    -- update the total in orders table
+    UPDATE orders
+    SET total_amount = total_amount + (NEW.item_qty * prodPrice)
+    WHERE order_id = NEW.order_id;
+    END
+";
+if (! mysqli_query($conn, $trigger)) {
+    die("Error creating trigger: " . mysqli_error($conn));
+}
+
+
 mysqli_close($conn);
