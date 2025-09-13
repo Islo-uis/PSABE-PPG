@@ -76,7 +76,7 @@ if (! mysqli_query($conn, $schedule)) {
 
 
 
-
+//CHRISLYN
 $merch = "CREATE table if not exists products (
     prod_id SMALLINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     prod_name VARCHAR(160) NOT NULL,
@@ -95,7 +95,6 @@ $merch = "CREATE table if not exists products (
 if (! mysqli_query($conn, $merch)) {
     die("Error creating merch table: " . mysqli_error($conn));
 }
-
 
 $prodimg = "CREATE TABLE IF NOT EXISTS product_images (
     prod_id SMALLINT UNSIGNED,
@@ -138,32 +137,56 @@ if (! mysqli_query($conn, $orderdetails)) {
     die("Error creating orderdetails table: " . mysqli_error($conn));
 }
 
-
-
 $trigger = "
-CREATE TRIGGER before_orderdetails_insert
-BEFORE INSERT ON orderdetails
-FOR EACH ROW
-BEGIN
-  DECLARE prodPrice DECIMAL(10,2);
+    CREATE OR REPLACE TRIGGER before_orderdetails_insert
+    BEFORE INSERT ON orderdetails
+    FOR EACH ROW
+    BEGIN
+    DECLARE prodPrice DECIMAL(10,2);
 
-  -- get current product price
-  SELECT prod_price INTO prodPrice 
-  FROM products 
-  WHERE prod_id = NEW.prod_id;
+    -- get current product price
+    SELECT prod_price INTO prodPrice 
+    FROM products 
+    WHERE prod_id = NEW.prod_id;
 
-  -- set unit price for this order detail
-  SET NEW.unit_price = prodPrice;
+    -- set unit price for this order detail
+    SET NEW.unit_price = prodPrice;
 
-  -- update the total in orders table
-  UPDATE orders
-  SET total_amount = total_amount + (NEW.item_qty * prodPrice)
-  WHERE order_id = NEW.order_id;
-END
+    -- update the total in orders table
+    UPDATE orders
+    SET total_amount = total_amount + (NEW.item_qty * prodPrice)
+    WHERE order_id = NEW.order_id;
+    END
 ";
 if (! mysqli_query($conn, $trigger)) {
     die("Error creating trigger: " . mysqli_error($conn));
 }
+$trigger = "
+    CREATE OR REPLACE TRIGGER reduce_stock_after_payment
+    AFTER UPDATE ON orders
+    FOR EACH ROW
+    BEGIN
+        -- Only run when status changes to 'payment verified'
+        IF NEW.order_status = 'payment verified' 
+        AND OLD.order_status <> 'payment verified' THEN
+        
+            -- Reduce stock for all items in the order
+            UPDATE products p
+            JOIN orderdetails od ON p.prod_id = od.prod_id
+            SET p.prod_qty = p.prod_qty - od.item_qty
+            WHERE od.order_id = NEW.order_id;
+        END IF;
+    END;
+";
+if (! mysqli_query($conn, $trigger)) {
+    die("Error creating trigger: " . mysqli_error($conn));
+}
+
+
+
+
+
+
 $event = "CREATE table if not exists events (
     eventID INT PRIMARY KEY AUTO_INCREMENT,
     eventName TEXT NOT NULL,
@@ -266,46 +289,46 @@ function sched()
 }
 
 // //Create stored procedures
-// $sp_addproducts = "
+    // $sp_addproducts = "
 
-// CREATE PROCEDURE sp_addProductWithImages(
-//     IN p_prod_name VARCHAR(160),
-//     IN p_prod_description TEXT,
-//     IN p_prod_qty SMALLINT UNSIGNED,
-//     IN p_prod_price DECIMAL(10,2),
-//     IN p_img_url1 VARCHAR(255),
-//     IN p_img_url2 VARCHAR(255),
-//     IN p_img_url3 VARCHAR(255),
-//     OUT new_prod_id INT
-// )
-// BEGIN
-//     DECLARE new_prod_id INT;
-//     DECLARE p_prod_status ENUM('in_stock', 'sold_out');
+    // CREATE PROCEDURE sp_addProductWithImages(
+    //     IN p_prod_name VARCHAR(160),
+    //     IN p_prod_description TEXT,
+    //     IN p_prod_qty SMALLINT UNSIGNED,
+    //     IN p_prod_price DECIMAL(10,2),
+    //     IN p_img_url1 VARCHAR(255),
+    //     IN p_img_url2 VARCHAR(255),
+    //     IN p_img_url3 VARCHAR(255),
+    //     OUT new_prod_id INT
+    // )
+    // BEGIN
+    //     DECLARE new_prod_id INT;
+    //     DECLARE p_prod_status ENUM('in_stock', 'sold_out');
 
-//     -- Set product status based on quantity
-//     IF p_prod_qty = 0 THEN
-//         SET p_prod_status = 'sold_out';
-//     ELSE
-//         SET p_prod_status = 'in_stock';
-//     END IF;
+    //     -- Set product status based on quantity
+    //     IF p_prod_qty = 0 THEN
+    //         SET p_prod_status = 'sold_out';
+    //     ELSE
+    //         SET p_prod_status = 'in_stock';
+    //     END IF;
 
-//     -- Insert the product into the products table
-//     INSERT INTO products (prod_name, prod_description, prod_qty, prod_price, prod_status)
-//     VALUES (p_prod_name, p_prod_description, p_prod_qty, p_prod_price, p_prod_status);
+    //     -- Insert the product into the products table
+    //     INSERT INTO products (prod_name, prod_description, prod_qty, prod_price, prod_status)
+    //     VALUES (p_prod_name, p_prod_description, p_prod_qty, p_prod_price, p_prod_status);
 
-//     -- Get the last inserted prod_id
-//     SET new_prod_id = LAST_INSERT_ID();
+    //     -- Get the last inserted prod_id
+    //     SET new_prod_id = LAST_INSERT_ID();
 
-//     INSERT INTO product_images (prod_id, p_img_url1, p_img_url2, p_img_url3)
-//     VALUES (
-//         new_prod_id, 
-//         p_img_url1,  -- img_url1 is required
-//         IFNULL(p_img_url2, NULL),  -- img_url2 is optional
-//         IFNULL(p_img_url3, NULL)   -- img_url3 is optional
-//     );
+    //     INSERT INTO product_images (prod_id, p_img_url1, p_img_url2, p_img_url3)
+    //     VALUES (
+    //         new_prod_id, 
+    //         p_img_url1,  -- img_url1 is required
+    //         IFNULL(p_img_url2, NULL),  -- img_url2 is optional
+    //         IFNULL(p_img_url3, NULL)   -- img_url3 is optional
+    //     );
 
-// END;
-// ";
-// if (! mysqli_query($conn, $sp_addproducts)) {
-//     die("Error creating stored procedure: " . mysqli_error($conn));
-// }
+    // END;
+    // ";
+    // if (! mysqli_query($conn, $sp_addproducts)) {
+    //     die("Error creating stored procedure: " . mysqli_error($conn));
+    // }

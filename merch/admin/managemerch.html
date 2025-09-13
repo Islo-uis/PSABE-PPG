@@ -63,7 +63,6 @@
     </nav>
 
 
-
     <main class="pt-20">
         <!-- Start block -->
         <section class=" p-3 sm:p-5 antialiased">
@@ -79,7 +78,7 @@
 
                     <div class="bg-white  relative shadow-md sm:rounded-lg overflow-hidden">
                         <div class="overflow-x-auto">
-                            
+
                             <table class="w-full text-sm text-left text-gray-500 ">
                                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
                                     <tr>
@@ -147,7 +146,7 @@
             tabindex="-1" aria-labelledby="drawer-update-product-label" aria-hidden="true">
             <h5 id="drawer-label" class="inline-flex items-center mb-6 text-sm font-semibold text-gray-500 ">
                 Update Product Details</h5>
-            <button type="button" data-drawer-dismiss="drawer-update-product" aria-controls="drawer-update-product"
+            <button id="close-update-modal" type="button" data-drawer-dismiss="drawer-update-product" aria-controls="drawer-update-product"
                 class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 absolute top-2.5 right-2.5 inline-flex items-center ">
                 <span class="material-icons text-base">close</span>
             </button>
@@ -215,66 +214,167 @@
 
             <div class="mb-4 mt-4">
                 <span class="block mb-2 text-sm font-medium text-gray-900 ">Product Images</span>
-                <div class="grid grid-cols-4 gap-4 mb-4">
-                    <div class="relative p-2 bg-gray-100 rounded-lg sm:w-36 sm:h-36 ">
-                        <img src="https://flowbite.s3.amazonaws.com/blocks/application-ui/products/imac-side-image.png"
-                            alt="imac image">
-                        <button type="button" class="absolute text-red-600  hover:text-red-500  bottom-1 left-1">
-                            <span class="material-symbols-outlined ">delete</span>
-                            <span class="sr-only">Remove image</span>
-                        </button>
-                    </div>
-                    <div class="relative p-2 bg-gray-100 rounded-lg sm:w-36 sm:h-36 ">
-                        <img src="https://flowbite.s3.amazonaws.com/blocks/application-ui/products/imac-front-image.png"
-                            alt="imac image">
-                        <button type="button" class="absolute text-red-600  hover:text-red-500  bottom-1 left-1">
-                            <span class="material-symbols-outlined ">delete</span>
 
-                            <span class="sr-only">Remove image</span>
-                        </button>
-                    </div>
-                    <div class="relative p-2 bg-gray-100 rounded-lg sm:w-36 sm:h-36 ">
-                        <img src="https://flowbite.s3.amazonaws.com/blocks/application-ui/products/imac-back-image.png"
-                            alt="imac image">
-                        <button type="button" class="absolute text-red-600  hover:text-red-500  bottom-1 left-1">
-                            <span class="material-symbols-outlined ">delete</span>
+                <div class="grid grid-cols-5 gap-4 mb-4">
+                    <!-- 
 
-                            <span class="sr-only">Remove image</span>
-                        </button>
-                    </div>
-                    <div class="relative p-2 bg-gray-100 rounded-lg sm:w-36 sm:h-36 ">
-                        <img src="https://flowbite.s3.amazonaws.com/blocks/application-ui/products/imac-side-image.png"
-                            alt="imac image">
-                        <button type="button" class="absolute text-red-600  hover:text-red-500  bottom-1 left-1">
-                            <span class="material-symbols-outlined ">delete</span>
-
-                            <span class="sr-only">Remove image</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="flex items-center justify-center w-full">
-                    <label for="dropzone-file"
-                        class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 ">
-                        <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                            <svg aria-hidden="true" class="w-10 h-10 mb-3 text-gray-400" fill="none"
-                                stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                            </svg>
-                            <p class="mb-2 text-sm text-gray-500 ">
-                                <span class="font-semibold">Click to upload</span>
-                                or drag and drop
-                            </p>
-                            <p class="text-xs text-gray-500 ">SVG, PNG, JPG or GIF (MAX.
-                                800x400px)</p>
+                        <div class="relative p-2 bg-gray-100 rounded-lg sm:w-36 sm:h-36  ">
+                            <img class="object-cover h-full w-full rounded" id="prod_img1" src="" alt="imac image">
+                            <button type="button" class="absolute text-red-600  hover:text-red-500  bottom-1 left-1">
+                                <span aria-hidden="true" class="material-icons">delete</span>
+                                <span class="sr-only">Remove image</span>
+                            </button>
                         </div>
-                        <input id="dropzone-file" type="file" class="hidden">
-                    </label>
+                        <div class="relative p-2 bg-gray-100 rounded-lg sm:w-36 sm:h-36 ">
+                            <label for="dropzone-file1"
+                                class="flex flex-col items-center justify-center w-full h-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 ">
+                                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                    <span aria-hidden="true" class=" text-gray-400 material-symbols-outlined">upload</span>
+                                    <p class="text-sm text-gray-500 ">
+                                        <span>Click to upload</span>
+                                    </p>
+                                </div>
+                                <input id="dropzone-file1" type="file" class="hidden">
+                            </label>
+                        </div>
+
+                        <div class="relative p-2 bg-gray-100 rounded-lg sm:w-36 sm:h-36 ">
+                            <img class="object-cover h-full w-full rounded" id="prod_img2" src="">
+                            <button type="button" class="absolute text-red-600  hover:text-red-500  bottom-1 left-1">
+                                <span aria-hidden="true" class="material-icons ">delete</span>
+                                <span class="sr-only">Remove image</span>
+                            </button>
+                        </div>
+                        <div class="relative p-2 bg-gray-100 rounded-lg sm:w-36 sm:h-36 ">
+                            <label for="dropzone-file2"
+                                class="flex flex-col items-center justify-center w-full h-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 ">
+                                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                    <span aria-hidden="true" class=" text-gray-400 material-symbols-outlined">upload</span>
+                                    <p class="text-sm text-gray-500 ">
+                                        <span>Click to upload</span>
+                                    </p>
+                                </div>
+                                <input id="dropzone-file2" type="file" class="hidden">
+                            </label>
+                        </div>
+
+                        <div class="relative p-2 bg-gray-100 rounded-lg sm:w-36 sm:h-36 ">
+                            <img class="object-cover h-full w-full rounded" id="prod_img3" src="" alt=""
+                                class="object-cover">
+                            <button type="button" class="absolute text-red-600  hover:text-red-500  bottom-1 left-1">
+                                <span aria-hidden="true" class="material-icons">delete</span>
+                                <span class="sr-only">Remove image</span>
+                            </button>
+                        </div>
+                        <div class="relative p-2 bg-gray-100 rounded-lg sm:w-36 sm:h-36 ">
+                            <label for="dropzone-file3"
+                                class="flex flex-col items-center justify-center w-full h-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 ">
+                                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                    <span aria-hidden="true" class=" text-gray-400 material-symbols-outlined">upload</span>
+                                    <p class="text-sm text-gray-500 ">
+                                        <span>Click to upload</span>
+                                    </p>
+                                </div>
+                                <input id="dropzone-file3" type="file" class="hidden">
+                            </label>
+                        </div> -->
+
+
+
+                    <div class="relative sm:w-36 sm:h-36">
+                        <!-- Image slot -->
+                        <div id="img1-wrapper" class="p-2 bg-gray-100 rounded-lg w-full h-full hidden">
+                            <img class="object-cover h-full w-full rounded" id="prod_img1" src="" alt="">
+                            <button type="button"
+                                class="delete-btn absolute text-red-600 hover:text-red-500 bottom-1 left-1"
+                                data-img-wrapper="img1-wrapper" data-upload-wrapper="upload1-wrapper"
+                                data-img="prod_img1">
+                                <span aria-hidden="true" class="material-icons">delete</span>
+                                <span class="sr-only">Remove image</span>
+                            </button>
+                        </div>
+
+                        <!-- Upload slot -->
+                        <div id="upload1-wrapper"
+                            class="p-2 bg-gray-100 rounded-lg w-full h-full flex items-center justify-center">
+                            <label for="dropzone-file1"
+                                class="flex flex-col items-center justify-center w-full h-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 ">
+                                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                    <span aria-hidden="true"
+                                        class=" text-gray-400 material-symbols-outlined">upload</span>
+                                    <p class="text-sm text-gray-500 ">
+                                        <span>Click to upload</span>
+                                    </p>
+                                </div>
+                                <input id="dropzone-file1" type="file" class="hidden" accept="image/png,image/jpeg">
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="relative sm:w-36 sm:h-36">
+                        <!-- Image slot -->
+                        <div id="img2-wrapper" class="p-2 bg-gray-100 rounded-lg w-full h-full hidden">
+                            <img class="object-cover h-full w-full rounded" id="prod_img2" src="" alt="">
+                            <button type="button"
+                                class="delete-btn absolute text-red-600 hover:text-red-500 bottom-1 left-1"
+                                data-img-wrapper="img2-wrapper" data-upload-wrapper="upload2-wrapper"
+                                data-img="prod_img2">
+                                <span aria-hidden="true" class="material-icons">delete</span>
+                                <span class="sr-only">Remove image</span>
+                            </button>
+                        </div>
+
+                        <!-- Upload slot -->
+                        <div id="upload2-wrapper"
+                            class="p-2 bg-gray-100 rounded-lg w-full h-full flex items-center justify-center">
+                            <label for="dropzone-file2"
+                                class="flex flex-col items-center justify-center w-full h-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 ">
+                                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                    <span aria-hidden="true"
+                                        class=" text-gray-400 material-symbols-outlined">upload</span>
+                                    <p class="text-sm text-gray-500 ">
+                                        <span>Click to upload</span>
+                                    </p>
+                                </div>
+                                <input id="dropzone-file2" type="file" class="hidden" accept="image/png,image/jpeg">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="relative sm:w-36 sm:h-36">
+                        <!-- Image slot -->
+                        <div id="img3-wrapper" class="p-2 bg-gray-100 rounded-lg w-full h-full hidden">
+                            <img class="object-cover h-full w-full rounded" id="prod_img3" src="" alt="">
+                            <button type="button"
+                                class="delete-btn absolute text-red-600 hover:text-red-500 bottom-1 left-1"
+                                data-img-wrapper="img3-wrapper" data-upload-wrapper="upload3-wrapper"
+                                data-img="prod_img3">
+                                <span aria-hidden="true" class="material-icons">delete</span>
+                                <span class="sr-only">Remove image</span>
+                            </button>
+                        </div>
+
+                        <!-- Upload slot -->
+                        <div id="upload3-wrapper"
+                            class="p-2 bg-gray-100 rounded-lg w-full h-full flex items-center justify-center">
+                            <label for="dropzone-file3"
+                                class="flex flex-col items-center justify-center w-full h-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 ">
+                                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                    <span aria-hidden="true"
+                                        class=" text-gray-400 material-symbols-outlined">upload</span>
+                                    <p class="text-sm text-gray-500 ">
+                                        <span>Click to upload</span>
+                                    </p>
+                                </div>
+                                <input id="dropzone-file3" type="file" class="hidden" accept="image/png,image/jpeg">
+                            </label>
+                        </div>
+                    </div>
+
                 </div>
             </div>
             <div class="grid grid-cols-2 gap-4 mt-6 sm:w-1/2">
 
-                <button type="button"
+                <button type="submit"
                     class="text-blue-600 inline-flex justify-center items-center hover:text-white border border-blue-600 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                     <span class="material-icons text-base mr-2">save</span>
                     Save
@@ -316,8 +416,8 @@
                                     placeholder="Enter product name" required>
                             </div>
                             <div>
-                                <label for="prod_price"
-                                    class="block mb-2 text-sm font-medium text-gray-900 ">Unit Price</label>
+                                <label for="prod_price" class="block mb-2 text-sm font-medium text-gray-900 ">Unit
+                                    Price</label>
                                 <input type="number" step="1" name="prod_price" id="prod_price"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                                     placeholder="₱2999" required
@@ -443,6 +543,7 @@
         </div>
     </main>
 
+
     <!-- WORKING FILE UPLOAD SCRIPT -->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -493,6 +594,73 @@
         });
     </script>
 
+    <script>
+        function toggleImageSlot(imgWrapperId, uploadWrapperId, imgElId, src) {
+            const imgWrapper = document.getElementById(imgWrapperId);
+            const uploadWrapper = document.getElementById(uploadWrapperId);
+            const imgEl = document.getElementById(imgElId);
+
+            if (imgWrapper && uploadWrapper && imgEl) {
+                if (src && src.trim() !== "") {
+                    imgEl.src = src;
+                    imgWrapper.classList.remove("hidden");
+                    uploadWrapper.classList.add("hidden");
+                } else {
+                    imgEl.src = "";
+                    imgWrapper.classList.add("hidden");
+                    uploadWrapper.classList.remove("hidden");
+                }
+            } else {
+                console.error("One or more elements not found for toggleImageSlot.", { imgWrapperId, uploadWrapperId, imgElId });
+            }
+        }
+
+
+        document.addEventListener("click", function (e) {
+            if (e.target.closest(".delete-btn")) {
+                const btn = e.target.closest(".delete-btn");
+                const imgWrapperId = btn.dataset.imgWrapper;
+                const uploadWrapperId = btn.dataset.uploadWrapper;
+                const imgElId = btn.dataset.img;
+
+                // Reset preview
+                toggleImageSlot(imgWrapperId, uploadWrapperId, imgElId, "");
+
+                // Clear file input
+                const slotNumber = imgWrapperId.match(/\d+/)[0]; // extract 1, 2, or 3
+                const input = document.getElementById(`dropzone-file${slotNumber}`);
+                if (input) {
+                    input.value = "";
+                    console.log(`Deleted image for slot ${slotNumber}, input cleared:`, input);
+                }
+            }
+        });
+
+        function handleFileInput(inputId, imgWrapperId, uploadWrapperId, imgElId) {
+            const input = document.getElementById(inputId);
+
+            input.addEventListener("change", function () {
+                if (this.files && this.files[0]) {
+                    const file = this.files[0];
+                    console.log(`File selected in ${inputId}:`, file);
+
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        toggleImageSlot(imgWrapperId, uploadWrapperId, imgElId, e.target.result);
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    console.log(`No file selected in ${inputId}`);
+                }
+            });
+        }
+
+        // Attach to all 3 file inputs
+        handleFileInput("dropzone-file1", "img1-wrapper", "upload1-wrapper", "prod_img1");
+        handleFileInput("dropzone-file2", "img2-wrapper", "upload2-wrapper", "prod_img2");
+        handleFileInput("dropzone-file3", "img3-wrapper", "upload3-wrapper", "prod_img3");
+
+    </script>
 
     <!-- for products table popuate -->
     <script>
@@ -528,7 +696,7 @@
                             <tr class="border-b hover:bg-gray-100">
                                 <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">
                                     <div class="flex items-center mr-3">
-                                        <img src="product-images/${prod.img}" alt="${prod.prod_name} Image" class="h-8 rounded w-auto mr-3 object-cover aspect-[3/4]">
+                                        <img src="product-images/${prod.img1}" alt="${prod.prod_name} Image" class="h-8 rounded w-auto mr-3 object-cover aspect-[3/4]">
                                         ${prod.prod_name}
                                     </div>
                                 </th>
@@ -565,7 +733,10 @@
                                             data-name="${prod.prod_name}"
                                             data-price="${prod.prod_price}"
                                             data-qty="${prod.prod_qty}"
-                                            data-desc="${prod.prod_description}">
+                                            data-desc="${prod.prod_description}"
+                                            data-img1="product-images/${prod.img1}"
+                                            ${prod.img2 ? `data-img2="product-images/${prod.img2}"` : ""}
+                                            ${prod.img3 ? `data-img3="product-images/${prod.img3}"` : ""}>
                                             <span class="material-symbols-outlined text-base mr-2">edit_square</span>
                                             Edit
                                         </button>
@@ -586,12 +757,39 @@
                                 const price = btn.dataset.price;
                                 const qty = btn.dataset.qty;
                                 const desc = btn.dataset.desc;
+                                const img1 = btn.dataset.img1;
+                                const img2 = btn.dataset.img2;
+                                const img3 = btn.dataset.img3;
+
+
+                                // // Reset all images first
+                                // document.getElementById('prod_img1').src = "";
+                                // document.getElementById('prod_img2').src = "";
+                                // document.getElementById('prod_img3').src = "";
 
                                 // Fill modal form fields
                                 document.getElementById("product-id").value = id;
                                 document.getElementById("name").value = name;
                                 document.getElementById("item-quantity").value = qty;
                                 document.getElementById("description").value = desc;
+
+                                // if (btn.dataset.img2 !== undefined) {
+                                //     document.getElementById('prod_img2').src = btn.dataset.img2;
+                                //     // document.getElementById('modal-thumb2').classList.remove('hidden');
+                                // } else {
+                                //     // document.getElementById('modal-thumb2').classList.add('hidden');
+                                // }
+
+                                // // Handle 3rd image
+                                // if (btn.dataset.img3 !== undefined) {
+                                //     document.getElementById('prod_img3').src = btn.dataset.img3;
+                                //     // document.getElementById('modal-thumb3').classList.remove('hidden');
+                                // } else {
+                                //     // document.getElementById('modal-thumb3').classList.add('hidden');
+                                // }
+
+                                // document.getElementById('prod_img1').src = btn.dataset.img1;
+
 
                                 // If you have a price field in modal:
                                 const priceInput = document.getElementById("prod_price_update");
@@ -602,6 +800,13 @@
                                 if (statusSelect) {
                                     statusSelect.value = (qty == 0 ? "Sold Out" : "In Stock");
                                 }
+
+
+                                // Inside the .edit-btn event listener
+                                toggleImageSlot("img1-wrapper", "upload1-wrapper", "prod_img1", btn.dataset.img1 || "");
+                                toggleImageSlot("img2-wrapper", "upload2-wrapper", "prod_img2", btn.dataset.img2 || "");
+                                toggleImageSlot("img3-wrapper", "upload3-wrapper", "prod_img3", btn.dataset.img3 || "");
+
                             });
                         });
 
@@ -615,6 +820,78 @@
         });
     </script>
 
+
+    <script>
+        document.getElementById("drawer-update-product").addEventListener("submit", function (e) {
+            e.preventDefault(); // stop default submit
+
+            const formData = new FormData();
+
+            // Always include ID, name, qty, description
+            formData.append("prod_id", document.getElementById("product-id").value);
+            formData.append("prod_name", document.getElementById("name").value);
+            formData.append("prod_qty", document.getElementById("item-quantity").value);
+            formData.append("prod_description", document.getElementById("description").value);
+
+            // Check each file input — only append if not empty
+            const file1 = document.getElementById("dropzone-file1").files[0];
+            if (file1) {
+                formData.append("img1", file1);
+                console.log("Appending img1:", file1);
+            }
+
+            const file2 = document.getElementById("dropzone-file2").files[0];
+            if (file2) {
+                formData.append("img2", file2);
+                console.log("Appending img2:", file2);
+            }
+
+            const file3 = document.getElementById("dropzone-file3").files[0];
+            if (file3) {
+                formData.append("img3", file3);
+                console.log("Appending img3:", file3);
+            }
+
+            // Debugging – log everything before sending
+            for (let pair of formData.entries()) {
+                console.log(pair[0], pair[1]);
+            }
+
+            // Send via fetch (adjust URL to your update PHP)
+            fetch("update_product.php", {
+                method: "POST",
+                body: formData
+            })
+                .then(res => res.text())
+                .then(data => {
+                    console.log("Server response:", data);
+                    alert("Product updated!");
+                    
+                    
+                    const closeButton = document.getElementById("close-update-modal");
+                        if (closeButton) {
+                            closeButton.click();
+                        }
+                })
+                .catch(err => {
+                    console.error("Error updating product:", err);
+                });
+        });
+
+        const mainImageInput = document.getElementById("dropzone-file1");
+
+mainImageInput.addEventListener("invalid", function () {
+  if (!this.value) {
+    this.setCustomValidity("Main product image is required");
+  }
+});
+
+mainImageInput.addEventListener("input", function () {
+  // Clear custom message when user picks a file
+  this.setCustomValidity("");
+});
+
+    </script>
 </body>
 
 </html>

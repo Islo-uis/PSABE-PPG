@@ -286,12 +286,17 @@
 document.getElementById("payment-form").addEventListener("submit", function(e) {
     e.preventDefault(); // stop normal form
 
+     const submitBtn = this.querySelector("button[type='submit']");
+    submitBtn.disabled = true;
+
     const refno = document.getElementById("refno").value.trim();
     const receiptFile = document.getElementById("receipt-file").files[0];
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
     if (!refno || !receiptFile || cart.length === 0) {
         alert("Please enter Ref No., upload receipt, and have items in cart.");
+         submitBtn.disabled = false; // re-enable if validation fails
+        submitBtn.textContent = "Submit Payment Receipt";
         return;
     }
 
@@ -329,6 +334,10 @@ document.getElementById("payment-form").addEventListener("submit", function(e) {
     .catch(err => {
         console.error("Error submitting order:", err);
         alert("Error submitting order. Please try again.");
+
+        // re-enable button on failure
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Submit Payment Receipt";
     });
 });
 </script>
